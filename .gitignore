@@ -1,0 +1,13 @@
+.yardoc/*
+_yardoc/*
+doc/*
+rdoc/*
+.bundle
+coverage/*
+.rvmrc
+*.swp
+*.swo
+.DS_Store
+stats
+stats/*
+*.o
