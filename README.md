@@ -7,21 +7,13 @@ Walk Framework API, responsible for managed compatibility between implemented de
 1. Install Ruby 1.9.3 (mruby compatible)
 
 2. Bundle `$ bundle install`
-
-
-## Platform Info
-
-Details about the environment
-
-1. Support only 16 bytes file names.
-2. Support only 255 files.
-3. Don't support rename, pipe, f* functions(fseek, fopen, fread).
 	
 	
 ## Docs (yard)
 
 
-	$ rake yard
+1. Generate: `$ rake yard`
+2. Open: `open docs/index.html`
 	
 
 
