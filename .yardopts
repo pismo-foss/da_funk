@@ -1,1 +1,12 @@
+--protected
+--no-private
+--readme README_GUIDE.md
+--title 'CloudWalk Ruby API Documentation'
+--charset utf-8
+'lib/device/**/*.rb'
+'lib/device.rb'
+'lib/iso8583/*.rb'
+'lib/iso8583.rb'
+'lib/file_db.rb'
+'guides/*'
 - guides/*
