@@ -1,5 +1,7 @@
 class Device
-  attr_accessor :adapter
+  class << self
+    attr_accessor :adapter
+  end
 
   # Flat syntax/behaviour API between versions, to any application be able to execute on whole versions.
   #
