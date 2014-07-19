@@ -107,16 +107,29 @@ module ISO8583
   class Message
 
     # The value of the MTI (Message Type Indicator) of this message.
-    attr_reader :mti 
+    attr_reader :mti, :size_endianness
 
     # Instantiate a new instance of this type of Message
     # optionally specifying an mti. 
-    def initialize(mti = nil)
+    def initialize(mti = nil, size_endianness = :little, format = :ascii)
       # values is an internal field used to collect all the
       # bmp number | bmp name | field en/decoders | values
       # which are set in this message.
       @values = {}
+      @size_endianness = size_endianness
+      @format = :ascii
       self.mti = mti if mti
+    end
+
+    def size(message)
+      case format
+      when :ascii
+        message.size
+      when :bcd
+        (message.size / 2)
+      else
+        raise ISO8583Exception.new "format no recognized"
+      end
     end
 
     # Set the mti of the Message using either the actual value
