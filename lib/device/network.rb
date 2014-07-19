@@ -37,7 +37,7 @@ class Device
     end
 
     def self.handshake
-      handshake = "#{Device::System.serial};#{Device::System.app};1;#{Device.version}"
+      handshake = "#{Device::System.serial};#{Device::System.app};#{Device::Setting.logical_number};#{Device.version}"
       socket.write("#{handshake.size.chr}#{handshake}")
 
       company_name = socket.read(3)
