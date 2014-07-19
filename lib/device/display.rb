@@ -14,7 +14,9 @@ class Device
     # @param row [Fixnum] Row to start display.
     # @param column [Fixnum] Column to start display.
     # @return [String] buffer to display.
-    def self.print(buf, row = 0, column = 0); end
+    def self.print(buf, row = 0, column = 0)
+      adapter.print_line(buf, row, column)
+    end
 
     # Clean display
     def self.clear; end
