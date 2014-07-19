@@ -121,6 +121,21 @@ module ISO8583
       self.mti = mti if mti
     end
 
+    def build
+      message = self.to_b
+      message_size = self.size(message)
+
+      if size_endianness == :little
+        binary_size = [message_size].pack("s")
+      elsif size_endianness == :big
+        binary_size = [message_size].pack("s>")
+      else
+        raise ISO8583Exception.new "size endianness no recognized"
+      end
+
+      binary_size + message
+    end
+
     def size(message)
       case format
       when :ascii
