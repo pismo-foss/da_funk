@@ -1,0 +1,23 @@
+class Device
+  class Support
+    def self.path_to_class(path)
+      constantize(camelize(remove_extension(path)))
+    end
+
+    def self.camelize(str)
+      str.split('_').map {|w| w.capitalize}.join
+    end
+
+    def self.remove_extension(path)
+      path.to_s.split(".").first
+    end
+
+    def self.constantize(name)
+      if ! name.empty? && Object.const_defined?(name)
+        Objcect.const_get name
+      else
+        nil
+      end
+    end
+  end
+end
