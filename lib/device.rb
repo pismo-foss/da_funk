@@ -7,10 +7,10 @@ class Device
   #
   # @return [Class] the class object flatted
   def self.flat_api
-    klass_version = self::VERSION.gsub(".", "")
-    if self::VERSION == "0.4.3"
-      puts "#{self.name}"
-      const_get("VersionFlat#{klass_version}").flat self
+    klass_version = Device::VERSION.gsub(".", "")
+    if Device::VERSION == "0.4.3"
+      puts "#{Device.name}"
+      const_get("VersionFlat#{klass_version}").flat Device
     end
   end
 end
