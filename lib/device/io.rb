@@ -4,27 +4,27 @@ class Device
     #
     # @param eot [String] End Of Line, expected to return to return.
     # @return [String] buffer read from keyboard
-    def self.gets(eot = "\n"); end
+    def self.gets(eot = "\n"); super; end
 
     # Read 1 byte on keyboard, wait until be pressed
     #
     # @return [String] key read from keyboard
-    def self.getc; end
+    def self.getc; super; end
 
     # Read Track 1, 2, and 3 if available on card
     #
     # @return [Hash] key read from keyboard
-    def self.read_card; end
+    def self.read_card; super; end
 
     # Clean Display
     #
     # @return [nil]
-    def self.display_clean; end
+    def self.display_clean; super; end
 
     # Clean Display
     #
     # @return [nil]
-    def self.display(buffer, column=0, row=0); end
+    def self.display(buffer, column=0, row=0); super; end
   end
 end
 

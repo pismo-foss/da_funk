@@ -1,4 +1,6 @@
 class Device
+  attr_accessor :adapter
+
   # Flat syntax/behaviour API between versions, to any application be able to execute on whole versions.
   #
   # @return [Class] the class object flatted

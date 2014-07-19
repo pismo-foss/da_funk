@@ -4,13 +4,37 @@ class Device
       attr_accessor :type, :apn, :user, :pass, :socket
     end
 
-    def self.init(type, options); end
-    def self.power(command); end
-    def self.connect; end
-    def self.connected?; end
-    def self.ping(host, port); end
-    def self.disconnect; end
-    def self.finish; end
+    def adapter
+      Device.adapter::Network
+    end
+
+    def self.init(type, options)
+      adapter.init(type, options)
+    end
+
+    def self.power(command)
+      adapter.power(command)
+    end
+
+    def self.connect
+      adapter.send(__method__)
+    end
+
+    def self.connected?
+      adapter.send(__method__)
+    end
+
+    def self.ping(host, port)
+      adapter.send(__method__, host, port)
+    end
+
+    def self.disconnect
+      adapter.send(__method__)
+    end
+
+    def self.finish
+      adapter.send(__method__)
+    end
 
     def self.handshake
       handshake = "#{Device::System.serial};#{Device::System.app};1;#{Device.version}"

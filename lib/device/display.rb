@@ -1,12 +1,18 @@
 class Device
   class Display
+    def self.adapter
+      Device.adapter::Display
+    end
+
     # Same as print, but add "\\n" at end of print
     #
     # @param buf [String] Text to be printed.
     # @param row [Fixnum] Row to start display.
     # @param column [Fixnum] Column to start display.
     # @return [String] buffer to display.
-    def self.puts(buf, row = 0, column = 0); end
+    def self.puts(buf, row = 0, column = 0)
+      self.print("#{buf}\n", row, column)
+    end
 
     # Display buffer
     #
@@ -19,6 +25,8 @@ class Device
     end
 
     # Clean display
-    def self.clear; end
+    def self.clear
+      adapter.clear
+    end
   end
 end
