@@ -1,3 +1,4 @@
+
 class FileDb < Hash
   attr_accessor :path
 
