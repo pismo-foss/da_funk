@@ -15,7 +15,7 @@ class Device
       "company_name"           => ""
     }
 
-    class << self
+    def self.setup
       @file = FileDb.open "config.dat"
     end
 
