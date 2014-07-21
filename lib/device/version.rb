@@ -1,3 +1,4 @@
+
 class Device
   def self.version
     "0.4.2"
@@ -7,3 +8,4 @@ class Device
     "0.2.0"
   end
 end
+

@@ -1,3 +1,4 @@
+
 class Device
   class Transaction
     class EMV
@@ -41,3 +42,4 @@ class Device
     end
   end
 end
+

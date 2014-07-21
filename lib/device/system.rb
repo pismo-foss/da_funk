@@ -1,3 +1,4 @@
+
 class Device
   class System
     def self.adapter
@@ -33,3 +34,4 @@ class Device
     end
   end
 end
+

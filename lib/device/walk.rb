@@ -1,3 +1,4 @@
+
 class Device
   class Walk
     def self.execute(file)

@@ -1,3 +1,4 @@
+
 class Device
   class Network
     class << self

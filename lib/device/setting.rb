@@ -1,3 +1,4 @@
+
 class Device
   class Setting
     FILE_NAME = "config.dat"
@@ -30,3 +31,4 @@ class Device
     end
   end
 end
+

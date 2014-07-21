@@ -1,3 +1,4 @@
+
 class Device
   class Transaction
     class Download
@@ -14,9 +15,9 @@ class Device
       def self.request_file(remote_path, local_path)
         download = Device::Transaction::Download.new(Device::System.serial, "", Device.version)
         download.perform(Device::Network.walk_socket,
-          Device::Setting.company_name,
-          remote_path, local_path, Device::System.app,
-          Device::Setting.logical_number)
+                         Device::Setting.company_name,
+                         remote_path, local_path, Device::System.app,
+                         Device::Setting.logical_number)
       end
 
       def self.request_param_file
@@ -258,3 +259,4 @@ class Device
     end
   end
 end
+

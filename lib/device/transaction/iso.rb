@@ -1,3 +1,4 @@
+
 class Device
   class Transaction
     # Object responsible to create ISO8583 message
@@ -69,3 +70,4 @@ class Device
     end
   end
 end
+

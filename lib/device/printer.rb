@@ -1,3 +1,4 @@
+
 class Device
   class Printer
     def self.adapter
@@ -31,3 +32,4 @@ class Device
     end
   end
 end
+

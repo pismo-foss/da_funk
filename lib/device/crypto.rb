@@ -1,3 +1,4 @@
+
 class Device
   class Crypto
     CCITT_16 = [
@@ -49,3 +50,4 @@ class Device
     end
   end
 end
+
