@@ -19,8 +19,10 @@ class Device
     #   mes2 = Device::Iso.parse input
     #
     class Iso < ISO8583::Message
+      include ISO8583
       mti_format N, :length => 4
       mti 1100, "Authorization Request Acquirer Gateway"
+
       mti 1110, "Authorization Request Response Issuer Gateway"
       mti 1420, "Reversal Advice Acquirer Gateway"
       mti 1421, "Reversal Advice Repeat Acquirer Gateway"
