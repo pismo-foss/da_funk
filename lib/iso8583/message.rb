@@ -196,6 +196,14 @@ module ISO8583
       raise ISO8583Exception.new "no MTI set!" unless mti
       mti_enc = self.class._mti_format.encode(mti)
       mti_enc << _body.join
+
+      # length = mti_enc.length.to_s(16).rjust(4, '0')
+
+      length_dec = [mti_enc.length]
+      length_hex = length_dec.pack("s>")
+      mti_enc = length_hex + mti_enc
+
+      return mti_enc
     end
 
     # Returns a nicely formatted representation of this
