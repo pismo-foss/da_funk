@@ -14,10 +14,11 @@ class Device
 
     def self.constantize(name)
       if ! name.empty? && Object.const_defined?(name)
-        Objcect.const_get name
+        Object.const_get name
       else
         nil
       end
     end
   end
 end
+
