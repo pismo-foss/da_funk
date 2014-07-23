@@ -237,7 +237,7 @@ module ISO8583
         enc_value = @values[bmp_num].encode
         message << enc_value
       end
-      [ bitmap.to_bytes, message ]
+      [ bitmap.to_s.to_i(2).to_s(16).upcase, message ]
     end
 
     def _get_definition(key) #:nodoc:
