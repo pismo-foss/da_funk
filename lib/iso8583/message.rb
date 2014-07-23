@@ -375,11 +375,14 @@ module ISO8583
       def parse(str)
         message = self.new
         message.mti, rest = _mti_format.parse(str)
+
         bmp,rest = Bitmap.parse(rest)
         bmp.each {|bit|
-          bmp_def      = _definitions[bit]
-          value, rest  = bmp_def.field.parse(rest)
-          message[bit] = value
+          if bit > 1 && bit <= 128
+            bmp_def      = _definitions[bit]
+            value, rest  = bmp_def.field.parse(rest)
+            message[bit] = value
+           end  
         }
         message
       end
