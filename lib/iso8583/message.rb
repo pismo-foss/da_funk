@@ -196,6 +196,14 @@ module ISO8583
       raise ISO8583Exception.new "no MTI set!" unless mti
       mti_enc = self.class._mti_format.encode(mti)
       mti_enc << _body.join
+
+      # length = mti_enc.length.to_s(16).rjust(4, '0')
+
+      length_dec = [mti_enc.length]
+      length_hex = length_dec.pack("s>")
+      mti_enc = length_hex + mti_enc
+
+      return mti_enc
     end
 
     # Returns a nicely formatted representation of this
@@ -229,7 +237,7 @@ module ISO8583
         enc_value = @values[bmp_num].encode
         message << enc_value
       end
-      [ bitmap.to_bytes, message ]
+      [ bitmap.to_s.to_i(2).to_s(16).upcase, message ]
     end
 
     def _get_definition(key) #:nodoc:
@@ -367,11 +375,14 @@ module ISO8583
       def parse(str)
         message = self.new
         message.mti, rest = _mti_format.parse(str)
+
         bmp,rest = Bitmap.parse(rest)
         bmp.each {|bit|
-          bmp_def      = _definitions[bit]
-          value, rest  = bmp_def.field.parse(rest)
-          message[bit] = value
+          if bit > 1 && bit <= 128
+            bmp_def      = _definitions[bit]
+            value, rest  = bmp_def.field.parse(rest)
+            message[bit] = value
+           end  
         }
         message
       end

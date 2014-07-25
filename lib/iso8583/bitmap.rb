@@ -20,12 +20,12 @@ module ISO8583
         initialize_from_message message
       end
     end
-
+    
     # yield once with the number of each set field.
     def each #:yields: each bit set in the bitmap.
       @bmp.each_with_index {|set, i| yield i+1 if set}
     end
-
+    
     # Returns whether the bit is set or not.
     def [](i)
       @bmp[i-1]
@@ -46,7 +46,7 @@ module ISO8583
     def set(i)
       self[i] = true
     end
-
+    
     # Unsets bit #i
     def unset(i)
       self[i] = false
@@ -62,7 +62,7 @@ module ISO8583
     alias_method :to_b, :to_bytes
 
     # Generate a String representation of this bitmap in the form:
-    #	01001100110000011010110110010100100110011000001101011011001010
+    # 01001100110000011010110110010100100110011000001101011011001010
     def to_s
       #check whether any `high` bits are set
       @bmp[0] = false
@@ -84,9 +84,9 @@ module ISO8583
     private
 
     def initialize_from_message(message)
-      bmp = message.unpack("B64")[0]
+      bmp = message.to_i(16).to_s(2)
       if bmp[0,1] == "1"
-        bmp = message.unpack("B128")[0]
+        bmp = message.to_i(16).to_s(2)
       end
 
       0.upto(bmp.length-1) do |i|
@@ -99,11 +99,11 @@ module ISO8583
       # after the bitmap is taken away.
       def parse(str)
         bmp  = Bitmap.new(str)
-        rest = bmp[1] ? str[16, str.length] : str[8, str.length]
+        rest = bmp[1] ? str[32, str.length] : str[16, str.length]
         [ bmp, rest ]
       end
     end
-
+    
   end
 end
 
