@@ -19,12 +19,7 @@ class Device
     # Clean Display
     #
     # @return [nil]
-    def self.display_clean; super; end
-
-    # Clean Display
-    #
-    # @return [nil]
-    def self.display(buffer, column=0, row=0); super; end
+    def self.display_clear; super; end
   end
 end
 
