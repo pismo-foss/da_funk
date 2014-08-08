@@ -1,10 +1,17 @@
 
 class Device
   class System
+    class << self
+      attr_reader :serial, :backlight
+    end
+
     def self.adapter
       Device.adapter::System
     end
 
+    def self.serial
+      @serial ||= adapter.serial
+    end
     def self.backlight
       adapter.backlight
     end
@@ -25,9 +32,6 @@ class Device
       adapter.app
     end
 
-    def self.serial
-      adapter.serial
-    end
 
     def self.model
       adapter.model
