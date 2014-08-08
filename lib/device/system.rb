@@ -28,8 +28,9 @@ class Device
       adapter.restart
     end
 
+    # TODO: Check file information on ruby compilers
     def self.app
-      adapter.app
+      __FILE__
     end
 
 
