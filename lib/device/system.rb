@@ -28,8 +28,16 @@ class Device
       @backlight ||= adapter.backlight
     end
 
-    def self.batery
-      adapter.batery
+    # Read the battery level.
+    #  0 Battery voltage low and battery icon blinks. Suggested that do not process transaction, print and wireless communication etc. at this moment. You should recharge the battery immediately to avoid shut down and lost data.
+    #  1 Battery icon displays 1 grid
+    #  2 Battery icon displays 2 grids
+    #  3 Battery icon displays 3 grids
+    #  4 Battery icon displays 4 grids
+    #  5 Powered by external power supply and the battery in charging. Battery icon displays form empty to full cycle. The battery status indicator on the bottom of terminal is displaying red
+    # ￼6 Powered by external power supply and the battery charging 6 finished. Battery icon displays full grids. The battery status indicator on the bottom of terminal is displaying green.
+    def self.battery
+      adapter.battery
     end
 
     def self.beep
@@ -44,7 +52,6 @@ class Device
     def self.app
       __FILE__
     end
-
 
     def self.model
       adapter.model
