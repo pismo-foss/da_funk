@@ -12,8 +12,20 @@ class Device
     def self.serial
       @serial ||= adapter.serial
     end
+
+    # Set screen backlight (turn on automatically if there has actions like key-pressing, card-swiping or card-inserting).
+    #  0 = Turn off backlight.
+    #  1 = (D200): Keep backlight on for 30 seconds ( auto-shut-down after 30 seconds).
+    #  1 = (Vx510): On.
+    #  2 = (D200): Always on.
+    #  n = (Evo/Telium 2): Percentage until 100.
+    def self.backlight=(level)
+      adapter.backlight = level
+      @backlight = level
+    end
+
     def self.backlight
-      adapter.backlight
+      @backlight ||= adapter.backlight
     end
 
     def self.batery
