@@ -22,7 +22,9 @@ Walk Framework API, responsible for managed compatibility between implemented de
 
 2. Develop start method in platform abstraction.
 
-		class PlatformAbstraction
+	Start method is responsible for start the runtime in our platform. And should require the da_funk lib(common lib between platforms).
+
+		class PlatformInterface
 		  	def self.start(file = "./main.mrb")
 			    begin
 					require "./da_funk.mrb"
@@ -43,9 +45,9 @@ Walk Framework API, responsible for managed compatibility between implemented de
 			end
 		end
 		
-3. Develop interface require by DaFunk
+3. Develop interface required by DaFunk on PlatformInterface, could be the same file you have start method.
 
-		class PAX
+		class PlatformInterface
 			Network = ::Network # Implemented on C
 			IO      = ::IO # Implemeted on C
 
@@ -53,19 +55,10 @@ Walk Framework API, responsible for managed compatibility between implemented de
 				def self.clear
 					::IO.display_clear
 				end
-			end
-
-			class System
-				def self.serial
-					PAX._serial # C method
-				end
-
-				def self.backlight=(level)
-					PAX._backlight = level
-				end
-
-				def self.battery
-					PAX._battery
+				
+				def self.print_line(buf, row, column)
+					# <class created on C or PlatformInterface>._print_line(buf, row, column)
+					PlatformInterface._print_line(buf, row, column)
 				end
 			end
 		end
@@ -78,7 +71,7 @@ Walk Framework API, responsible for managed compatibility between implemented de
 
 5. Compile da_funk into mrb file `$ mrbc -o da_funk.mrb </path/to/lib/da_funk/lib/**/*/.rb`
 6. Compile platform abstraction into mrb file `$ mrbc -o platform.mrb </path/to/mrblib/**/*/.rb`
-7. Application file `main.rb`
+7. Application file `main.rb`(could be use to test).
 
 		class Main
 			def self.call
@@ -86,12 +79,14 @@ Walk Framework API, responsible for managed compatibility between implemented de
 			end
 		end
 
+	Call method should be implemented on applications.
+
 
 ### Adapter pattern
 Adapter(platform abstraction) should be configured to access by DaFunk Library
 
 - [Wiki](http://en.wikipedia.org/wiki/Adapter_pattern)
-- Image
+- Scheme Image (todo)
 
 
 ### Platform Abstraction
