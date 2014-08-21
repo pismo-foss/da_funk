@@ -89,7 +89,7 @@ Adapter(platform abstraction) should be configured to access by DaFunk Library
 - Scheme Image (todo)
 
 
-### Platform Abstraction
+### Platform Interface
 
 - Be careful with instance object variable, let't for DaFunk.
 - Prefer class methods to call as interface.
