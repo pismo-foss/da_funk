@@ -421,7 +421,7 @@ module ISO8583
       # in through the `bmp` and `mti_format` class methods.
       #
       def _handle_opts(field, opts)
-        opts.each_pair {|key, value|
+        opts.each {|key, value|
           key = (key.to_s+"=").to_sym
           if field.respond_to?(key)
             field.send(key, value)
