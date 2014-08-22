@@ -37,7 +37,7 @@ module ISO8583
   # be accessed later either via their name or value:
   #
   #    mes = MyMessage.new 1100
-  # 
+  #
   # or
   #    mes = MyMessage.new "Authorization Request Acquirer Gateway"
   #
@@ -333,7 +333,7 @@ module ISO8583
         field.bmp  = bmp
         _handle_opts(field, opts) if opts
 
-        bmp_def = BMP.new bmp, name, field
+        bmp_def = ISO8583::BMP.new bmp, name, field
 
         @defs[bmp]  = bmp_def
         @defs[name] = bmp_def
@@ -382,7 +382,7 @@ module ISO8583
             bmp_def      = _definitions[bit]
             value, rest  = bmp_def.field.parse(rest)
             message[bit] = value
-           end  
+          end
         }
         message
       end
@@ -451,5 +451,5 @@ module ISO8583
       field.encode(value)
     end
   end
-
 end
+
