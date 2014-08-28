@@ -1,4 +1,4 @@
-require 'date'
+#require 'date'
 
 module ISO8583
 
