@@ -11,3 +11,4 @@ coverage/*
 stats
 stats/*
 *.o
+out/da_funk.mrb
