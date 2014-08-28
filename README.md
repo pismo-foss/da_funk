@@ -69,7 +69,7 @@ Walk Framework API, responsible for managed compatibility between implemented de
 			self.adapter = PlatformAbstraction
 		end
 
-5. Compile da_funk into mrb file `$ mrbc -o da_funk.mrb </path/to/lib/da_funk/lib/**/*/.rb`
+5. Compile da_funk into mrb file `$ rake`.
 6. Compile platform abstraction into mrb file `$ mrbc -o platform.mrb </path/to/mrblib/**/*/.rb`
 7. Application file `main.rb`(could be use to test).
 
