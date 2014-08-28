@@ -25,8 +25,13 @@ class Device
     end
 
     # Clean display
-    def self.clear
+    #
+    # @param line [Fixnum] Line to clear
+    def self.clear(line = nil)
+    if line.nil?
       adapter.clear
+    else
+      adapter.clear_line line
     end
   end
 end
