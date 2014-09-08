@@ -1,6 +1,9 @@
 
 class Device
   class Network
+
+    MEDIA_GPRS = :gprs
+
     class << self
       attr_accessor :type, :apn, :user, :pass, :socket
     end
@@ -54,6 +57,14 @@ class Device
         @socket = TCPSocket.new(Device::Setting.host, Device::Setting.host_port)
         handshake
         @socket
+      end
+    end
+
+    def self.attach
+      Device::Network.init(MEDIA_GPRS, self.config)
+      Device::Network.connect
+      while(iRet == 1)
+        iRet = Device::Network.connected?
       end
     end
 
