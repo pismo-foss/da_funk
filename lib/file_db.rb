@@ -37,4 +37,10 @@ class FileDb < Hash
     end
     file_new.close
   end
+
+  def []=(key, value)
+    ret = super(key, value)
+    save
+    ret
+  end
 end
