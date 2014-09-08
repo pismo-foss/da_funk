@@ -56,6 +56,15 @@ class Device
         @socket
       end
     end
+
+    def self.config
+      # TODO should check if WIFI, ETHERNET and etc
+      {
+        apn: Setting::Network.apn,
+        user: Setting::Network.user,
+        pass: Setting::Network.pass
+      }
+    end
   end
 end
 
