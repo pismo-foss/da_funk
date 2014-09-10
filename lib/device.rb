@@ -12,5 +12,9 @@ class Device
       const_get("VersionFlat#{klass_version}").flat Device
     end
   end
+
+  def self.call
+    System.klass = self
+  end
 end
 
