@@ -69,9 +69,9 @@ class Device
     def self.config
       # TODO should check if WIFI, ETHERNET and etc
       {
-        apn: Setting::Network.apn,
-        user: Setting::Network.user,
-        pass: Setting::Network.pass
+        apn: Device::Setting.apn,
+        user: Device::Setting.user,
+        pass: Device::Setting.pass
       }
     end
   end
