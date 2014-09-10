@@ -24,7 +24,7 @@ class FileDb < Hash
 
   def parse(text)
     text.each_line do |line|
-      line = line[0..-2] if line[-1] == "\n" # This seems to be necessary
+      line = line[0..-2] if line[-1] == "\n" # Last record, probably shouldn't have \n
       key_value = line.split("=")
       self[key_value[0]] = key_value[1]
     end
