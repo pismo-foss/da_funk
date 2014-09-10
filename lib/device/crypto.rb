@@ -36,17 +36,15 @@ class Device
       0x6E17, 0x7E36, 0x4E55, 0x5E74, 0x2E93, 0x3EB2, 0x0ED1, 0x1EF0
     ]
 
-    class << self
-      def crc16_hex(buf)
-        crc = crc16(buf)
-        # to swap the number just invert the order of the indexes [0..1] and [2..3]
-        "#{crc.to_s(16).rjust(4,"0")[0..1]}#{crc.to_s(16).rjust(4,"0")[2..3]}".upcase
-      end
+    def self.crc16_hex(buf)
+      crc = crc16(buf)
+      # to swap the number just invert the order of the indexes [0..1] and [2..3]
+      "#{crc.to_s(16).rjust(4,"0")[0..1]}#{crc.to_s(16).rjust(4,"0")[2..3]}".upcase
+    end
 
-      def crc16(buf, crc=0)
-        buf.each_byte{|x| crc = ((crc<<8) ^ CCITT_16[(crc>>8) ^ x])&0xffff}
-        crc
-      end
+    def self.crc16(buf, crc=0)
+      buf.each_byte{|x| crc = ((crc<<8) ^ CCITT_16[(crc>>8) ^ x])&0xffff}
+      crc
     end
   end
 end
