@@ -21,19 +21,19 @@ class Device
     end
 
     def self.connect
-      adapter.send(__method__)
+      adapter.connect
     end
 
     def self.connected?
-      adapter.send(__method__)
+      adapter.connected?
     end
 
     def self.ping(host, port)
-      adapter.send(__method__, host, port)
+      adapter.ping(host, port)
     end
 
     def self.disconnect
-      adapter.send(__method__)
+      adapter.disconnect
     end
 
     def self.handshake
