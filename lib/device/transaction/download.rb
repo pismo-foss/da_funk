@@ -146,33 +146,29 @@ class Device
       end
 
       def partial_download_to_store(file_name, response_size, file_size)
-        begin
-          tmp  = "tmp_#{file_name}"
-          file = File.open(tmp, "w+")
+        tmp  = "tmp_#{file_name}"
+        file = File.open(tmp, "w+")
 
-          if (response_size > 1024)
-            file.write(@first_packet[13..-1])
-            downloaded = 1024
-            while(downloaded < (response_size - 1))
-              if (to_download = response_size - downloaded) > 1024
-                to_download = 1024
-              else
-                to_download -= 1 # because of 6A
-              end
-              file.write(socket.read(to_download))
-              downloaded += to_download
+        if (response_size > 1024)
+          file.write(@first_packet[13..-1])
+          downloaded = 1024
+          while(downloaded < (response_size - 1))
+            if (to_download = response_size - downloaded) > 1024
+              to_download = 1024
+            else
+              to_download -= 1 # because of 6A
             end
-          else
-            # -2 because of 6A
-            downloaded = file.write(@first_packet[13..-2])
+            file.write(socket.read(to_download))
+            downloaded += to_download
           end
-
-          file.close
-          File.rename(tmp, file_name)
-          downloaded
-        rescue
-          -1
+        else
+          # -2 because of 6A
+          downloaded = file.write(@first_packet[13..-2])
         end
+
+        file.close
+        File.rename(tmp, file_name)
+        downloaded
       end
 
       def put(value)
