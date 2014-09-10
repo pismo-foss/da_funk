@@ -24,6 +24,7 @@ class Device
     end
 
     def self.method_missing(method, *args, &block)
+      setup unless @file
       param = method.to_s
       if @file[param]
         @file[params]
