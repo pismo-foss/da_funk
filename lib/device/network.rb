@@ -8,7 +8,7 @@ class Device
       attr_accessor :type, :apn, :user, :pass, :socket
     end
 
-    def adapter
+    def self.adapter
       Device.adapter::Network
     end
 
