@@ -27,8 +27,8 @@ class Device
       setup unless @file
       param = method.to_s
       if @file[param]
-        @file[params]
-      elsif (param[-1..1] == "=" && @file[param[0..-2]])
+        @file[param]
+      elsif (param[-1..-1] == "=" && @file[param[0..-2]])
         @file[param[0..-2]] = args.first
       else
         super
