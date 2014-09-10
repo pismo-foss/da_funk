@@ -1,5 +1,9 @@
 class Device
   class Support
+    def self.class_to_path(klass)
+      "#{klass.to_s.downcase}.mrb"
+    end
+
     def self.path_to_class(path)
       constantize(camelize(remove_extension(path)))
     end
