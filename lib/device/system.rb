@@ -49,9 +49,8 @@ class Device
       adapter.restart
     end
 
-    # TODO: Check file information on ruby compilers
     def self.app
-      __FILE__
+      Device::Support.class_to_path(self.klass)
     end
 
     def self.model
