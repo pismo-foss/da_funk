@@ -38,4 +38,9 @@ class FileDb
     save
     ret
   end
+
+  def [](key)
+    @hash[key]
+  end
 end
+
