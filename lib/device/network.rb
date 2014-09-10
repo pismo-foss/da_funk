@@ -49,7 +49,9 @@ class Device
 
     # Create Socket in Walk Switch
     def self.walk_socket
-      unless (@socket && ! @socket.closed?)
+      if @socket && ! @socket.closed?
+        @socket
+      else
         @socket = TCPSocket.new(Device::Setting.host, Device::Setting.host_port)
         handshake
         @socket
