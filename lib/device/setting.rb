@@ -20,7 +20,7 @@ class Device
     }
 
     def self.setup
-      @file = FileDb.open "config.dat"
+      @file = FileDb.new(FILE_NAME, DEFAULT)
     end
 
     def self.method_missing(method, *args, &block)
