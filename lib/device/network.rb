@@ -36,10 +36,6 @@ class Device
       adapter.send(__method__)
     end
 
-    def self.finish
-      adapter.send(__method__)
-    end
-
     def self.handshake
       handshake = "#{Device::System.serial};#{Device::System.app};#{Device::Setting.logical_number};#{Device.version}"
       socket.write("#{handshake.size.chr}#{handshake}")
