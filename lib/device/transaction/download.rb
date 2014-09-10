@@ -106,8 +106,6 @@ class Device
         @socket.read(1) if response_size > 1024
 
         return_code
-      ensure
-        @socket.close
       end
 
       def generate_crc(local_path)
