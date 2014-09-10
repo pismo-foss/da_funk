@@ -3,6 +3,7 @@ class Device
   class System
     class << self
       attr_reader :serial, :backlight
+      attr_accessor :klass
     end
 
     def self.adapter
