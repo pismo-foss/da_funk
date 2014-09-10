@@ -59,11 +59,13 @@ class Device
     end
 
     def self.attach
-      Device::Network.init(MEDIA_GPRS, self.config)
-      Device::Network.connect
-      while(iRet == 1)
+      "Net Init #{Device::Network.init(MEDIA_GPRS, self.config)}"
+      "Net Connnect #{Device::Network.connect}"
+      "Net Connected? #{iRet = Device::Network.connected?}"
+      while(iRet == 1) # 1 - In process to attach
         iRet = Device::Network.connected?
       end
+      iRet
     end
 
     def self.config
