@@ -1,21 +1,16 @@
 
-class FileDb < Hash
-  attr_accessor :path
+class FileDb
+  attr_accessor :path, :hash
 
-  def initialize
-    super
-  end
-
-  def self.open(path)
-    f = self.new
-    f.open(path)
-    f
-  end
-
-  def open(path)
+  def initialize(path, default_value)
+    @hash = default_value.dup
     @path = path
-    if File.exist?(path)
-      file = File.open(path, "r")
+    self.open
+  end
+
+  def open
+    if File.exist?(@path)
+      file = File.open(@path, "r")
       self.parse(file.read)
     end
   ensure
@@ -26,20 +21,20 @@ class FileDb < Hash
     text.each_line do |line|
       line = line[0..-2] if line[-1] == "\n" # Last record, probably shouldn't have \n
       key_value = line.split("=")
-      self[key_value[0]] = key_value[1]
+      @hash[key_value[0]] ||= key_value[1]
     end
   end
 
   def save
     file_new = File.open(@path, "w+")
-    self.each do |line_key, line_value|
+    @hash.each do |line_key, line_value|
       file_new.puts("#{line_key}=#{line_value}")
     end
     file_new.close
   end
 
   def []=(key, value)
-    ret = super(key, value)
+    ret = @hash[key] = value
     save
     ret
   end
