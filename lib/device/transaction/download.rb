@@ -216,8 +216,15 @@ class Device
 
       def ei_encode_binary(value)
         put8(ERL_BINARY_EXT)
-        put32be(value.size)
-        put(value)
+
+        # TODO: Check it after to implement on put.
+        if value.is_a? Fixnum 
+          put32be(2)
+          @buffer << [value].pack("s")
+        else
+          put32be(value.size)
+          put(value)
+        end
       end
 
       def ei_encode_long(value)
