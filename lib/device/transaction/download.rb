@@ -134,7 +134,7 @@ class Device
 
         size = ljust(4, binary_size).to_s.unpack("V*").first
         # Already download, check on store
-        [size - 6, packet]
+        [size - packet.size, packet]
       end
 
       def makelong(a, b)
