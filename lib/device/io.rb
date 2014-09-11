@@ -1,5 +1,11 @@
 class Device
   class IO < ::IO
+    CANCEL = 0x1B.chr
+    ENTER  = 0x0D.chr
+    BACK   = 0x08.chr
+    F1     = 0x01.chr
+    F2     = 0x02.chr
+
     # The same as getc, but wait until eot be pressed
     #
     # @param eot [String] End Of Line, expected to return to return.
