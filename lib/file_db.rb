@@ -10,7 +10,7 @@ class FileDb
 
   def open
     if File.exist?(@path)
-      file = File.open(@path, "r")
+      file = File.open(@path)
       self.parse(file.read)
     end
   ensure
@@ -18,10 +18,11 @@ class FileDb
   end
 
   def parse(text)
-    text.each_line do |line|
-      line = line[0..-2] if line[-1] == "\n" # Last record, probably shouldn't have \n
+    text.split("\n").compact.each do |line|
       key_value = line.split("=")
-      @hash[key_value[0]] ||= key_value[1]
+      if key_value[1] && (@hash[key_value[0]].nil? || @hash[key_value[0]].empty?)
+        @hash[key_value[0]] = key_value[1]
+      end
     end
   end
 
