@@ -3,20 +3,20 @@ class Device
   class Setting
     FILE_NAME = "config.dat"
     DEFAULT     = {
-      "host"                   => "switch-staging.cloudwalk.io",
-      "host_port"              => "31415",
-      "ssl"                    => "",
-      "user"                   => "",
-      "pass"                   => "",
-      "apn"                    => "",
-      "media"                  => "",
-      "ip"                     => "",
-      "gateway"                => "",
-      "dns1"                   => "",
-      "dns2"                   => "",
-      "subnet"                 => "",
-      "logical_number"         => "",
-      "company_name"           => ""
+      "host"           => "switch-staging.cloudwalk.io",
+      "host_port"      => "31415",
+      "ssl"            => "",
+      "user"           => "",
+      "pass"           => "",
+      "apn"            => "",
+      "media"          => "",
+      "ip"             => "",
+      "gateway"        => "",
+      "dns1"           => "",
+      "dns2"           => "",
+      "subnet"         => "",
+      "logical_number" => "",
+      "company_name"   => ""
     }
 
     def self.setup
