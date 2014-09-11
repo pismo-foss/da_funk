@@ -2,7 +2,7 @@
 class FileDb
   attr_accessor :path, :hash
 
-  def initialize(path, default_value)
+  def initialize(path, default_value = {})
     @hash = default_value.dup
     @path = path
     self.open
