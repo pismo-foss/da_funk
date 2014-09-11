@@ -6,6 +6,14 @@ class Device
     F1     = 0x01.chr
     F2     = 0x02.chr
 
+    # Restricted to terminals, get strings and numbers.
+    # The switch method between uppercase, lowercase and number characters is to keep pressing a same button quickly. The timeout of this operation is 1 second.
+    #
+    # @param min [Fixnum] Minimum length of the input string.
+    # @param max [Fixnum] Maximum length of the input string (127 bytes maximum).
+    # @return [String] buffer read from keyboard
+    def self.get_string(min, max); super; end
+
     # The same as getc, but wait until eot be pressed
     #
     # @param eot [String] End Of Line, expected to return to return.
