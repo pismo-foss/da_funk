@@ -1,6 +1,13 @@
 require 'yard'
+require 'rake/testtask'
 
 DA_FUNK_ROOT = File.dirname(File.expand_path(__FILE__))
+
+Rake::TestTask.new do |t|
+  t.libs << "lib"
+  t.test_files = FileList['test/*test.rb']
+  t.verbose = true
+end
 
 YARD::Rake::YardocTask.new do |t|
   t.options = ['--debug'] # optional arguments
