@@ -54,7 +54,7 @@ task :compile => :check do
   out   = File.join(DA_FUNK_ROOT, "out", "da_funk.mrb")
   files = " #{DA_FUNK_ROOT}/" + funk_files.join(" #{DA_FUNK_ROOT}/")
 
-  sh "mkdir -p out"
+  sh "mkdir -p #{File.join(DA_FUNK_ROOT, "out")}"
   if ENV["MRBC"]
     sh "#{ENV["MRBC"]} -o #{out} #{funk_files.join(" ")}"
   else
