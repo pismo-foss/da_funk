@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'version.rb'
 
 Gem::Specification.new do |spec|
-  spec.name          = "simplehttp"
+  spec.name          = "da_funk"
   spec.version       = Device::API_VERSION
   spec.authors       = ["Thiago Scalone"]
   spec.email         = ["thiago@cloudwalk.io"]
