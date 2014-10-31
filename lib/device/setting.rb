@@ -7,8 +7,13 @@ class Device
       "host_port"      => "31415",
       "ssl"            => "",
       "user"           => "",
-      "pass"           => "",
+      "password"       => "", #WIFI
       "apn"            => "",
+      "authentication" => "", #WIFI
+      "essid"          => "", #WIFI
+      "bssid"          => "", #WIFI
+      "cipher"         => "", #WIFI
+      "mode"           => "", #WIFI
       "media"          => "",
       "ip"             => "",
       "gateway"        => "",
