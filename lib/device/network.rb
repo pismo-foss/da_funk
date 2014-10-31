@@ -64,22 +64,39 @@ class Device
     end
 
     def self.attach
-      "Net Init #{Device::Network.init(MEDIA_GPRS, self.config)}"
-      "Net Connnect #{Device::Network.connect}"
-      "Net Connected? #{iRet = Device::Network.connected?}"
+      puts "Net Init #{Device::Network.init(*self.config)}"
+      puts "Net Connnect #{Device::Network.connect}"
+      puts "Net Connected? #{iRet = Device::Network.connected?}"
       while(iRet == 1) # 1 - In process to attach
-        iRet = Device::Network.connected?
+        print iRet = Device::Network.connected?
       end
+      puts Device::Network.get_ip
       iRet
     end
 
     def self.config
-      # TODO should check if WIFI, ETHERNET and etc
-      {
-        apn: Device::Setting.apn,
-        user: Device::Setting.user,
-      }
+      media = Device::Setting.gprs? ? MEDIA_GPRS : MEDIA_WIFI
+      [media, self.config_media(media) ]
+    end
+
+    # TODO should check if WIFI, ETHERNET and etc
+    def self.config_media(media)
+      if media == MEDIA_GPRS
+        {
+          apn:      Device::Setting.apn,
+          user:     Device::Setting.user,
           password: Device::Setting.password
+        }
+      else
+        {
+          authentication: Device::Setting.authentication,
+          password:       Device::Setting.password,
+          essid:          Device::Setting.essid,
+          channel:        Device::Setting.channel,
+          cipher:         Device::Setting.cipher,
+          mode:           Device::Setting.mode
+        }
+      end
     end
   end
 end
