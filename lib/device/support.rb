@@ -13,7 +13,7 @@ class Device
     end
 
     def self.remove_extension(path)
-      path.to_s.split(".").first
+      path.to_s.split(".")[-2].split("/").last
     end
 
     def self.constantize(name)
