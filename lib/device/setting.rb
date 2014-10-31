@@ -34,6 +34,10 @@ class Device
         super
       end
     end
+
+    def self.gprs?
+      self.media == "gprs"
+    end
   end
 end
 
