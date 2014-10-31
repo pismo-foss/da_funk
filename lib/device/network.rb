@@ -37,6 +37,10 @@ class Device
       adapter.disconnect
     end
 
+    def self.get_ip
+      adapter.get_ip if adapter.respond_to? :get_ip
+    end
+
     def self.handshake
       handshake = "#{Device::System.serial};#{Device::System.app};#{Device::Setting.logical_number};#{Device.version}"
       socket.write("#{handshake.size.chr}#{handshake}")
