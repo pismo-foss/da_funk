@@ -3,6 +3,7 @@ class Device
   class Network
 
     MEDIA_GPRS = :gprs
+    MEDIA_WIFI = :wifi
 
     class << self
       attr_accessor :type, :apn, :user, :pass, :socket
