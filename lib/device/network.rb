@@ -6,7 +6,7 @@ class Device
     MEDIA_WIFI = :wifi
 
     class << self
-      attr_accessor :type, :apn, :user, :pass, :socket
+      attr_accessor :type, :apn, :user, :password, :socket
     end
 
     def self.adapter
@@ -78,8 +78,8 @@ class Device
       {
         apn: Device::Setting.apn,
         user: Device::Setting.user,
-        pass: Device::Setting.pass
       }
+          password: Device::Setting.password
     end
   end
 end
