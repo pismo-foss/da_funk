@@ -15,13 +15,14 @@ class Device
     # @param min [Fixnum] Minimum length of the input string.
     # @param max [Fixnum] Maximum length of the input string (127 bytes maximum).
     # @return [String] buffer read from keyboard
-    def self.get_string(min, max); super; end
+    def self.get_string(min, max, mode = IO_INPUT_LETTERS); super; end
 
     # The same as getc, but wait until eot be pressed
     #
-    # @param eot [String] End Of Line, expected to return to return.
+    # @param separator [String] Separator, expected to return to return.
+    # @param limit [Fixnum] Limit of characters.
     # @return [String] buffer read from keyboard
-    def self.gets(eot = "\n"); super; end
+    def self.gets(separator, limit, mode = IO_INPUT_LETTERS); super; end
 
     # Read 1 byte on keyboard, wait until be pressed
     #
