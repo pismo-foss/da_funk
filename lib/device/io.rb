@@ -1,10 +1,13 @@
 class Device
   class IO < ::IO
-    CANCEL = 0x1B.chr
-    ENTER  = 0x0D.chr
-    BACK   = 0x08.chr
-    F1     = 0x01.chr
-    F2     = 0x02.chr
+    CANCEL           = 0x1B.chr
+    ENTER            = 0x0D.chr
+    BACK             = 0x08.chr
+    F1               = 0x01.chr
+    F2               = 0x02.chr
+    IO_INPUT_NUMBERS = :numbers
+    IO_INPUT_LETTERS = :letters
+    IO_INPUT_SECRET  = :secret
 
     # Restricted to terminals, get strings and numbers.
     # The switch method between uppercase, lowercase and number characters is to keep pressing a same button quickly. The timeout of this operation is 1 second.
