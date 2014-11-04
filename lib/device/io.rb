@@ -29,11 +29,6 @@ class Device
     #
     # @return [Hash] key read from keyboard
     def self.read_card; super; end
-
-    # Clean Display
-    #
-    # @return [nil]
-    def self.display_clear; super; end
   end
 end
 
