@@ -76,7 +76,7 @@ class Device
 
     def self.config
       media = Device::Setting.gprs? ? MEDIA_GPRS : MEDIA_WIFI
-      [media, self.config_media(media) ]
+      [media, self.config_media(media)]
     end
 
     # TODO should check if WIFI, ETHERNET and etc

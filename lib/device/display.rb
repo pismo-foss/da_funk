@@ -9,7 +9,7 @@ class Device
     # @param buf [String] Text to be printed.
     # @param row [Fixnum] Row to start display.
     # @param column [Fixnum] Column to start display.
-    # @return [String] buffer to display.
+    # @return [NilClass] nil.
     def self.puts(buf, row = 0, column = 0)
       self.print("#{buf}\n", row, column)
     end
@@ -19,9 +19,19 @@ class Device
     # @param buf [String] Text to be printed.
     # @param row [Fixnum] Row to start display.
     # @param column [Fixnum] Column to start display.
-    # @return [String] buffer to display.
+    # @return [NilClass] nil.
     def self.print(buf, row = 0, column = 0)
       adapter.print_line(buf, row, column)
+    end
+
+    # Display bitmap
+    #
+    # @param path [String] path
+    # @param row [Fixnum] Row to start display.
+    # @param column [Fixnum] Column to start display.
+    # @return [NilClass] nil.
+    def self.print_bitmap(path, row = 0, column = 0)
+      adapter.print_bitmap(buf, row, column)
     end
 
     # Clean display
