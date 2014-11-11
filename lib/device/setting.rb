@@ -14,6 +14,7 @@ class Device
       "bssid"          => "", #WIFI
       "cipher"         => "", #WIFI
       "mode"           => "", #WIFI
+      "channel"        => "", #WIFI
       "media"          => "",
       "ip"             => "",
       "gateway"        => "",
