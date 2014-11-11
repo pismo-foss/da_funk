@@ -67,8 +67,8 @@ class Device
       puts "Net Init #{Device::Network.init(*self.config)}"
       puts "Net Connnect #{Device::Network.connect}"
       puts "Net Connected? #{iRet = Device::Network.connected?}"
-      while(iRet == 1) # 1 - In process to attach
-        print iRet = Device::Network.connected?
+      while(iRet != 0) # 1 - In process to attach
+        puts iRet = Device::Network.connected?
       end
       puts Device::Network.get_ip
       iRet
