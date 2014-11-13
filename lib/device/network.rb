@@ -5,6 +5,29 @@ class Device
     MEDIA_GPRS = :gprs
     MEDIA_WIFI = :wifi
 
+    AUTH_NONE_OPEN       = "open"
+    AUTH_NONE_WEP        = "wep"
+    AUTH_NONE_WEP_SHARED = "wep_shared"
+    AUTH_IEEE8021X       = "IEEE8021X"
+    AUTH_WPA_PSK         = "wpa_psk"
+    AUTH_WPA_WPA2_PSK    = "wpa_wpa2_psk"
+    AUTH_WPA2_PSK        = "wpa2_psk"
+
+    PARE_CIPHERS_NONE   = "none"
+    PARE_CIPHERS_WEP64  = "wep64"
+    PARE_CIPHERS_WEP128 = "wep128"
+    PARE_CIPHERS_WEPX   = "wepx"
+    PARE_CIPHERS_CCMP   = "ccmp"
+    PARE_CIPHERS_TKIP   = "tkip"
+
+    MODE_IBSS    = "ibss"
+    MODE_STATION = "station"
+
+    # Not Supported
+    #AUTH_WPA_EAP        = "wpa_eap"
+    #AUTH_WPA2_EAP       = "wpa2_eap"
+    #AUTH_WPA_WPA2_EAP   = "wpa_wpa2_eap"
+
     class << self
       attr_accessor :type, :apn, :user, :password, :socket
     end
