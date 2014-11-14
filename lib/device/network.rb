@@ -23,6 +23,8 @@ class Device
     MODE_IBSS    = "ibss"
     MODE_STATION = "station"
 
+    TIMEOUT = -3320
+
     # Not Supported
     #AUTH_WPA_EAP        = "wpa_eap"
     #AUTH_WPA2_EAP       = "wpa2_eap"
