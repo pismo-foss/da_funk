@@ -62,8 +62,14 @@ class Device
       adapter.disconnect
     end
 
-    def self.get_ip
-      adapter.get_ip if adapter.respond_to? :get_ip
+    def self.dhcp_client(timeout)
+      time = Time.now + (timeout.to_f / 1000.0)
+      ret = adapter.dhcp_client_start
+      while(ret == 1) # 1 - In process to attach
+        ret = self.dhcp_client_check
+        return TIMEOUT if (time >= Time.now)
+      end
+      ret
     end
 
     def self.handshake
