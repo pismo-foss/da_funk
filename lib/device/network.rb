@@ -104,7 +104,7 @@ class Device
       while(ret == 1) # 1 - In process to attach
         puts ret = Device::Network.connected?
       end
-      puts "Get ip #{Device::Network.dhcp_client(5000)}"
+      puts "Get ip #{Device::Network.dhcp_client(20000)}" if ret == 0
       ret
     end
 
