@@ -99,8 +99,8 @@ class Device
 
     def self.attach
       puts "Net Init #{Device::Network.init(*self.config)}"
-      puts "Net Connnect #{Device::Network.connect}"
-      puts "Net Connected? #{ret = Device::Network.connected?}"
+      puts "Net Connnect #{ret = Device::Network.connect}"
+      puts "Net Connected? #{ret = Device::Network.connected?}" if ret != 0
       while(ret == 1) # 1 - In process to attach
         puts ret = Device::Network.connected?
       end
