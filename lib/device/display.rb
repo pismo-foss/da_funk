@@ -31,7 +31,7 @@ class Device
     # @param column [Fixnum] Column to start display.
     # @return [NilClass] nil.
     def self.print_bitmap(path, row = 0, column = 0)
-      adapter.print_bitmap(buf, row, column)
+      adapter.display_bitmap(path, row, column)
     end
 
     # Clean display
