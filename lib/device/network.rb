@@ -65,9 +65,12 @@ class Device
     def self.dhcp_client(timeout)
       time = Time.now + (timeout.to_f / 1000.0)
       ret = adapter.dhcp_client_start
-      while(ret == 1) # 1 - In process to attach
-        ret = self.dhcp_client_check
-        return TIMEOUT if (time >= Time.now)
+      if (ret == 0)
+        ret = 1
+        while(ret == 1) # 1 - In process to attach
+          ret = adapter.dhcp_client_check
+          break ret = TIMEOUT unless (time >= Time.now)
+        end
       end
       ret
     end
