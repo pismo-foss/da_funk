@@ -7,11 +7,11 @@ class Device
 
     AUTH_NONE_OPEN       = "open"
     AUTH_NONE_WEP        = "wep"
-    AUTH_NONE_WEP_SHARED = "wep_shared"
+    AUTH_NONE_WEP_SHARED = "wepshared"
     AUTH_IEEE8021X       = "IEEE8021X"
-    AUTH_WPA_PSK         = "wpa_psk"
-    AUTH_WPA_WPA2_PSK    = "wpa_wpa2_psk"
-    AUTH_WPA2_PSK        = "wpa2_psk"
+    AUTH_WPA_PSK         = "wpapsk"
+    AUTH_WPA_WPA2_PSK    = "wpawpa2psk"
+    AUTH_WPA2_PSK        = "wpa2psk"
 
     PARE_CIPHERS_NONE   = "none"
     PARE_CIPHERS_WEP64  = "wep64"
