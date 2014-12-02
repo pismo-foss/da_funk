@@ -23,7 +23,7 @@ class Device
     MODE_IBSS    = "ibss"
     MODE_STATION = "station"
 
-    TIMEOUT = -3320
+    TIMEOUT       = -3320
     NO_CONNECTION = -1012
 
     # Not Supported
@@ -111,6 +111,7 @@ class Device
     end
 
     def self.config
+      # TODO raise some error if media was not set
       media = Device::Setting.gprs? ? MEDIA_GPRS : MEDIA_WIFI
       [media, self.config_media(media)]
     end
