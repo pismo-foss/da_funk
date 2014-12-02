@@ -111,7 +111,7 @@ class Device
       def generate_crc(local_path)
         if File.exists?(local_path)
           file = File.open(local_path)
-          Device::Crypto.crc16(file.read)
+          Device::Crypto.crc16_hex(file.read)
         else
           ""
         end
