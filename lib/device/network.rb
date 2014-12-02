@@ -98,13 +98,13 @@ class Device
     end
 
     def self.attach
-      puts "Net Init #{Device::Network.init(*self.config)}"
-      puts "Net Connnect #{ret = Device::Network.connect}"
-      puts "Net Connected? #{ret = Device::Network.connected?}" if ret != 0
+      "Net Init #{Device::Network.init(*self.config)}"
+      "Net Connnect #{ret = Device::Network.connect}"
+      "Net Connected? #{ret = Device::Network.connected?}" if ret != 0
       while(ret == 1) # 1 - In process to attach
-        puts ret = Device::Network.connected?
+        ret = Device::Network.connected?
       end
-      puts "Get ip #{Device::Network.dhcp_client(20000)}" if ret == 0
+      "Get ip #{Device::Network.dhcp_client(20000)}" if ret == 0
       ret
     end
 
