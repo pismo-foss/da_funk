@@ -52,7 +52,7 @@ class Device
     end
 
     def self.connected?
-      return NO_CONNECTION if self.adapter.interface.nil?
+      return NO_CONNECTION unless self.adapter.started?
       adapter.connected?
     end
 
