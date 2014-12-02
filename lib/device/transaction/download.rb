@@ -85,7 +85,7 @@ class Device
         socket.write(@request)
 
         # Read header
-        return -1 if (socket.read(4).size <= 0)
+        return -1 if (socket.read(4).to_s.size <= 0)
 
         response_size, @first_packet = get_rest_response_size
 
