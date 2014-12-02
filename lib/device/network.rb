@@ -2,8 +2,8 @@
 class Device
   class Network
 
-    MEDIA_GPRS = :gprs
-    MEDIA_WIFI = :wifi
+    MEDIA_GPRS = "gprs"
+    MEDIA_WIFI = "wifi"
 
     AUTH_NONE_OPEN       = "open"
     AUTH_NONE_WEP        = "wep"
