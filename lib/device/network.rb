@@ -24,6 +24,7 @@ class Device
     MODE_STATION = "station"
 
     TIMEOUT = -3320
+    NO_CONNECTION = -1012
 
     # Not Supported
     #AUTH_WPA_EAP        = "wpa_eap"
@@ -51,6 +52,7 @@ class Device
     end
 
     def self.connected?
+      return NO_CONNECTION if self.adapter.interface.nil?
       adapter.connected?
     end
 
