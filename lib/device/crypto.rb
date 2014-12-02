@@ -39,7 +39,8 @@ class Device
     def self.crc16_hex(buf)
       crc = crc16(buf)
       # to swap the number just invert the order of the indexes [0..1] and [2..3]
-      "#{crc.to_s(16).rjust(4,"0")[0..1]}#{crc.to_s(16).rjust(4,"0")[2..3]}".upcase
+      #"#{crc.to_s(16).rjust(4,"0")[0..1]}#{crc.to_s(16).rjust(4,"0")[2..3]}".upcase
+      crc.to_s(16).upcase
     end
 
     def self.crc16(buf, crc=0)
