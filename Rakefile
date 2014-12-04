@@ -29,6 +29,7 @@ task :compile => :check do
     "lib/device/crypto.rb",
     "lib/device/display.rb",
     "lib/device/audio.rb",
+    "lib/device/runtime.rb",
     "lib/device/io.rb",
     "lib/device/network.rb",
     "lib/device/printer.rb",
