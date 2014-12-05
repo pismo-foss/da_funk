@@ -1,6 +1,9 @@
-require 'yard'
-require 'rake/testtask'
+#!/usr/bin/env rake
 
+require 'rake/testtask'
+require 'bundler/setup'
+
+Bundler.require(:default)
 DA_FUNK_ROOT = File.dirname(File.expand_path(__FILE__))
 
 Rake::TestTask.new do |t|
