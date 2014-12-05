@@ -1,3 +1,8 @@
+PATH
+  remote: .
+  specs:
+    da_funk (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -12,6 +17,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  bundler (~> 1.7)
+  da_funk!
   rake
   rdoc
   yard
