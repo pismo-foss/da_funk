@@ -1,7 +1,7 @@
 
 class Device
   def self.api_version
-    "0.2.0"
+    Device::API_VERSION
   end
 
   def self.version
