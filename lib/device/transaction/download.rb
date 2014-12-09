@@ -108,7 +108,9 @@ class Device
         return_code = @first_packet[7].to_s.unpack("C*").first
         file_size   = @first_packet[9..12].to_s.unpack("N*").first
 
+        if return_code != FILE_NOT_CHANGE
           return IO_ERROR if (partial_download_to_store(filepath, response_size, file_size) < 0)
+        end
 
         # receive 6A
         @socket.read(1) if response_size > 1024
