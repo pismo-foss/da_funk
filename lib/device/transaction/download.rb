@@ -153,8 +153,8 @@ class Device
         (a & 0xff) | ((b & 0xff) << 8)
       end
 
-      def partial_download_to_store(file_name, response_size, file_size)
-        tmp  = "tmp_#{file_name}"
+      def partial_download_to_store(filepath, response_size, file_size)
+        tmp  = tmp_file(filepath)
         file = File.open(tmp, "w+")
 
         if (response_size > 1024)
@@ -175,7 +175,7 @@ class Device
         end
 
         file.close
-        File.rename(tmp, file_name)
+        File.rename(tmp, filepath)
         downloaded
       end
 
@@ -264,6 +264,12 @@ class Device
           string = string + ("\x00" * (size - string.size))
         end
         string
+      end
+
+      def tmp_file(path)
+        paths = path.split("/")
+        paths[-1] = "tmp_#{paths.last}"
+        paths.join("/")
       end
     end
   end
