@@ -25,6 +25,7 @@ class Device
 
     TIMEOUT       = -3320
     NO_CONNECTION = -1012
+    SUCCESS       = 0
 
     # Not Supported
     #AUTH_WPA_EAP        = "wpa_eap"
@@ -100,13 +101,13 @@ class Device
     end
 
     def self.attach
-      "Net Init #{Device::Network.init(*self.config)}"
-      "Net Connnect #{ret = Device::Network.connect}"
-      "Net Connected? #{ret = Device::Network.connected?}" if ret != 0
+      Device::Network.init(*self.config)
+      ret = Device::Network.connect
+      ret = Device::Network.connected? if ret != SUCCESS
       while(ret == 1) # 1 - In process to attach
         ret = Device::Network.connected?
       end
-      "Get ip #{Device::Network.dhcp_client(20000)}" if ret == 0
+      Device::Network.dhcp_client(20000) if ret == SUCCESS
       ret
     end
 
