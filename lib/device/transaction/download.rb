@@ -2,15 +2,23 @@
 class Device
   class Transaction
     class Download
-      ERL_VERSION_MAGIC   = 131
-      ERL_NIL_EXT         = 'j'
-      ERL_SMALL_TUPLE_EXT = 'h'
-      ERL_ATOM_EXT        = 'd'
-      ERL_BINARY_EXT      = 'm'
-      ERL_INTEGER_EXT     = 'b'
-      ERL_CONTENT_TYPE    = "application/x-erlang-binary"
-      MAXATOMLEN          = 255
-      PARAMS_FILE         = "params.dat"
+      ERL_VERSION_MAGIC        = 131
+      ERL_NIL_EXT              = 'j'
+      ERL_SMALL_TUPLE_EXT      = 'h'
+      ERL_ATOM_EXT             = 'd'
+      ERL_BINARY_EXT           = 'm'
+      ERL_INTEGER_EXT          = 'b'
+      ERL_CONTENT_TYPE         = "application/x-erlang-binary"
+      MAXATOMLEN               = 255
+      PARAMS_FILE              = "params.dat"
+
+      SUCCESS                  = 0
+      FILE_NOT_CHANGE          = 1
+      FILE_NOT_FOUND           = 2
+      SERIAL_NUMBER_NOT_FOUND  = 3
+      COMMUNICATION_ERROR      = -1
+      MAPREDUCE_RESPONSE_ERROR = -2
+      IO_ERROR                 = -3
 
       def self.request_file(remote_path, local_path)
         download = Device::Transaction::Download.new(Device::System.serial, "", Device.version)
@@ -36,9 +44,9 @@ class Device
       # -1: Commnucation error
       # -2: Mapreduce response error
       # -3: IO Error
-      def perform(socket, company_name, remote_path, file_name, current_app, logical_number, file_crc = nil)
+      def perform(socket, company_name, remote_path, filepath, current_app, logical_number, file_crc = nil)
         @socket, @buffer, @request, @first_packet = socket, "", "", ""
-        @crc = file_crc ? file_crc : generate_crc(file_name)
+        @crc = file_crc ? file_crc : generate_crc(filepath)
         key = "#{company_name}_#{remote_path}"
 
         ei_encode_version                # version
@@ -85,7 +93,7 @@ class Device
         socket.write(@request)
 
         # Read header
-        return -1 if (socket.read(4).to_s.size <= 0)
+        return COMMUNICATION_ERROR if (socket.read(4).to_s.size <= 0)
 
         response_size, @first_packet = get_rest_response_size
 
@@ -95,12 +103,12 @@ class Device
           @first_packet = @first_packet + socket.read(response_size)
         end
 
-        return -2 unless binary_valid?
+        return MAPREDUCE_RESPONSE_ERROR unless binary_valid?
 
         return_code = @first_packet[7].to_s.unpack("C*").first
         file_size   = @first_packet[9..12].to_s.unpack("N*").first
 
-        return -3 if (partial_download_to_store(file_name, response_size, file_size) < 0)
+          return IO_ERROR if (partial_download_to_store(filepath, response_size, file_size) < 0)
 
         # receive 6A
         @socket.read(1) if response_size > 1024
@@ -214,7 +222,7 @@ class Device
         put8(ERL_BINARY_EXT)
 
         # TODO: Check it after to implement on put.
-        if value.is_a? Fixnum 
+        if value.is_a? Fixnum
           put32be(2)
           @buffer << [value].pack("s")
         else
