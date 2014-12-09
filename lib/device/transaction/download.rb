@@ -20,8 +20,8 @@ class Device
                          Device::Setting.logical_number)
       end
 
-      def self.request_param_file
-        request_file("#{Device::Setting.logical_number}_#{PARAMS_FILE}", PARAMS_FILE)
+      def self.request_param_file(file = PARAMS_FILE)
+        request_file("#{Device::Setting.logical_number}_#{PARAMS_FILE}", file)
       end
 
       attr_accessor :buffer, :request, :first_packet, :socket, :path, :crc
