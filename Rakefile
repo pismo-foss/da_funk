@@ -31,6 +31,7 @@ task :compile => :check do
   funk_files = [
     "lib/device/support.rb",
     "lib/device/crypto.rb",
+    "lib/device/helper.rb",
     "lib/device/params_dat.rb",
     "lib/device/display.rb",
     "lib/device/audio.rb",
