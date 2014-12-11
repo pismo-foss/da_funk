@@ -132,18 +132,12 @@ class Device
       private
 
       def get_rest_response_size
-        binary_size, packet, found = "", "", false
-        @socket.read(8).each_char do |str|
-          if found || str.unpack("H*").first == "83"
-            packet << str
-            found = true
-          else
-            binary_size << str
-          end
-        end
+        header       = @socket.read(8)
+        header_split = header.split("\x83\x6c")
+        binary_size  = header_split[0]
+        packet       = "\x83\x6C#{header_split[1]}"
+        size         = ljust(4, binary_size).to_s.unpack("V*").first
 
-        size = ljust(4, binary_size).to_s.unpack("V*").first
-        # Already download, check on store
         [size - packet.size, packet]
       end
 
