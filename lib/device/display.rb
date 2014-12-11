@@ -10,7 +10,7 @@ class Device
     # @param row [Fixnum] Row to start display.
     # @param column [Fixnum] Column to start display.
     # @return [NilClass] nil.
-    def self.puts(buf, row = 0, column = 0)
+    def self.puts(buf, row = nil, column = nil)
       self.print("#{buf}\n", row, column)
     end
 
@@ -20,7 +20,7 @@ class Device
     # @param row [Fixnum] Row to start display.
     # @param column [Fixnum] Column to start display.
     # @return [NilClass] nil.
-    def self.print(buf, row = 0, column = 0)
+    def self.print(buf, row = nil, column = nil)
       adapter.print_line(buf, row, column)
     end
 
@@ -30,7 +30,7 @@ class Device
     # @param row [Fixnum] Row to start display.
     # @param column [Fixnum] Column to start display.
     # @return [NilClass] nil.
-    def self.print_bitmap(path, row = 0, column = 0)
+    def self.print_bitmap(path, row = nil, column = nil)
       adapter.display_bitmap(path, row, column)
     end
 
