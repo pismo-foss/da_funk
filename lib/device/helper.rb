@@ -64,7 +64,7 @@ class Device
     # {"option X" => {:detail => 10}, "option Y" => {:detail => 11}}
     def menu(title, options)
       Device::Display.clear
-      Device::Display.print(title)
+      Device::Display.puts(title)
       values = Hash.new
       options.each_with_index do |value,i|
         values[i.to_i] = value[1]
