@@ -92,18 +92,9 @@ class Device
         # Send Request
         socket.write(@request)
 
-        # Read header
-        return COMMUNICATION_ERROR if (socket.read(4).to_s.size <= 0)
+        return COMMUNICATION_ERROR if (response_size = get_response_size(socket.read(4))) <= 0
 
-        response_size, @first_packet = get_rest_response_size
-
-        if response_size > 1024
-          @first_packet = @first_packet + socket.read(1024)
-        else
-          @first_packet = @first_packet + socket.read(response_size)
-        end
-
-        return MAPREDUCE_RESPONSE_ERROR unless binary_valid?
+        return MAPREDUCE_RESPONSE_ERROR unless @first_packet = get_binary_term_beginning(response_size)
 
         return_code = @first_packet[7].to_s.unpack("C*").first
         file_size   = @first_packet[9..12].to_s.unpack("N*").first
@@ -131,14 +122,23 @@ class Device
 
       private
 
-      def get_rest_response_size
-        header       = @socket.read(8)
-        header_split = header.split("\x83\x6c")
-        binary_size  = header_split[0]
-        packet       = "\x83\x6C#{header_split[1]}"
-        size         = ljust(4, binary_size).to_s.unpack("V*").first
+      def get_response_size(bytes)
+        return -1 if bytes.size <= 0
+        bytes.to_s.unpack("N*").first
+      end
 
-        [size - packet.size, packet]
+      def get_binary_term_beginning(response_size)
+        if response_size > 1024
+          packet = socket.read(1024)
+        else
+          packet = socket.read(response_size)
+        end
+
+        if packet.include?("\x83\x6c\x00")
+          "\x83\x6c\x00#{packet.split("\x83\x6C\x00")[1]}"
+        else
+          return false
+        end
       end
 
       def makelong(a, b)
@@ -243,14 +243,6 @@ class Device
         new_request << "#{request_size}#{@buffer}#{ERL_CONTENT_TYPE}"
         new_request << @request
         @request = new_request
-      end
-
-      def binary_valid?
-        if (@first_packet[0].unpack("H*").first == "83" && @first_packet[1] == "\x6c" && @first_packet[2] == "\x00" && @first_packet[5] == "\x02")
-          true
-        else
-          false
-        end
       end
 
       # MRuby do not support String#ljust
