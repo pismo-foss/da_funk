@@ -28,39 +28,9 @@ end
 
 desc "Compile da_funk to mrb"
 task :compile => :check do
-  funk_files = [
-    "lib/device/support.rb",
-    "lib/device/crypto.rb",
-    "lib/device/helper.rb",
-    "lib/device/params_dat.rb",
-    "lib/device/display.rb",
-    "lib/device/audio.rb",
-    "lib/device/runtime.rb",
-    "lib/device/io.rb",
-    "lib/device/network.rb",
-    "lib/device/printer.rb",
-    "lib/device/setting.rb",
-    "lib/device/system.rb",
-    "lib/device/version.rb",
-    "lib/device/walk.rb",
-    "lib/device.rb",
-    "lib/file_db.rb",
-    "lib/iso8583/bitmap.rb",
-    "lib/iso8583/codec.rb",
-    "lib/iso8583/exception.rb",
-    "lib/iso8583/field.rb",
-    "lib/iso8583/fields.rb",
-    "lib/iso8583/message.rb",
-    "lib/iso8583/util.rb",
-    "lib/iso8583/version.rb",
-    "lib/version.rb",
-    "lib/device/transaction/download.rb",
-    "lib/device/transaction/emv.rb",
-    "lib/device/transaction/iso.rb"
-  ]
-
-  out   = File.join(DA_FUNK_ROOT, "out", "da_funk.mrb")
-  files = funk_files.inject([]) {|files,file| files << File.join(DA_FUNK_ROOT, file)}
+  funk_files = FileList['lib/**/*.rb']
+  out        = File.join(DA_FUNK_ROOT, "out", "da_funk.mrb")
+  files      = funk_files.inject([]) {|files,file| files << File.join(DA_FUNK_ROOT, file)}
 
   FileUtils.mkdir_p(File.join(DA_FUNK_ROOT, "out"))
   if ENV["MRBC"]
