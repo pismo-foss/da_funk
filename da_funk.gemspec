@@ -1,6 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+tasks = File.expand_path('../tasks', __FILE__)
+$LOAD_PATH.unshift(tasks) unless $LOAD_PATH.include?(tasks)
+
 require 'version.rb'
 
 Gem::Specification.new do |spec|
