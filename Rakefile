@@ -28,7 +28,7 @@ end
 
 desc "Compile da_funk to mrb"
 task :compile => :check do
-  funk_files = FileList['lib/**/*.rb']
+  funk_files = FileList[File.join(DA_FUNK_ROOT, 'lib/**/*.rb')]
   out        = File.join(DA_FUNK_ROOT, "out", "da_funk.mrb")
   files      = funk_files.inject([]) {|files,file| files << File.join(DA_FUNK_ROOT, file)}
 
