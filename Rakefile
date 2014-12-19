@@ -28,7 +28,7 @@ end
 
 desc "Compile da_funk to mrb"
 task :compile => :check do
-  files = FileList[File.join(DA_FUNK_ROOT, 'lib/**/*.rb')]
+  files = FileList[File.join(DA_FUNK_ROOT, 'lib/**/*.rb')].reverse
   out   = File.join(DA_FUNK_ROOT, "out", "da_funk.mrb")
 
   FileUtils.mkdir_p(File.join(DA_FUNK_ROOT, "out"))
