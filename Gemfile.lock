@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    da_funk (0.2.0)
+    da_funk (0.3.0)
+      bundler (>= 1.7)
       rake (~> 10.4.2)
       rdoc (>= 4.1.1)
       yard (>= 0.8)
@@ -11,17 +12,12 @@ GEM
   specs:
     json (1.8.1)
     rake (10.4.2)
-    rdoc (4.1.1)
+    rdoc (4.2.0)
       json (~> 1.4)
-    yard (0.8.7.4)
+    yard (0.8.7.6)
 
 PLATFORMS
   ruby
-  x86-mingw32
 
 DEPENDENCIES
-  bundler (>= 1.7)
   da_funk!
-  rake (~> 10.4.2)
-  rdoc (>= 4.1.1)
-  yard (>= 0.8)
