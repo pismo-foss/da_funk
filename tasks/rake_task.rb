@@ -71,9 +71,8 @@ module DaFunk
           FileUtils.mkdir_p File.join(root_path, "out")
           FileUtils.rm_rf main_out
         end
-
-        task :default => :build
       end
+      task :default => "#{@name}:build"
     end
   end
 end
