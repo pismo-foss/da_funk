@@ -26,7 +26,7 @@ module DaFunk
     end
 
     def engine
-      Test::Unit
+      ::Test::Unit
     end
 
     def run; end
