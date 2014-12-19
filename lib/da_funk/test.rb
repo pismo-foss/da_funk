@@ -18,6 +18,10 @@ module DaFunk
         require file
       end
     end
+
+    def platform
+      :mruby
+    end
   end
 
   module CRuby
@@ -33,11 +37,15 @@ module DaFunk
 
     def setup
       require 'fileutils'
-      require 'test/unit' if ENV["RUBY_PLATFORM"] != "mruby"
+      require 'test/unit'
 
       libs.each do |file|
         require file
       end
+    end
+
+    def platform
+      :cruby
     end
   end
 
@@ -52,12 +60,26 @@ module DaFunk
       end
     end
 
+    def self.mruby?
+      platform == :mruby
+    end
+
+    def self.cruby?
+      platform == :cruby
+    end
+
+    # TODO Scalone Refactor tests/libs for mruby and cruby checking project configuration
     def self.configure
       yield self if block_given?
 
       @root_path ||= File.dirname("./")
-      @libs      ||= FileList[File.join(root_path, 'lib/**/*.rb')]
-      @tests     ||= FileList[File.join(root_path, 'lib/**/*test.rb')]
+      if self.cruby?
+        @libs      ||= FileList[File.join(root_path, 'lib/**/*.rb')]
+        @tests     ||= FileList[File.join(root_path, 'test/**/*test.rb')]
+      else
+        @libs      ||= ["main.mrb"]
+        @tests     ||= []
+      end
 
       self.setup
     end
