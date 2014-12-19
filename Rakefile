@@ -28,7 +28,39 @@ end
 
 desc "Compile da_funk to mrb"
 task :compile => :check do
-  files = FileList[File.join(DA_FUNK_ROOT, 'lib/**/*.rb')].reverse
+  files = [
+    "lib/da_funk.rb",
+    "lib/da_funk/test.rb",
+    "lib/device.rb",
+    "lib/device/audio.rb",
+    "lib/device/crypto.rb",
+    "lib/device/display.rb",
+    "lib/device/helper.rb",
+    "lib/device/io.rb",
+    "lib/device/network.rb",
+    "lib/device/params_dat.rb",
+    "lib/device/printer.rb",
+    "lib/device/runtime.rb",
+    "lib/device/setting.rb",
+    "lib/device/support.rb",
+    "lib/device/system.rb",
+    "lib/device/transaction/download.rb",
+    "lib/device/transaction/emv.rb",
+    "lib/device/version.rb",
+    "lib/device/walk.rb",
+    "lib/file_db.rb",
+    "lib/iso8583/bitmap.rb",
+    "lib/iso8583/codec.rb",
+    "lib/iso8583/exception.rb",
+    "lib/iso8583/field.rb",
+    "lib/iso8583/fields.rb",
+    "lib/iso8583/message.rb",
+    "lib/iso8583/util.rb",
+    "lib/iso8583/version.rb",
+    "lib/version.rb",
+    "lib/device/transaction/iso.rb"
+  ]
+  files = files.inject([]) {|array,file| array << File.join(DA_FUNK_ROOT, file)}
   out   = File.join(DA_FUNK_ROOT, "out", "da_funk.mrb")
 
   FileUtils.mkdir_p(File.join(DA_FUNK_ROOT, "out"))
