@@ -1,7 +1,7 @@
 class Device
   class Support
     def self.class_to_path(klass)
-      "#{klass.to_s.downcase}.mrb"
+      klass.to_s.downcase
     end
 
     def self.path_to_class(path)
