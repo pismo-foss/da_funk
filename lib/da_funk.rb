@@ -2,6 +2,7 @@
 unless Object.const_defined?(:MTest)
   file_path = File.dirname(File.realpath(__FILE__))
   require file_path + "/device/support.rb"
+  require file_path + "/device/helper.rb"
   require file_path + "/device/crypto.rb"
   require file_path + "/device/display.rb"
   require file_path + "/device/io.rb"
