@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    da_funk (0.3.0)
+    da_funk (0.3.1)
       bundler (>= 1.7)
       rake (~> 10.4.2)
       rdoc (>= 4.1.1)
