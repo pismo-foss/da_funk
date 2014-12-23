@@ -78,6 +78,17 @@ class Device
       ret
     end
 
+    def self.handshake_ssl
+      entropy = PolarSSL::Entropy.new
+      ctr_drbg = PolarSSL::CtrDrbg.new entropy
+      ssl = PolarSSL::SSL.new
+      ssl.set_endpoint PolarSSL::SSL::SSL_IS_CLIENT
+      ssl.set_rng ctr_drbg
+      ssl.set_socket @socket
+      ssl.handshake
+      ssl
+    end
+
     def self.handshake
       handshake = "#{Device::System.serial};#{Device::System.app};#{Device::Setting.logical_number};#{Device.version}"
       socket.write("#{handshake.size.chr}#{handshake}")
