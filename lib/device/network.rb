@@ -33,7 +33,7 @@ class Device
     #AUTH_WPA_WPA2_EAP   = "wpa_wpa2_eap"
 
     class << self
-      attr_accessor :type, :apn, :user, :password, :socket
+      attr_accessor :type, :apn, :user, :password, :socket, :socket_tcp, :socket_ssl, :ssl
     end
 
     def self.adapter
@@ -81,12 +81,13 @@ class Device
     def self.handshake_ssl
       entropy = PolarSSL::Entropy.new
       ctr_drbg = PolarSSL::CtrDrbg.new entropy
-      ssl = PolarSSL::SSL.new
-      ssl.set_endpoint PolarSSL::SSL::SSL_IS_CLIENT
-      ssl.set_rng ctr_drbg
-      ssl.set_socket @socket
-      ssl.handshake
-      ssl
+      @socket_ssl = PolarSSL::SSL.new
+      @socket_ssl.set_endpoint PolarSSL::SSL::SSL_IS_CLIENT
+      @socket_ssl.set_rng ctr_drbg
+      @socket_ssl.set_socket @socket_tcp
+      @socket_ssl.handshake
+      @ssl = true
+      @socket = @socket_ssl
     end
 
     def self.handshake
@@ -101,11 +102,16 @@ class Device
     end
 
     # Create Socket in Walk Switch
-    def self.walk_socket
+    def self.walk_socket(use_ssl = false)
       if @socket && ! @socket.closed?
         @socket
       else
-        @socket = TCPSocket.new(Device::Setting.host, Device::Setting.host_port)
+        @socket_tcp = TCPSocket.new(Device::Setting.host, Device::Setting.host_port)
+        if use_ssl
+          handshake_ssl
+        else
+          @socket = @socket_tcp
+        end
         handshake
         @socket
       end
