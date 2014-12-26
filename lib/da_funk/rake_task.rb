@@ -25,6 +25,13 @@ module DaFunk
       define
     end
 
+    def execute_tests(files)
+      all_files = FileList["test/test_helper.rb"] + files + ["test/test_run.rb"]
+      if sh("mrbc -o #{main_out} #{libs.uniq}") && sh("mrbc -o #{test_out} #{all_files.uniq}")
+        sh("mruby -b out/test.mrb")
+      end
+    end
+
     def define
       namespace @name do
         task :check do
@@ -49,20 +56,31 @@ module DaFunk
           end
         end
 
-        desc "Run all test on mruby"
-        task :mtest => :check do
-          ENV["RUBY_PLATFORM"] = "mruby"
+        namespace :mtest do
+          task :setup do
+            ENV["RUBY_PLATFORM"] = "mruby"
 
-          FileUtils.rm_rf File.join(root_path, "out")
-          FileUtils.mkdir_p File.join(root_path, "out")
+            FileUtils.rm_rf File.join(root_path, "out")
+            FileUtils.mkdir_p File.join(root_path, "out")
 
-          Bundler.load.specs.each do |gem|
-            sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb out/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
+            Bundler.load.specs.each do |gem|
+              sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb out/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
+            end
           end
 
-          files = FileList["test/test_helper.rb"] + tests + ["test/test_run.rb"]
-          if sh("mrbc -o #{main_out} #{libs.uniq}") && sh("mrbc -o #{test_out} #{files.uniq}")
-            sh("mruby -b out/test.mrb")
+          desc "Run unit test on mruby"
+          task :unit => ["#{@name}:check", "#{@name}:mtest:setup" do
+            execute_tests(FileList['lib/unit/*test.rb'])
+          end
+
+          desc "Run integration test on mruby"
+          task :integration => ["#{@name}:check", "#{@name}:mtest:setup" do
+            execute_tests(FileList['lib/integration/*test.rb'])
+          end
+
+          desc "Run all test on mruby"
+          task :all => ["#{@name}:check", "#{@name}:mtest:setup" do
+            execute_tests(FileList['lib/**/*test.rb'])
           end
         end
 
