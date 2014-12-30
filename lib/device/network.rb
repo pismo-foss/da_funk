@@ -95,7 +95,7 @@ class Device
       socket.write("#{handshake.size.chr}#{handshake}")
 
       company_name = socket.read(3)
-      return false if company_name == "err"
+      return false if company_name == "err" || company_name.nil?
 
       Device::Setting.company_name = company_name
       true
