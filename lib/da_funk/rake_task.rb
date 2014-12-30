@@ -70,17 +70,17 @@ module DaFunk
 
           desc "Run unit test on mruby"
           task :unit => ["#{@name}:check", "#{@name}:mtest:setup"] do
-            execute_tests(FileList['lib/unit/*test.rb'])
+            execute_tests(FileList['test/unit/*test.rb'])
           end
 
           desc "Run integration test on mruby"
           task :integration => ["#{@name}:check", "#{@name}:mtest:setup"] do
-            execute_tests(FileList['lib/integration/*test.rb'])
+            execute_tests(FileList['test/integration/*test.rb'])
           end
 
           desc "Run all test on mruby"
           task :all => ["#{@name}:check", "#{@name}:mtest:setup"] do
-            execute_tests(FileList['lib/**/*test.rb'])
+            execute_tests(FileList['test/**/*test.rb'])
           end
         end
 
