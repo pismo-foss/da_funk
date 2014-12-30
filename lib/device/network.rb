@@ -102,12 +102,12 @@ class Device
     end
 
     # Create Socket in Walk Switch
-    def self.walk_socket(use_ssl = false)
       if @socket && ! @socket.closed?
+    def self.walk_socket
         @socket
       else
         @socket_tcp = TCPSocket.new(Device::Setting.host, Device::Setting.host_port)
-        if use_ssl
+        if Device::Setting.ssl == "1"
           handshake_ssl
         else
           @socket = @socket_tcp
