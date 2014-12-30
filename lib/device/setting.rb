@@ -5,7 +5,7 @@ class Device
     DEFAULT     = {
       "host"           => "switch-staging.cloudwalk.io",
       "host_port"      => "31416",
-      "ssl"            => "",
+      "ssl"            => "1",
       "user"           => "",
       "password"       => "", #WIFI
       "apn"            => "",
