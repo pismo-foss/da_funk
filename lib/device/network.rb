@@ -117,6 +117,16 @@ class Device
       end
     end
 
+    def self.close_socket
+      @socket.close
+      if @socket != @socket_tcp
+        @socket_tcp.close
+      end
+      @socket     = nil
+      @socket_tcp = nil
+      @socket_ssl = nil
+    end
+
     def self.attach
       Device::Network.init(*self.config)
       ret = Device::Network.connect
