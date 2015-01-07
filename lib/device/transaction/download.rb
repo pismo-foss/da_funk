@@ -157,13 +157,14 @@ class Device
           file.write(@first_packet[13..-1])
           downloaded = 1024
           while(downloaded < (response_size - 1))
+
             if (to_download = response_size - downloaded) > 1024
               to_download = 1024
             else
               to_download -= 1 # because of 6A
             end
-            file.write(socket.read(to_download))
-            downloaded += to_download
+
+            downloaded += file.write(socket.read(to_download))
           end
         else
           # -2 because of 6A
