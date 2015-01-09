@@ -142,8 +142,7 @@ class Device
 
     def self.config
       # TODO raise some error if media was not set
-      media = Device::Setting.gprs? ? MEDIA_GPRS : MEDIA_WIFI
-      [media, self.config_media(media)]
+      [Device::Setting.media, self.config_media]
     end
 
     # TODO should check if WIFI, ETHERNET and etc
@@ -164,6 +163,14 @@ class Device
           mode:           Device::Setting.mode
         }
       end
+    end
+
+    def self.gprs?
+      Device::Setting.media == "gprs"
+    end
+
+    def self.wifi?
+      Device::Setting.media == "wifi"
     end
   end
 end
