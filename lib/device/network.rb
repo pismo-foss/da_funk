@@ -26,6 +26,7 @@ class Device
     TIMEOUT       = -3320
     NO_CONNECTION = -1012
     SUCCESS       = 0
+    PROCESSING    = 1
 
     # Not Supported
     #AUTH_WPA_EAP        = "wpa_eap"
@@ -68,9 +69,9 @@ class Device
     def self.dhcp_client(timeout)
       time = Time.now + (timeout.to_f / 1000.0)
       ret = adapter.dhcp_client_start
-      if (ret == 0)
-        ret = 1
-        while(ret == 1) # 1 - In process to attach
+      if (ret == SUCCESS)
+        ret = PROCESSING
+        while(ret == PROCESSING) # 1 - In process to attach
           ret = adapter.dhcp_client_check
           break ret = TIMEOUT unless (time >= Time.now)
         end
@@ -132,7 +133,7 @@ class Device
       Device::Network.init(*self.config)
       ret = Device::Network.connect
       ret = Device::Network.connected? if ret != SUCCESS
-      while(ret == 1) # 1 - In process to attach
+      while(ret == PROCESSING)
         ret = Device::Network.connected?
       end
       Device::Network.dhcp_client(20000) if ret == SUCCESS
