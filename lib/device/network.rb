@@ -145,14 +145,14 @@ class Device
     end
 
     # TODO should check if WIFI, ETHERNET and etc
-    def self.config_media(media)
-      if media == MEDIA_GPRS
+    def self.config_media
+      if gprs?
         {
           apn:      Device::Setting.apn,
           user:     Device::Setting.user,
           password: Device::Setting.password
         }
-      else
+      elsif wifi?
         {
           authentication: Device::Setting.authentication,
           password:       Device::Setting.password,
