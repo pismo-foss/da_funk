@@ -89,6 +89,8 @@ class Device
 
         mount_request                    # add request to protocol buffers message
 
+        return COMMUNICATION_ERROR unless @socket
+
         # Send Request
         socket.write(@request)
 
