@@ -104,7 +104,6 @@ class Device
 
     # Create Socket in Walk Switch
     def self.walk_socket
-      #if @socket && ! @socket.closed?
       if @socket
         @socket
       else
