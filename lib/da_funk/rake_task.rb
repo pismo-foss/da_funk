@@ -9,7 +9,7 @@ module DaFunk
   class RakeTask < ::Rake::TaskLib
     include ::Rake::DSL if defined?(::Rake::DSL)
 
-    attr_accessor :name, :libs, :tests, :root_path, :main_out, :test_out
+    attr_accessor :name, :libs, :tests, :root_path, :main_out, :test_out, :resources
 
     def initialize(name = :da_funk)
       @name = name
@@ -20,6 +20,7 @@ module DaFunk
       @tests             ||= FileList['lib/**/*test.rb']
       @tests_integration ||= FileList['lib/integration/*test.rb']
       @tests_unit        ||= FileList['lib/unit/*test.rb']
+      @resources         ||= FileList['resources/**/*']
       @root_path         ||= File.dirname("./")
       @main_out          ||= File.join(root_path, "out", "main.mrb")
       @test_out          ||= File.join(root_path, "out", "test.mrb")
@@ -43,8 +44,14 @@ module DaFunk
           end
         end
 
+        task :resources do
+          resources.each do |file|
+            FileUtils.cp(file, File.join(root_path, "out/"))
+          end
+        end
+
         desc "Compile app to mrb"
-        task :build => :check do
+        task :build => [:check, :resources] do
           FileUtils.mkdir_p File.join(root_path, "out")
 
           Bundler.load.specs.each do |gem|
