@@ -17,9 +17,9 @@ module DaFunk
       yield self if block_given?
 
       @libs              ||= FileList['lib/**/*.rb']
-      @tests             ||= FileList['lib/**/*test.rb']
-      @tests_integration ||= FileList['lib/integration/*test.rb']
-      @tests_unit        ||= FileList['lib/unit/*test.rb']
+      @tests             ||= FileList['test/**/*test.rb']
+      @tests_integration ||= FileList['test/integration/*test.rb']
+      @tests_unit        ||= FileList['test/unit/*test.rb']
       @resources         ||= FileList['resources/**/*']
       @root_path         ||= File.dirname("./")
       @main_out          ||= File.join(root_path, "out", "main.mrb")
