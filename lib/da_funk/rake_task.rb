@@ -16,11 +16,13 @@ module DaFunk
 
       yield self if block_given?
 
-      @libs      ||= FileList['lib/**/*.rb']
-      @tests     ||= FileList['lib/**/*test.rb']
-      @root_path ||= File.dirname("./")
-      @main_out  ||= File.join(root_path, "out", "main.mrb")
-      @test_out  ||= File.join(root_path, "out", "test.mrb")
+      @libs              ||= FileList['lib/**/*.rb']
+      @tests             ||= FileList['lib/**/*test.rb']
+      @tests_integration ||= FileList['lib/integration/*test.rb']
+      @tests_unit        ||= FileList['lib/unit/*test.rb']
+      @root_path         ||= File.dirname("./")
+      @main_out          ||= File.join(root_path, "out", "main.mrb")
+      @test_out          ||= File.join(root_path, "out", "test.mrb")
 
       define
     end
@@ -70,17 +72,17 @@ module DaFunk
 
           desc "Run unit test on mruby"
           task :unit => ["#{@name}:check", "#{@name}:mtest:setup"] do
-            execute_tests(FileList['test/unit/*test.rb'])
+            execute_tests(tests_unit)
           end
 
           desc "Run integration test on mruby"
           task :integration => ["#{@name}:check", "#{@name}:mtest:setup"] do
-            execute_tests(FileList['test/integration/*test.rb'])
+            execute_tests(tests_integration)
           end
 
           desc "Run all test on mruby"
           task :all => ["#{@name}:check", "#{@name}:mtest:setup"] do
-            execute_tests(FileList['test/**/*test.rb'])
+            execute_tests(tests)
           end
         end
 
