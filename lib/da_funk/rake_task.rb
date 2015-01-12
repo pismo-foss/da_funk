@@ -9,7 +9,7 @@ module DaFunk
   class RakeTask < ::Rake::TaskLib
     include ::Rake::DSL if defined?(::Rake::DSL)
 
-    attr_accessor :name, :libs, :tests, :root_path, :main_out, :test_out, :resources
+    attr_accessor :name, :libs, :tests, :tests_unit, :tests_integration, :root_path, :main_out, :test_out, :resources
 
     def initialize(name = :da_funk)
       @name = name
