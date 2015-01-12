@@ -46,8 +46,7 @@ module DaFunk
 
         task :resources do
           resources.each do |file|
-            p file
-            FileUtils.cp(file, File.join(root_path, "out/"))
+            FileUtils.cp(file, File.join(root_path, "out/")) if File.file?(file)
           end
         end
 
