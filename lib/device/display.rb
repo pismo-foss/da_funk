@@ -30,7 +30,7 @@ class Device
     # @param row [Fixnum] Row to start display.
     # @param column [Fixnum] Column to start display.
     # @return [NilClass] nil.
-    def self.print_bitmap(path, row = nil, column = nil)
+    def self.print_bitmap(path, row = 0, column = 0)
       adapter.display_bitmap(path, row, column)
     end
 
