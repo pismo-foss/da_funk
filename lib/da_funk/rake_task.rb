@@ -25,9 +25,22 @@ module DaFunk
       @main_out          ||= File.join(root_path, "out", "main.mrb")
       @test_out          ||= File.join(root_path, "out", "test.mrb")
       @mruby             ||= "cloudwalk"
-      @mrbc              ||= "cloudwalk"
+      @mrbc              ||= get_mrbc_bin
 
       define
+    end
+
+    def get_mrbc_bin
+      if ENV["MRBC"]
+        ENV["MRBC"]
+      elsif system("type mrbc > /dev/null 2>&1 ")
+        "env mrbc"
+      elsif system("type cloudwalk > /dev/null 2>&1 ")
+        "env cloudwalk build"
+      else
+        puts "$MRBC isn't set or mrbc/cloudwalk isn't on $PATH"
+        exit 0
+      end
     end
 
     def execute_tests(files)
