@@ -31,7 +31,11 @@ module DaFunk
     def execute_tests(files)
       all_files = FileList["test/test_helper.rb"] + files + ["test/test_run.rb"]
       if sh("mrbc -o #{main_out} #{libs.uniq}") && sh("mrbc -o #{test_out} #{all_files.uniq}")
-        sh("mruby -b out/test.mrb")
+        if ENV["MRUBY_BIN"]
+          sh("#{ENV["MRUBY_BIN"]} out/test.mrb")
+        else
+          sh("mruby -b out/test.mrb")
+        end
       end
     end
 
