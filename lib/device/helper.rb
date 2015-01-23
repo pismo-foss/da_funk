@@ -73,6 +73,35 @@ class Device
 
       [values[getc.to_i - 1]].flatten.first
     end
+
+    def number_to_currency(value, options = {})
+      options[:delimiter] ||= ","
+      options[:precision] ||= 2
+      options[:separator] ||= "."
+
+      if value.is_a? Float
+        number, unit = value.to_s.split(".")
+        len = number.size + unit.size
+      else
+        len    = value.to_s.size
+        unit   = value.to_s[(len - options[:precision])..-1]
+        if len <= options[:precision]
+          number = ""
+        else
+          number = value.to_s[0..(len - (options[:precision] + 1)).abs]
+        end
+      end
+
+      text = ""
+      i = 0
+      number.reverse.each_char do |ch|
+        i += 1
+        text << ch
+        text << options[:delimiter] if (i % 3 == 0) && (len - unit.size) != i
+      end
+      [rjust(text.reverse, 1, "0"),rjust(unit, options[:precision], "0")].join options[:separator]
+    end
+
     def ljust(string, size, new_string)
       string = string.to_s
       if size > string.size
