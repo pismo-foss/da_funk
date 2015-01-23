@@ -81,5 +81,14 @@ class Device
         string
       end
     end
+
+    def rjust(string, size, new_string)
+      string = string.to_s
+      if size > string.size
+        (new_string * (size - string.size)) + string
+      else
+        string
+      end
+    end
   end
 end
