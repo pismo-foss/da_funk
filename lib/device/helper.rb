@@ -73,5 +73,13 @@ class Device
 
       [values[getc.to_i - 1]].flatten.first
     end
+    def ljust(string, size, new_string)
+      string = string.to_s
+      if size > string.size
+        string + (new_string * (size - string.size))
+      else
+        string
+      end
+    end
   end
 end
