@@ -22,27 +22,21 @@ class Device
     #
     # @param min [Fixnum] Minimum length of the input string.
     # @param max [Fixnum] Maximum length of the input string (127 bytes maximum).
-    # @param mode [Symbol] Indicate the type of input
-    #
-    # :numbers (IO_INPUT_NUMBERS) - Only number.
-    #
-    # :letters (IO_INPUT_LETTERS) - Letters and numbers.
-    #
-    # :secret (IO_INPUT_SECRET) - Secret *.
-    #
-    # :decimal (IO_INPUT_DECIMAL) - Decimal input, only number.
-    #
-    # :money (IO_INPUT_MONEY) - Money input, only number.
-    #
     # @param options [Hash]
     #
     # :precision - Sets the level of precision (defaults to 2).
     #
-    # :unit - Sets the denomination of the currency (defaults to “$”).
-    #
     # :separator - Sets the separator between the units (defaults to “.”).
     #
     # :delimiter - Sets the thousands delimiter (defaults to “,”).
+    #
+    # :mode - Define input modes:
+    #
+    #   :numbers (IO_INPUT_NUMBERS) - Only number.
+    #   :letters (IO_INPUT_LETTERS) - Letters and numbers.
+    #   :secret (IO_INPUT_SECRET) - Secret *.
+    #   :decimal (IO_INPUT_DECIMAL) - Decimal input, only number.
+    #   :money (IO_INPUT_MONEY) - Money input, only number.
     #
     # @return [String] buffer read from keyboard
     def self.get_string(min, max, options = {})
