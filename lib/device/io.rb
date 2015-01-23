@@ -2,9 +2,9 @@ class Device
   class IO < ::IO
     CANCEL           = 0x1B.chr
     ENTER            = 0x0D.chr
-    BACK             = 0x08.chr
-    F1               = 0x01.chr
-    F2               = 0x02.chr
+    BACK             = "\017"
+    F1               = "\020"
+    F2               = "\002"
     IO_INPUT_NUMBERS = :numbers
     IO_INPUT_LETTERS = :letters
     IO_INPUT_SECRET  = :secret
