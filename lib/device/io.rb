@@ -42,9 +42,6 @@ class Device
     def self.get_string(min, max, options = {})
       options[:mode] ||= IO_INPUT_LETTERS
       if options[:mode] == IO_INPUT_MONEY || options[:mode] == IO_INPUT_DECIMAL
-        options[:delimiter] ||= ","
-        options[:separator] ||= "."
-        options[:precision] ||= 2
 
         text = ""
         key = ""
