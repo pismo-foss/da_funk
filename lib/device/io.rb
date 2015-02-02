@@ -55,6 +55,8 @@ class Device
           key = getc
           if key == BACK
             text = text[0..-2]
+          elsif text.size >= max
+            next
           elsif NUMBERS.include? key
             text << key
           elsif key == ENTER
