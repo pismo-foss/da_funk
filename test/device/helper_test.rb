@@ -45,4 +45,14 @@ class HelperTest < Test::Unit::TestCase
     assert_equal "100.000", @helper.number_to_currency(100.0, {:precision => 3})
     assert_equal "10,000.000", @helper.number_to_currency(10000.0, {:precision => 3})
   end
+
+  def test_number_to_currency_basic
+    assert_equal  "U$: 0.00", @helper.number_to_currency("",     {:label => "U$: "})
+    assert_equal  "U$: 0.01", @helper.number_to_currency("1",    {:label => "U$: "})
+    assert_equal  "U$: 0.10", @helper.number_to_currency("10",   {:label => "U$: "})
+    assert_equal  "U$: 0.01", @helper.number_to_currency("01",   {:label => "U$: "})
+    assert_equal  "U$: 1.00", @helper.number_to_currency("100",  {:label => "U$: "})
+    assert_equal "U$: 10.00", @helper.number_to_currency("1000", {:label => "U$: "})
+  end
+
 end

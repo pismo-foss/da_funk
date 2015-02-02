@@ -99,7 +99,12 @@ class Device
         text << ch
         text << options[:delimiter] if (i % 3 == 0) && (len - unit.size) != i
       end
-      [rjust(text.reverse, 1, "0"),rjust(unit, options[:precision], "0")].join options[:separator]
+      currency = [rjust(text.reverse, 1, "0"),rjust(unit, options[:precision], "0")].join options[:separator]
+      if options[:label]
+        options[:label] + currency
+      else
+        currency
+      end
     end
 
     def ljust(string, size, new_string)

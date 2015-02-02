@@ -30,6 +30,8 @@ class Device
     #
     # :delimiter - Sets the thousands delimiter (defaults to “,”).
     #
+    # :label - Sets the label display before currency, eg.: "U$:", "R$:"
+    #
     # :mode - Define input modes:
     #
     #   :numbers (IO_INPUT_NUMBERS) - Only number.
