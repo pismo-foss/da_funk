@@ -103,20 +103,20 @@ class Device
     end
 
     def ljust(string, size, new_string)
-      string = string.to_s
-      if size > string.size
-        string + (new_string * (size - string.size))
+      string_plain = string.to_s
+      if size > string_plain.size
+        string_plain + (new_string * (size - string_plain.size))
       else
-        string
+        string_plain
       end
     end
 
     def rjust(string, size, new_string)
-      string = string.to_s
-      if size > string.size
-        (new_string * (size - string.size)) + string
+      string_plain = string.to_s
+      if size > string_plain.size
+        (new_string * (size - string_plain.size)) + string_plain
       else
-        string
+        string_plain
       end
     end
   end
