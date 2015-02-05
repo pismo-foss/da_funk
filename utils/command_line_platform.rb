@@ -36,24 +36,6 @@ class CommandLinePlatform
       # No way to clear from the CLI yet
       # we could use ncurses, but that's painful
     end
-
-    class << Kernel
-      include A
-    end
-    Kernel.include A
-
-    #def self.getc
-    #print "#{$color_cyan}Enter any key to continue: "
-    #input = gets[0..-2]
-    #print $color_normal
-    ## TODO Check CANCEL AND ENTER
-    #case input
-    #when "CANCEL", "ENTER"
-    #input
-    #else
-    #input[0]
-    #end
-    #end
   end
 
   class Display
