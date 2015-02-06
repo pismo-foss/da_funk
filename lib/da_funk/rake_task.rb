@@ -19,7 +19,7 @@ module DaFunk
       @tests_integration ||= FileList['test/integration/*test.rb']
       @tests_unit        ||= FileList['test/unit/*test.rb']
       @resources         ||= FileList['resources/**/*']
-      @root_path         ||= File.dirname("./")
+      @root_path         ||= File.expand_path("./")
       @name              ||= File.basename(root_path)
       @out_path          ||= File.join(root_path, "out", @name)
       @main_out          ||= File.join(out_path, "main.mrb")
