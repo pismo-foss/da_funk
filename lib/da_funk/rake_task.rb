@@ -9,11 +9,9 @@ module DaFunk
   class RakeTask < ::Rake::TaskLib
     include ::Rake::DSL if defined?(::Rake::DSL)
 
-    attr_accessor :name, :libs, :tests, :tests_unit, :tests_integration, :root_path, :main_out, :test_out, :resources, :mrbc, :mruby
+    attr_accessor :name, :libs, :tests, :tests_unit, :tests_integration, :root_path, :main_out, :test_out, :resources, :mrbc, :mruby, :out_path
 
-    def initialize(name = :da_funk)
-      @name = name
-
+    def initialize
       yield self if block_given?
 
       @libs              ||= FileList['lib/**/*.rb']
@@ -22,8 +20,10 @@ module DaFunk
       @tests_unit        ||= FileList['test/unit/*test.rb']
       @resources         ||= FileList['resources/**/*']
       @root_path         ||= File.dirname("./")
-      @main_out          ||= File.join(root_path, "out", "main.mrb")
-      @test_out          ||= File.join(root_path, "out", "test.mrb")
+      @name              ||= File.basename(root_path)
+      @out_path          ||= File.join(root_path, "out", @name)
+      @main_out          ||= File.join(out_path, "main.mrb")
+      @test_out          ||= File.join(out_path, "test.mrb")
       @mruby             ||= "cloudwalk"
       @mrbc              ||= get_mrbc_bin
 
@@ -46,24 +46,24 @@ module DaFunk
     def execute_tests(files)
       all_files = FileList["test/test_helper.rb"] + files + [File.join(File.dirname(__FILE__), "..", "..", "utils", "command_line_platform.rb")] + [File.join(File.dirname(__FILE__), "..", "..", "utils", "test_run.rb")]
       if sh("#{mrbc} -o #{main_out} #{libs.uniq}") && sh("#{mrbc} -o #{test_out} #{all_files.uniq}")
-        sh("#{mruby} out/test.mrb")
+        sh("#{mruby} #{File.join(out_path, "test.mrb")}")
       end
     end
 
     def define
-      namespace @name do
+      namespace @name.to_sym do
         task :resources do
           resources.each do |file|
-            FileUtils.cp(file, File.join(root_path, "out/")) if File.file?(file)
+            FileUtils.cp(file, out_path) if File.file?(file)
           end
         end
 
         desc "Compile app to mrb"
         task :build => :resources do
-          FileUtils.mkdir_p File.join(root_path, "out")
+          FileUtils.mkdir_p out_path
 
           Bundler.load.specs.each do |gem|
-            sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb out/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
+            sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb #{out_path}/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
           end
 
           sh "#{mrbc} -o #{main_out} #{libs} "
@@ -74,10 +74,10 @@ module DaFunk
             ENV["RUBY_PLATFORM"] = "mruby"
 
             FileUtils.rm_rf File.join(root_path, "out")
-            FileUtils.mkdir_p File.join(root_path, "out")
+            FileUtils.mkdir_p out_path
 
             Bundler.load.specs.each do |gem|
-              sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb out/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
+              sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb #{out_path}/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
             end
           end
 
