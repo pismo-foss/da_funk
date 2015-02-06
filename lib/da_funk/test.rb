@@ -14,9 +14,11 @@ module DaFunk
     end
 
     def setup
-      libs.each do |file|
-        require file
-      end
+      # TODO Scalone check this
+      #libs.each do |file|
+        #p file
+        ##require file
+      #end
     end
 
     def platform
