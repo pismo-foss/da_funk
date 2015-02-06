@@ -29,5 +29,6 @@ unless Object.const_defined?(:MTest)
   require file_path + "/device/transaction/iso.rb"
   require file_path + "/da_funk/rake_task.rb"
   require file_path + "/da_funk/test.rb"
+  require file_path + "/../utils/command_line_platform.rb"
 end
 
