@@ -78,12 +78,10 @@ module DaFunk
       if self.cruby?
         @libs      ||= FileList[File.join(root_path, 'lib/**/*.rb')]
         @tests     ||= FileList[File.join(root_path, 'test/**/*test.rb')]
-      else
-        @libs      ||= ["main.mrb"]
-        @tests     ||= []
       end
 
       self.setup
     end
   end
 end
+
