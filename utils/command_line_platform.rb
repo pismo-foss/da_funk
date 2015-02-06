@@ -1,3 +1,4 @@
+
 module GetC
   def getc
     gets[0]
@@ -12,9 +13,7 @@ module GetC
   end
 end
 
-class Kernel
-  include GetC unless Kernel.respond_to? :getc
-end
+include GetC unless Kernel.respond_to? :getc
 
 class CommandLinePlatform
   IO = ::IO
