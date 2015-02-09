@@ -36,7 +36,7 @@ module DaFunk
       elsif system("type mrbc > /dev/null 2>&1 ")
         "env mrbc"
       elsif system("type cloudwalk > /dev/null 2>&1 ")
-        "env cloudwalk build"
+        "env cloudwalk compile"
       else
         puts "$MRBC isn't set or mrbc/cloudwalk isn't on $PATH"
         exit 0
