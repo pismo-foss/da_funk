@@ -2,7 +2,6 @@
 
 require 'rake'
 require 'fileutils'
-require 'rake/testtask'
 require 'bundler/setup'
 
 module DaFunk
@@ -51,59 +50,59 @@ module DaFunk
     end
 
     def define
-      namespace @name.to_sym do
-        task :resources do
-          resources.each do |file|
-            FileUtils.cp(file, out_path) if File.file?(file)
-          end
+      task :resources do
+        resources.each do |file|
+          FileUtils.cp(file, out_path) if File.file?(file)
+        end
+      end
+
+      desc "Compile app to mrb and process resources"
+      task :build => :resources do
+        FileUtils.mkdir_p out_path
+
+        Bundler.load.specs.each do |gem|
+          sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb #{out_path}/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
         end
 
-        desc "Compile app to mrb"
-        task :build => :resources do
+        sh "#{mrbc} -o #{main_out} #{libs} "
+      end
+
+      namespace :test do
+        task :setup do
+          ENV["RUBY_PLATFORM"] = "mruby"
+
+          FileUtils.rm_rf File.join(root_path, "out")
           FileUtils.mkdir_p out_path
 
           Bundler.load.specs.each do |gem|
             sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb #{out_path}/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
           end
-
-          sh "#{mrbc} -o #{main_out} #{libs} "
         end
 
-        namespace :mtest do
-          task :setup do
-            ENV["RUBY_PLATFORM"] = "mruby"
-
-            FileUtils.rm_rf File.join(root_path, "out")
-            FileUtils.mkdir_p out_path
-
-            Bundler.load.specs.each do |gem|
-              sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb #{out_path}/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
-            end
-          end
-
-          desc "Run unit test on mruby"
-          task :unit => "#{@name}:mtest:setup" do
-            execute_tests(tests_unit)
-          end
-
-          desc "Run integration test on mruby"
-          task :integration => "#{@name}:mtest:setup" do
-            execute_tests(tests_integration)
-          end
-
-          desc "Run all test on mruby"
-          task :all => "#{@name}:mtest:setup" do
-            execute_tests(tests)
-          end
+        desc "Run unit test on mruby"
+        task :unit => "test:setup" do
+          execute_tests(tests_unit)
         end
 
-        desc "Clobber/Clean"
-        task :clean do
-          FileUtils.mkdir_p File.join(root_path, "out")
-          FileUtils.rm_rf main_out
+        desc "Run integration test on mruby"
+        task :integration => "test:setup" do
+          execute_tests(tests_integration)
+        end
+
+        desc "Run all test on mruby"
+        task :all => "test:setup" do
+          execute_tests(tests)
         end
       end
-      task :default => "#{@name}:build"
+
+      desc "Clobber/Clean"
+      task :clean do
+        FileUtils.mkdir_p File.join(root_path, "out")
+        FileUtils.rm_rf main_out
+      end
+
+      task :default => :build
+      task :test => "test:all"
     end
   end
 end
