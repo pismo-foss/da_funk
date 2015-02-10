@@ -4,17 +4,13 @@ require 'rake/testtask'
 require 'bundler/setup'
 require 'yard'
 
-#Bundler.require(:default)
+Bundler.require(:default)
 DA_FUNK_ROOT = File.dirname(File.expand_path(__FILE__))
 
 Rake::TestTask.new do |t|
   t.libs << "lib"
   t.test_files = FileList['test/**/*test.rb']
   t.verbose = true
-end
-
-YARD::Rake::YardocTask.new do |t|
-  t.options = ['--debug'] # optional arguments
 end
 
 task :default => :compile
@@ -83,3 +79,10 @@ task :clean => :check do
   sh "mkdir -p out"
   sh "rm -f out/da_funk.mrb"
 end
+
+desc "Generate YARD Documentation"
+task :yard do
+  Bundler.require(:default, :development)
+  sh "yard"
+end
+
