@@ -1,6 +1,7 @@
 #!/usr/bin/env rake
 
 require 'rake'
+require 'rake/tasklib'
 require 'fileutils'
 require 'bundler/setup'
 
