@@ -4,13 +4,11 @@ PATH
     da_funk (0.3.2)
       bundler (>= 1.7)
       rake (~> 10.4.2)
-      rdoc (>= 4.1.1)
-      yard (>= 0.8)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    json (1.8.1)
+    json (1.8.2)
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
@@ -22,3 +20,5 @@ PLATFORMS
 
 DEPENDENCIES
   da_funk!
+  rdoc
+  yard
