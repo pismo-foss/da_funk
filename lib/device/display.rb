@@ -31,6 +31,7 @@ class Device
     # @param column [Fixnum] Column to start display.
     # @return [NilClass] nil.
     def self.print_bitmap(path, row = 0, column = 0)
+      raise(Errno::ENOENT, path) unless File.exists?(path)
       adapter.display_bitmap(path, row, column)
     end
 
