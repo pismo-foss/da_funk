@@ -65,6 +65,7 @@ task :compile => :check do
 
   FileUtils.mkdir_p(File.join(DA_FUNK_ROOT, "out"))
   if ENV["MRBC"]
+    puts "Compilinggggg!!!"
     sh "#{ENV["MRBC"]} -o #{out} #{files.join(" ")}"
   else
     sh "env mrbc -o #{out} #{files.join(" ")}"
