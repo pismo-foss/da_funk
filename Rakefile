@@ -20,9 +20,15 @@ end
 task :default => :compile
 
 task :check do
-  if ENV["MRBC"].nil? && ! system("type mrbc > /dev/null 2>&1 ")
-    puts "$MRBC isn't set or mrbc isn't on $PATH"
-    exit 0
+  if ENV["MRBC"].nil?
+    if system("type cloudwalk > /dev/null 2>&1 ")
+      ENV["MRBC"] = "env cloudwalk compile"
+    elsif system("type mrbc > /dev/null 2>&1 ")
+      ENV["MRBC"] = "env mrbc"
+    else
+      puts "$MRBC isn't set or mrbc/cloudwalk isn't on $PATH"
+      exit 0
+    end
   end
 end
 
