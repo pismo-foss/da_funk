@@ -1,5 +1,9 @@
 class Device
   module Helper
+    def self.included(base)
+      base.extend Device::Helper
+    end
+
     def form(txt, min=0, max=8, default="", is_number=true)
       Device::Display.clear
       puts txt

@@ -55,4 +55,8 @@ class HelperTest < Test::Unit::TestCase
     assert_equal "U$: 10.00", @helper.number_to_currency("1000", {:label => "U$: "})
   end
 
+  def test_helper_include_scope
+    assert HelperKlass.methods.include? :attach
+    assert HelperKlass.new.methods.include? :attach
+  end
 end
