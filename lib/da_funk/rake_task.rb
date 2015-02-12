@@ -31,9 +31,6 @@ module DaFunk
     end
 
     def get_mrbc_bin(from_user)
-      elsif system("type mrbc > /dev/null 2>&1 ")
-        "env mrbc"
-
       if (! system("type mrbc > /dev/null 2>&1 ")) && from_user
         from_user
       elsif system("type mrbc > /dev/null 2>&1 ")
