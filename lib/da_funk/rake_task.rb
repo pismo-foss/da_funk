@@ -25,13 +25,15 @@ module DaFunk
       @main_out          ||= File.join(out_path, "main.mrb")
       @test_out          ||= File.join(out_path, "test.mrb")
       @mruby             ||= "cloudwalk"
-      @mrbc              ||= get_mrbc_bin
+      @mrbc              = get_mrbc_bin(@mrbc)
 
       define
     end
 
-    def get_mrbc_bin
-      if ENV["MRBC"]
+    def get_mrbc_bin(from_user)
+      if ENV["MRBC"].nil? && from_user
+        from_user
+      else ENV["MRBC"]
         ENV["MRBC"]
       elsif system("type mrbc > /dev/null 2>&1 ")
         "env mrbc"
