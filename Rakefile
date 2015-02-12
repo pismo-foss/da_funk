@@ -2,8 +2,7 @@
 
 require 'rake/testtask'
 require 'bundler/setup'
-require 'yard'
-
+p "asdfasdfasdf"
 Bundler.require(:default)
 DA_FUNK_ROOT = File.dirname(File.expand_path(__FILE__))
 
