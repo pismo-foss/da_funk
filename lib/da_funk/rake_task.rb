@@ -33,7 +33,7 @@ module DaFunk
     def get_mrbc_bin(from_user)
       if ENV["MRBC"].nil? && from_user
         from_user
-      else ENV["MRBC"]
+      elsif ENV["MRBC"]
         ENV["MRBC"]
       elsif system("type mrbc > /dev/null 2>&1 ")
         "env mrbc"
