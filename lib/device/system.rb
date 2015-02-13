@@ -50,7 +50,7 @@ class Device
     end
 
     def self.app
-      Device::Support.class_to_path(self.klass)
+      self.klass
     end
 
     def self.model
