@@ -62,12 +62,16 @@ module DaFunk
     def execute_tests(files)
       all_files = FileList["test/test_helper.rb"] + libs + files + [File.join(File.dirname(__FILE__), "..", "..", "utils", "command_line_platform.rb")] + [File.join(File.dirname(__FILE__), "..", "..", "utils", "test_run.rb")]
       if sh("#{mrbc} -o #{test_out} #{all_files.uniq}")
+        FileUtils.cd File.dirname(out_path)
         sh("#{mruby} #{File.join(out_path, "test.mrb")}")
       end
     end
 
     def define
       task :resources do
+        FileUtils.rm_rf File.join(root_path, "out")
+        FileUtils.mkdir_p out_path
+
         resources.each do |file|
           FileUtils.cp(file, out_path) if File.file?(file)
         end
@@ -85,12 +89,8 @@ module DaFunk
       end
 
       namespace :test do
-        task :setup do
+        task :setup => :resources do
           ENV["RUBY_PLATFORM"] = "mruby"
-
-          FileUtils.rm_rf File.join(root_path, "out")
-          FileUtils.mkdir_p out_path
-
           Bundler.load.specs.each do |gem|
             sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb #{out_path}/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
           end
