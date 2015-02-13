@@ -16,5 +16,12 @@ class Device
   def self.call
     System.klass = self
   end
+
+  def self.loop(&block)
+    loop do
+      #Notification.check
+      block.call(self)
+    end
+  end
 end
 
