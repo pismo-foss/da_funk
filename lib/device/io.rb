@@ -13,9 +13,7 @@ class Device
 
     NUMBERS = %w(1 2 3 4 5 6 7 8 9 0)
 
-    class << self
-      include Device::Helper
-    end
+    include Device::Helper
 
     # Restricted to terminals, get strings and numbers.
     # The switch method between uppercase, lowercase and number characters is to keep pressing a same button quickly. The timeout of this operation is 1 second.
