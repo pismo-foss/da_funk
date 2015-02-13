@@ -21,7 +21,11 @@ class Device
     # @param column [Fixnum] Column to start display.
     # @return [NilClass] nil.
     def self.print(buf, row = nil, column = nil)
-      adapter.print_line(buf, row, column)
+      if row.nil? && column.nil?
+        print(buf)
+      else
+        adapter.print_line(buf, row, column)
+      end
     end
 
     # Display bitmap
