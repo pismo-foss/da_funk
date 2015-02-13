@@ -1,19 +1,13 @@
 
 module GetC
   def getc
-    gets[0]
-    #print $color_normal
-    ## TODO Check CANCEL AND ENTER
-    #case input
-    #when "CANCEL", "ENTER"
-    #input
-    #else
-    #input[0]
-    #end
+    puts "asasdfasf"
+    str = gets
+    str[0]
   end
 end
 
-include GetC unless Kernel.respond_to? :getc
+include GetC
 
 class CommandLinePlatform
   IO = ::IO
