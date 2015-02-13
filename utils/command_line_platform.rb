@@ -1,9 +1,7 @@
 
 module GetC
   def getc
-    puts "asasdfasf"
-    str = gets
-    str[0]
+    gets[0]
   end
 end
 
