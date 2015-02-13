@@ -16,7 +16,7 @@ class Device
       Device::Display.clear
       raise Errno::ENOENT, zip unless File.exists?(zip)
       raise "Problem to unzip #{zip}" unless Miniz.unzip(zip)
-      return mrb_eval "Context.start('#{app}', '#{Device.adapter}', '#{buf}')"
+      return mrb_eval "Context.start('#{app}', '#{Device.adapter}', '#{json}')"
     end
   end
 end
