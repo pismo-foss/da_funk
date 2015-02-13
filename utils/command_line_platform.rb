@@ -56,6 +56,9 @@ class CommandLinePlatform
       # No way to clear from the CLI yet
       # we could use ncurses, but that's painful
     end
+
+    def self.display_bitmap(path, row, column)
+    end
   end
 
   class Network
