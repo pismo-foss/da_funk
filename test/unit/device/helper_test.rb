@@ -1,10 +1,8 @@
-require File.dirname(File.realpath(__FILE__)) + "/../test_helper.rb"
-
 class HelperKlass
   include Device::Helper
 end
 
-class HelperTest < Test::Unit::TestCase
+class HelperTest < DaFunk::Test.case
   def setup
     @helper = HelperKlass.new
   end
