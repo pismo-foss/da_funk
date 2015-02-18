@@ -94,7 +94,7 @@ module Serfx
     # @return  [Thread, Response]
     def stream(types, &block)
       res = request(:stream, 'Type' => types)
-      #t = Fiber.new do
+      t = Fiber.new do
         loop do
           header, ev = read_data
           check_rpc_error!(header)
@@ -105,7 +105,7 @@ module Serfx
             break
           end
         end
-      #end
+      end
       [res, t]
     end
 
