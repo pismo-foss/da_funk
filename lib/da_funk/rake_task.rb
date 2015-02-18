@@ -16,8 +16,8 @@ module DaFunk
 
       @libs              ||= FileList['lib/**/*.rb']
       @tests             ||= FileList['test/**/*test.rb']
-      @tests_integration ||= FileList['test/integration/*test.rb']
-      @tests_unit        ||= FileList['test/unit/*test.rb']
+      @tests_integration ||= FileList['test/integration/**/*test.rb']
+      @tests_unit        ||= FileList['test/unit/**/*test.rb']
       @resources         ||= FileList['resources/**/*']
       @root_path         ||= File.expand_path("./")
       @name              ||= File.basename(root_path)
