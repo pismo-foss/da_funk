@@ -4,11 +4,7 @@ doc/*
 rdoc/*
 .bundle
 coverage/*
-.rvmrc
-*.swp
-*.swo
-.DS_Store
 stats
 stats/*
-*.o
 out/da_funk.mrb
+out/da_funk/*
