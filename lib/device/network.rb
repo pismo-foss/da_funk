@@ -79,19 +79,24 @@ class Device
       ret
     end
 
-    def self.handshake_ssl
-      entropy = PolarSSL::Entropy.new
-      ctr_drbg = PolarSSL::CtrDrbg.new entropy
-      @socket_ssl = PolarSSL::SSL.new
-      @socket_ssl.set_endpoint PolarSSL::SSL::SSL_IS_CLIENT
-      @socket_ssl.set_rng ctr_drbg
-      @socket_ssl.set_socket @socket_tcp
-      @socket_ssl.handshake
+    def self.handshake_ssl!
+      @socket_ssl = self.handshake_ssl(@socket_tcp)
       @ssl = true
       @socket = @socket_ssl
     end
 
-    def self.handshake
+    def self.handshake_ssl(tcp)
+      entropy = PolarSSL::Entropy.new
+      ctr_drbg = PolarSSL::CtrDrbg.new entropy
+      s_ssl = PolarSSL::SSL.new
+      s_ssl.set_endpoint PolarSSL::SSL::SSL_IS_CLIENT
+      s_ssl.set_rng ctr_drbg
+      s_ssl.set_socket tcp
+      s_ssl.handshake
+      s_ssl
+    end
+
+    def self.handshake!
       handshake = "#{Device::System.serial};#{Device::System.app};#{Device::Setting.logical_number};#{Device.version}"
       socket.write("#{handshake.size.chr}#{handshake}")
 
@@ -109,11 +114,11 @@ class Device
       else
         @socket_tcp = create_socket
         if Device::Setting.ssl == "1"
-          handshake_ssl
+          handshake_ssl!
         else
           @socket = @socket_tcp
         end
-        handshake
+        handshake!
         @socket
       end
     end
