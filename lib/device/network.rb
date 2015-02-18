@@ -107,7 +107,7 @@ class Device
       if @socket
         @socket
       else
-        @socket_tcp = TCPSocket.new(Device::Setting.host, Device::Setting.host_port)
+        @socket_tcp = create_socket
         if Device::Setting.ssl == "1"
           handshake_ssl
         else
@@ -116,6 +116,10 @@ class Device
         handshake
         @socket
       end
+    end
+
+    def self.create_socket
+      TCPSocket.new(Device::Setting.host, Device::Setting.host_port)
     end
 
     def self.close_socket
