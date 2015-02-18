@@ -55,7 +55,11 @@ module Serfx
     #
     # @return [TCPSocket]
     def socket
-      @socket ||= TCPSocket.new(host, port)
+      unless @socket
+        @socket_tcp = Device::Network.create_socket
+        @socket = Device::Network.handshake_ssl(@socket_tcp)
+      end
+      @socket
     end
 
     # creates a MsgPack un-packer object from the tcp socket unless its
