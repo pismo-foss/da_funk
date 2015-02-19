@@ -32,6 +32,7 @@ module Serfx
     attr_reader :host, :port, :seq, :socket, :socket_tcp, :socket_block, :timeout
 
     def close
+      @socket_tcp.close
       @socket.close
     end
 
