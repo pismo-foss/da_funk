@@ -65,15 +65,11 @@ module Serfx
     #
     # @return [Hash]
     def read_data
-      p "1===="
-      p buf = socket.recv(MAX_MESSAGE_SIZE, Socket::MSG_PEEK)
-      p "2===="
-      #if not socket.recv(MAX_MESSAGE_SIZE, Socket::MSG_PEEK).empty?
-        #buf = socket.recv(MAX_MESSAGE_SIZE)
-      #end
-      p "3===="
-      first_packet, second_packet = buf.split("\x85")
+      buf = read_buffer
+      return if buf.nil?
 
+      # TODO Check first and second(header and body) packet size
+      first_packet, second_packet = buf.split("\x85")
       if second_packet.nil?
         [MessagePack.unpack(first_packet), nil]
       else
