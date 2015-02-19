@@ -29,7 +29,7 @@ module Serfx
 
     include Serfx::Commands
 
-    attr_reader :host, :port, :seq
+    attr_reader :host, :port, :seq, :socket, :socket_tcp, :socket_block, :timeout
 
     def close
       @socket.close
@@ -40,12 +40,19 @@ module Serfx
     end
 
     # @param  opts [Hash] Specify the RPC connection details
-    # @option opts [Symbol] :host ipaddreess of the target serf agent
-    # @option opts [Symbol] :port port of target serf agents RPC
+    # @option opts [TCPSocket] :socket_tcp Socket
+    # @option opts [SSL] :socket Socket SSL or normal tcp socket
+    # @option opts [Fixnum] :timeout Timeout in seconds to wait for a event and return Fiber
     # @option opts [Symbol] :authkey encryption key for RPC communication
+    # @option opts [Block] :socket_block Callback to create socket if socket was closed, should return [socket, socket_tcp]
     def initialize(opts = {})
-      @host = opts[:host] || '127.0.0.1'
-      @port = opts[:port] || 7373
+      if @socket_block = opts[:socket_block]
+        @socket, @socket_tcp = @socket_block.call
+      else
+        @socket = opts[:socket]
+        @socket_tcp = opts[:socket_tcp]
+      end
+      @timeout = opts[:timeout] || DEFAULT_TIMEOUT
       @seq = 0
       @authkey = opts[:authkey]
       @requests = {}
