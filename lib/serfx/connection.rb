@@ -52,27 +52,6 @@ module Serfx
       @responses = {}
     end
 
-    # creates a tcp socket if does not exist already, against RPC host/port
-    #
-    # @return [TCPSocket]
-    def socket
-      unless @socket
-        @socket_tcp = Device::Network.create_socket
-        @socket = Device::Network.handshake_ssl(@socket_tcp)
-      end
-      @socket
-    end
-
-    # creates a MsgPack un-packer object from the tcp socket unless its
-    # already present
-    #
-    # @return [MessagePack::Unpacker]
-    def unpacker
-      #buf = socket.read
-      #p "Buf - #{buf.inspect}"
-      @unpacker ||= MessagePack::Unpacker.new(socket)
-    end
-
     # read data from tcp socket and pipe it through msgpack unpacker for
     # deserialization
     #
