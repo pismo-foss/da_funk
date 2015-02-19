@@ -145,6 +145,17 @@ module Serfx
       tcp_send(command, body)
       read_response(command)
     end
+
+    def fiber_yield!(ev)
+      if Fiber.yield(ev) == "close"
+        self.close
+        false
+      elsif self.closed?
+        false
+      else
+        true
+      end
+    end
   end
 end
 
