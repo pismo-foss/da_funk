@@ -37,7 +37,7 @@ module Serfx
     end
 
     def closed?
-      @socket.closed?
+      @socket_tcp.closed?
     end
 
     # @param  opts [Hash] Specify the RPC connection details
