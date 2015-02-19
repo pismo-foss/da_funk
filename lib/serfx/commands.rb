@@ -94,19 +94,12 @@ module Serfx
     # @return  [Thread, Response]
     def stream(types, &block)
       res = request(:stream, 'Type' => types)
-      t = Fiber.new do
-        loop do
-          header, ev = read_data
-          check_rpc_error!(header)
-          if header['Seq'] == res.header.seq
-            #ev = read_data
-            block.call(ev) if block
-          else
-            break
-          end
-        end
+      loop do
+        header, ev = read_data
+        check_rpc_error!(header)
+        break unless fiber_yield!(ev)
       end
-      [res, t]
+      res
     end
 
     # monitor is similar to the stream command, but instead of events it
@@ -143,12 +136,7 @@ module Serfx
       loop do
         header, ev = read_data
         check_rpc_error!(header)
-        #ev = read_data
-        if ev['Type'] == 'done'
-          break
-        else
-          block.call(ev) if block
-        end
+        break unless fiber_yield!(ev)
       end
       res
     end
