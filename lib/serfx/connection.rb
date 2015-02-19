@@ -110,11 +110,8 @@ module Serfx
     def read_response(command)
       header, body = read_data
       check_rpc_error!(header)
-      puts "Before Response.new"
       if COMMANDS[command].include?(:body)
-        r = Response.new(header, body)
-        p r
-        r
+        Response.new(header, body)
       else
         Response.new(header)
       end
