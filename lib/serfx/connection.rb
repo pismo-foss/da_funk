@@ -108,12 +108,10 @@ module Serfx
         'Command' => command.to_s.gsub('_', '-'),
         'Seq' => seq
       }
-      #Log.info("#{__method__}|Header: #{header.inspect}")
       buff = MessagePack::Packer.new
       buff.write(header)
       buff.write(body) unless body.nil?
-      res = socket.send(buff.to_str, 0)
-      #Log.info("#{__method__}|Res: #{res.inspect}")
+      res = socket.write(buff.to_str)
       @requests[seq] = { header: header, ack?: false }
       seq
     end
