@@ -81,6 +81,19 @@ module Serfx
       end
     end
 
+    def read_buffer
+      time_timeout = Time.now + timeout
+      loop do
+        if socket.bytes_available > 0
+          return socket.read(MAX_MESSAGE_SIZE)
+          break
+        end
+        break unless (time_timeout > Time.now)
+        sleep 1
+      end
+      nil
+    end
+
     # takes raw RPC command name and an optional request body
     # and convert them to msgpack encoded data and then send
     # over tcp
