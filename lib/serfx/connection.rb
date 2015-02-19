@@ -108,7 +108,9 @@ module Serfx
     #
     # @param header [Hash] RPC response header as hash
     def check_rpc_error!(header)
-      raise RPCError, header['Error'] unless header['Error'].empty?
+      if header
+        raise RPCError, header['Error'] unless header['Error'].empty?
+      end
     end
 
     # read data from the tcp socket. and convert it to a [Response] object
