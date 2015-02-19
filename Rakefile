@@ -36,7 +36,13 @@ FILES = FileList[
   "lib/iso8583/util.rb",
   "lib/iso8583/version.rb",
   "lib/version.rb",
-  "lib/device/transaction/iso.rb"
+  "lib/device/transaction/iso.rb",
+  "lib/serfx.rb",
+  "lib/serfx/commands.rb",
+  "lib/serfx/connection.rb",
+  "lib/serfx/response.rb",
+  "lib/serfx/exceptions.rb",
+  "lib/device/notification.rb"
 ]
 
 DaFunk::RakeTask.new do |t|
