@@ -59,13 +59,5 @@ class Device
         [ssl, socket_tcp]
       end
     end
-
-    def check_type(event)
-      # TODO Scalone Event parse
-      #"SYSTEMUPDATE"
-      #"APPUPDATE"
-      #:system_update
-      #:app_update
-    end
   end
 end
