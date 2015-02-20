@@ -10,6 +10,14 @@ class Device
     attr_accessor :events
     attr_reader :fiber, :timeout
 
+
+    def self.execute(event)
+      calls = self.callbacks[event.callback]
+      [:before, :on, :after].each do |moment|
+        calls.each{|callback| callback.call(event, moment)}
+      end
+    end
+
     def self.schedule(callback)
       self.callbacks[callback.description] ||= []
       self.callbacks[callback.description] << callback
