@@ -18,8 +18,9 @@ class Device
   end
 
   def self.app_loop(&block)
+    Notification.setup
     loop do
-      #Notification.check
+      Notification.check
       block.call(self)
     end
   end
