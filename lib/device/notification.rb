@@ -5,9 +5,15 @@ class Device
     class << self
       attr_accessor :callbacks, :current
     end
+    self.callbacks = []
 
     attr_accessor :events
     attr_reader :fiber, :timeout
+
+    def self.schedule(callback)
+      self.callbacks[callback.description] ||= []
+      self.callbacks[callback.description] << callback
+    end
 
     def self.setup
       # TODO Scalone event parse
