@@ -17,7 +17,7 @@ class Device
     System.klass = self
   end
 
-  def self.loop(&block)
+  def self.app_loop(&block)
     loop do
       #Notification.check
       block.call(self)
