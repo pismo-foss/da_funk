@@ -24,11 +24,10 @@ class Device
       @fiber = create_fiber
     end
 
-    # Check if there is any event
+    # Check if there is any notification
     def check
-      if @fiber.alive?
-        # TODO Scalone event parse
-        event = @fiber.resume
+      if @fiber.alive? && (notification = @fiber.resume)
+        Notification.execute(NotificationEvent.new(notification))
       end
     end
 
