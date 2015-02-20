@@ -6,6 +6,11 @@ require 'bundler/setup'
 Bundler.require(:default)
 DA_FUNK_ROOT = File.dirname(File.expand_path(__FILE__))
 
+puts "PWD"
+puts `pwd`
+
+FileUtils.cd DA_FUNK_ROOT
+
 FILES = FileList[
   "lib/da_funk.rb",
   "lib/da_funk/test.rb",
