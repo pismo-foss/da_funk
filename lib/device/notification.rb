@@ -24,12 +24,18 @@ class Device
     end
 
     def self.setup
-      # TODO Scalone event parse
-      #self.callbacks = {
-        #:on_system_update => Proc.new {|event| },
-        #:on_app_update => Proc.new {|event| },
-        #:on_ => Proc.new {|event| },
-      #}
+      NotificationCallback.new "APP_UPDATE", :on => Proc.new do
+      end
+
+      NotificationCallback.new "SETUP_DEVICE_CONFIG", :on => Proc.new do
+      end
+
+      NotificationCallback.new "RESET_DEVICE_CONFIG", :on => Proc.new do
+      end
+
+      NotificationCallback.new "SYSTEM_UPDATE", :on => Proc.new { |file| }
+
+      NotificationCallback.new "CANCEL_SYSTEM_UPDATE", :on => Proc.new {}
     end
 
     def initialize(timeout = DEFAULT_TIMEOUT)
