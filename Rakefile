@@ -42,6 +42,8 @@ FILES = FileList[
   "lib/serfx/connection.rb",
   "lib/serfx/response.rb",
   "lib/serfx/exceptions.rb",
+  "lib/device/notification_event.rb",
+  "lib/device/notification_callback.rb",
   "lib/device/notification.rb"
 ]
 
