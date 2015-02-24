@@ -72,32 +72,6 @@ class CommandLinePlatform
   def self.version
     "0.0.1"
   end
-
-  def self.execute(file)
-    begin
-      dir = get_dir(file)
-      $LOAD_PATH = [dir]
-
-      if File.exist?("#{dir}/da_funk.mrb")
-        require "da_funk.mrb"
-      else
-        require "./robot_rock/da_funk.mrb"
-      end
-
-      require "./robot_rock/pax.mrb"
-
-      require "main.mrb"
-
-      # Test.run
-      Main.call
-    rescue => @exception
-      PAX.display_clear
-      puts "#{@exception.class}: #{@exception.message}"
-      puts "#{@exception.backtrace[0..2].join("\n")}"
-      getc
-      return nil
-    end
-  end
 end
 
 Device.adapter ||= CommandLinePlatform
