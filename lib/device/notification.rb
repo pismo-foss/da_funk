@@ -7,7 +7,6 @@ class Device
     end
     self.callbacks = []
 
-    attr_accessor :events
     attr_reader :fiber, :timeout
 
 
