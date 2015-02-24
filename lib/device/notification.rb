@@ -1,14 +1,14 @@
 class Device
   class Notification
-    DEFAULT_TIMEOUT = 15
+    DEFAULT_TIMEOUT  = 15
+    DEFAULT_INTERVAL = 10
 
     class << self
       attr_accessor :callbacks, :current
     end
     self.callbacks = []
 
-    attr_reader :fiber, :timeout
-
+    attr_reader :fiber, :timeout, :interval, :last_check
 
     def self.execute(event)
       calls = self.callbacks[event.callback]
@@ -37,15 +37,17 @@ class Device
       NotificationCallback.new "CANCEL_SYSTEM_UPDATE", :on => Proc.new {}
     end
 
-    def initialize(timeout = DEFAULT_TIMEOUT)
-      @timeout = timeout
+    def initialize(timeout = DEFAULT_TIMEOUT, interval = DEFAULT_INTERVAL)
+      @timeout  = timeout
+      @interval = interval
       Device::Notification.current = self
       @fiber = create_fiber
     end
 
     # Check if there is any notification
     def check
-      if @fiber.alive? && (notification = @fiber.resume)
+      if @fiber.alive? && valid_interval? && (notification = @fiber.resume)
+        @last_check = Time.now
         Notification.execute(NotificationEvent.new(notification))
       end
     end
@@ -57,6 +59,14 @@ class Device
 
     def closed?
       ! @fiber.alive?
+    end
+
+    def valid_interval?
+      if @last_check
+        (@last_check + self.interval) < Time.now
+      else
+        true
+      end
     end
 
     private
