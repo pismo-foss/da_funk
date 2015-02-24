@@ -1,6 +1,6 @@
 class Device
   class ParamsDat
-    FILE_NAME = "./robot_rock/params.dat"
+    FILE_NAME = "./main/params.dat"
 
     class << self
       include Device::Helper
