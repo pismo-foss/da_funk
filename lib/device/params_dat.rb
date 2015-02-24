@@ -2,8 +2,8 @@ class Device
   class ParamsDat
     FILE_NAME = "./main/params.dat"
 
+    include Device::Helper
     class << self
-      include Device::Helper
       attr_accessor :file, :apps, :status
     end
 
