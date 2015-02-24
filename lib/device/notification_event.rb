@@ -23,7 +23,7 @@ class Device
       @value    = JSON.parse(message)
       @body     = value["Body"]
 
-      @callback, *@parameters = @body.to_s.split(",")
+      @callback, *@parameters = @body.to_s.split("|")
     end
   end
 end
