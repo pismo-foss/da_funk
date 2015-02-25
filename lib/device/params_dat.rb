@@ -3,10 +3,12 @@ class Device
     FILE_NAME = "./main/params.dat"
 
     include Device::Helper
+
     class << self
       attr_accessor :file, :apps, :status
     end
 
+    # To control if there is any app and parse worked
     self.status = false
 
     def self.setup
