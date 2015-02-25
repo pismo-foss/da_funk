@@ -88,6 +88,13 @@ class Device
       @apps
     end
 
+    def self.executable_app
+      selected = self.executable_apps
+      if selected.size == 1
+        selected[selected.keys.first]
+      end
+    end
+
     def self.executable_apps
       self.apps.select{|app| app.label != "X"}
     end
