@@ -66,13 +66,17 @@ class Device
     end
 
     # {"option X" => {:detail => 10}, "option Y" => {:detail => 11}}
-    def menu(title, options)
+    def menu(title, options, add_number = true)
       Device::Display.clear
       puts(title)
       values = Hash.new
       options.each_with_index do |value,i|
         values[i.to_i] = value[1]
-        Device::Display.print(value[0], i+2)
+        if add_number
+          Device::Display.print("#{i+1} - #{value[0]}", i+2)
+        else
+          Device::Display.print(value[0], i+2)
+        end
       end
 
       [values[getc.to_i - 1]].flatten.first
