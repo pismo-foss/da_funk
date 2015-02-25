@@ -1,7 +1,7 @@
 
 class Device
   class Setting
-    FILE_NAME = "config.dat"
+    FILE_PATH = "./main/config.dat"
     DEFAULT     = {
       "host"           => "switch-staging.cloudwalk.io",
       "host_port"      => "31416",
@@ -26,7 +26,7 @@ class Device
     }
 
     def self.setup
-      @file = FileDb.new(FILE_NAME, DEFAULT)
+      @file = FileDb.new(FILE_PATH, DEFAULT)
     end
 
     def self.method_missing(method, *args, &block)
