@@ -46,7 +46,8 @@ FILES = FileList[
   "lib/serfx/exceptions.rb",
   "lib/device/notification_event.rb",
   "lib/device/notification_callback.rb",
-  "lib/device/notification.rb"
+  "lib/device/notification.rb",
+  "lib/ext/kernel.rb"
 ]
 
 DaFunk::RakeTask.new do |t|
