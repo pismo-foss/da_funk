@@ -6,7 +6,8 @@ class Device
     class << self
       attr_accessor :callbacks, :current
     end
-    self.callbacks = []
+
+    self.callbacks = Hash.new
 
     attr_reader :fiber, :timeout, :interval, :last_check
 
