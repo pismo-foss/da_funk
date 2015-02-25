@@ -10,11 +10,11 @@ class Device
     end
 
     def file
-      @file_name ||= file_path.gsub("#{Device::Setting.company_name}_", "")
+      @file ||= file_path.gsub("#{Device::Setting.company_name}_", "")
     end
 
     def file_no_ext
-      @file ||= file_name.split(".")[0]
+      @file_no_ext ||= file.split(".")[0]
     end
 
     def zip
@@ -26,3 +26,4 @@ class Device
     end
   end
 end
+
