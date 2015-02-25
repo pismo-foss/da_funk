@@ -50,7 +50,7 @@ class Device
     end
 
     def self.app
-      self.klass
+      self.klass.to_s.downcase
     end
 
     def self.model
