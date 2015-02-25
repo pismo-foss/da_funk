@@ -23,18 +23,11 @@ class Device
     end
 
     def self.setup
-      NotificationCallback.new "APP_UPDATE", :on => Proc.new do
-      end
-
-      NotificationCallback.new "SETUP_DEVICE_CONFIG", :on => Proc.new do
-      end
-
-      NotificationCallback.new "RESET_DEVICE_CONFIG", :on => Proc.new do
-      end
-
+      NotificationCallback.new "APP_UPDATE", :on => Proc.new { }
+      NotificationCallback.new "SETUP_DEVICE_CONFIG", :on => Proc.new { }
+      NotificationCallback.new "RESET_DEVICE_CONFIG", :on => Proc.new { }
       NotificationCallback.new "SYSTEM_UPDATE", :on => Proc.new { |file| }
-
-      NotificationCallback.new "CANCEL_SYSTEM_UPDATE", :on => Proc.new {}
+      NotificationCallback.new "CANCEL_SYSTEM_UPDATE", :on => Proc.new { }
     end
 
     def initialize(timeout = DEFAULT_TIMEOUT, interval = DEFAULT_INTERVAL)
