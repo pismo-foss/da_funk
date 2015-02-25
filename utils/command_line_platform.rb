@@ -11,7 +11,7 @@ class CommandLinePlatform
   IO = ::IO
 
   class IO
-    def self.get_string(min, max)
+    def self.get_string(min, max, option = nil)
       str = ""
       while
         str << gets
