@@ -9,7 +9,7 @@ class Device
       puts txt
 
       if is_number
-        string = get_string(min, max, IO_INPUT_NUMBERS)
+        string = get_string(min, max, IO::IO_INPUT_NUMBERS)
       else
         string = get_string(min, max)
       end
