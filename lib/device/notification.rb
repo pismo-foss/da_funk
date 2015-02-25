@@ -11,6 +11,10 @@ class Device
 
     attr_reader :fiber, :timeout, :interval, :last_check
 
+    def self.check
+      self.current.check if self.current
+    end
+
     def self.execute(event)
       calls = self.callbacks[event.callback]
       [:before, :on, :after].each do |moment|
