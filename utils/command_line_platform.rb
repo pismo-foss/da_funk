@@ -1,7 +1,7 @@
 
 module GetC
   def getc
-    gets[0]
+    gets.chomp[0]
   end
 end
 
@@ -14,7 +14,7 @@ class CommandLinePlatform
     def self.get_string(min, max, option = nil)
       str = ""
       while
-        str << gets
+        str << gets.chomp
         return str if str.size >= min
       end
     end
