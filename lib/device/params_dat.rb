@@ -29,10 +29,7 @@ class Device
 
       @apps = []
       self.file["apps_list"].to_s.gsub("\"", "").split(";").each do |app|
-        values = app.split(",")
-        no_company = values[1].gsub("#{Device::Setting.company_name}_", "")
-        no_ext = no_company.split(".")[0]
-        @apps << {:zip => "#{no_ext}.zip", :label => values[0], :file => no_company, :type => values[2], :crc => values[3]}
+        @apps << Device::Application.new(*app.split(","))
       end
 
       if (@apps.size >= 1)
@@ -71,11 +68,11 @@ class Device
       end
     end
 
-    def self.update_app(file)
-      if attach && file
+    def self.update_app(application)
+      if attach && application
         Device::Display.clear
-        puts "Downloading #{file[:label]}..."
-        ret = Device::Transaction::Download.request_file(file[:file], file[:zip])
+        puts "Downloading #{application.label}..."
+        ret = Device::Transaction::Download.request_file(application.file_path, application.zip)
         Device::Network.close_socket
         # TODO
         #Device::Network.walk_socket.close unless Device::Network.walk_socket.closed?
@@ -91,8 +88,12 @@ class Device
       @apps
     end
 
+    def self.executable_apps
+      self.apps.select{|app| app.label != "X"}
+    end
+
     def self.application_menu
-      options = self.apps.sort{|app| app[:label]}.group_by{|app| app[:label]}
+      options = executable_apps.sort{|app| app.label}.group_by{|app| app.label}
       menu("Application Menu", options)
     end
   end
