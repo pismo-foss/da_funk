@@ -75,8 +75,8 @@ class Device
     def self.update_app(application)
       if attach && application
         Device::Display.clear
-        puts "Downloading #{application.label}..."
-        ret = Device::Transaction::Download.request_file(application.file_path, application.zip)
+        puts "Downloading #{application.file}..."
+        ret = Device::Transaction::Download.request_file(application.file, application.zip)
         Device::Network.close_socket
         # TODO
         #Device::Network.walk_socket.close unless Device::Network.walk_socket.closed?
