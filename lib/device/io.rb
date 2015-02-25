@@ -39,7 +39,7 @@ class Device
     #   :money (IO_INPUT_MONEY) - Money input, only number.
     #
     # @return [String] buffer read from keyboard
-    def self.get_string(min, max, options = {})
+    def self.get_format(min, max, options = {})
       options[:mode] ||= IO_INPUT_LETTERS
       if options[:mode] == IO_INPUT_MONEY || options[:mode] == IO_INPUT_DECIMAL
 
@@ -61,16 +61,9 @@ class Device
           end
         end
       else
-        super(min, max, options[:mode])
+        get_string(min, max, options[:mode])
       end
     end
-
-    # The same as getc, but wait until eot be pressed
-    #
-    # @param separator [String] Separator, expected to return to return.
-    # @param limit [Fixnum] Limit of characters.
-    # @return [String] buffer read from keyboard
-    def self.gets(separator, limit, mode = IO_INPUT_LETTERS); super; end
 
     # Read 1 byte on keyboard, wait until be pressed
     #

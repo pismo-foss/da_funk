@@ -3,7 +3,7 @@ module Kernel
     Device::Display.print_line(*args)
   end
 
-  def get_string(*args)
-    Device::IO.get_string(*args)
+  def get_format(*args)
+    Device::IO.get_format(*args)
   end
 end
