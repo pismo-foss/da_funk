@@ -8,6 +8,8 @@ class Device
       attr_accessor :file, :apps, :status
     end
 
+    self.apps = Hash.new
+
     # To control if there is any app and parse worked
     self.status = false
 
