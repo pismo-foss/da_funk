@@ -14,7 +14,6 @@ class Device
   end
 
   def self.call
-    System.klass = self
   end
 
   def self.app_loop(&block)
