@@ -1,5 +1,6 @@
 class Device
   class IO < ::IO
+    KEY_TIMEOUT      = 0x12.chr
     CANCEL           = 0x1B.chr
     ENTER            = 0x0D.chr
     BACK             = "\017"
