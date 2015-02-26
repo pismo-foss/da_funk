@@ -14,7 +14,7 @@ class CommandLinePlatform
     def self.get_string(min, max, option = nil)
       str = ""
       while
-        str << gets.chomp
+        str << Kernel.gets.chomp
         return str if str.size >= min
       end
     end
