@@ -3,6 +3,10 @@ module GetC
   def getc
     gets.chomp[0]
   end
+
+  def print_line(*args)
+    Device::Display.print_line(*args)
+  end
 end
 
 include GetC
