@@ -44,9 +44,11 @@ class Device
 
     # Check if there is any notification
     def check
-      if @fiber.alive? && valid_interval? && (notification = @fiber.resume)
+      if @fiber.alive? && valid_interval? && Device::Network.connected?
+        if (notification = @fiber.resume)
+          Notification.execute(NotificationEvent.new(notification))
+        end
         @last_check = Time.now
-        Notification.execute(NotificationEvent.new(notification))
       end
     end
 
