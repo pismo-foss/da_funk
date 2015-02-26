@@ -27,6 +27,14 @@ class Device
       self.callbacks[callback.description] << callback
     end
 
+    def self.start
+      unless Device::Setting.logical_number.empty? || Device::Setting.company_name.empty? || (! Device::Network.connected?)
+        unless Device::Notification.current && Device::Notification.current.closed?
+          self.new
+        end
+      end
+    end
+
     def self.setup
       NotificationCallback.new "APP_UPDATE", :on => Proc.new { }
       NotificationCallback.new "SETUP_DEVICE_CONFIG", :on => Proc.new { }
