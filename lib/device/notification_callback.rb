@@ -41,7 +41,7 @@ class Device
     end
 
     def equal_arity?(event, moment)
-      on.arity != event.parameters.size
+      send(moment).arity == event.parameters.size
     end
   end
 end
