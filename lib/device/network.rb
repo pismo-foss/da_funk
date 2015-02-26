@@ -58,6 +58,10 @@ class Device
       adapter.connected?
     end
 
+    def self.configured?
+      Device::Setting.network_configured == "1"
+    end
+
     def self.ping(host, port)
       adapter.ping(host, port)
     end
