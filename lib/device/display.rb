@@ -24,7 +24,7 @@ class Device
       if row.nil? && column.nil?
         print(buf)
       else
-        adapter.print_line(buf, row, column)
+        print_line(buf, row, column)
       end
     end
 
