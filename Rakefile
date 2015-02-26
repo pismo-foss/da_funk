@@ -49,6 +49,7 @@ FILES = FileList[
   "lib/device/notification.rb",
   "lib/device/application.rb",
   "lib/zip.rb",
+  "lib/device/magnetic.rb",
   "lib/ext/kernel.rb"
 ]
 
