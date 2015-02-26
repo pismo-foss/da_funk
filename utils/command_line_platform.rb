@@ -4,8 +4,9 @@ module GetC
     gets.chomp[0]
   end
 
-  def print_line(*args)
-    Device::Display.print_line(*args)
+  def self.print_line(buf, row = nil, column = nil)
+    buf = (" " * column) + buf if column != nil && column > 0
+    puts buf
   end
 end
 
@@ -34,11 +35,6 @@ class CommandLinePlatform
   end
 
   class Display
-    def self.print_line(buf, row = nil, column = nil)
-      buf = (" " * column) + buf if column != nil && column > 0
-      puts buf
-    end
-
     def self.print(*args)
       self.print_line(*args)
     end
