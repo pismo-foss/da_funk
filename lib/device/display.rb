@@ -22,9 +22,9 @@ class Device
     # @return [NilClass] nil.
     def self.print(buf, row = nil, column = nil)
       if row.nil? && column.nil?
-        print(buf)
+        Kernel.print(buf)
       else
-        print_line(buf, row, column)
+        Kernel.print_line(buf, row, column)
       end
     end
 
