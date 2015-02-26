@@ -29,7 +29,7 @@ class Device
     end
 
     private
-    def perform
+    def perform(event, moment)
       unless equal_arity?(event, moment)
         return "Error Arity not Match: Event arity #{event.parameters.size} Proc arity #{send(moment).arity}"
       end
