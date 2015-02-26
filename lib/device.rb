@@ -13,7 +13,7 @@ class Device
     end
   end
 
-  def self.call
+  def self.call(*args)
   end
 
   def self.app_loop(&block)
