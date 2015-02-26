@@ -48,6 +48,7 @@ FILES = FileList[
   "lib/device/notification_callback.rb",
   "lib/device/notification.rb",
   "lib/device/application.rb",
+  "lib/zip.rb",
   "lib/ext/kernel.rb"
 ]
 
