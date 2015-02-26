@@ -30,23 +30,23 @@ class Device
     attr_reader :tracks, :track1, :track2, :track3, :status
 
     def initialize
-      self.status = STATUS_CLOSE
+      @status = STATUS_CLOSE
       self.start
     end
 
     def start
       if self.adapter.open == 1
-        self.status = STATUS_OPEN
+        @status = STATUS_OPEN
         true
       else
-        self.status = STATUS_OPEN_FAIL
+        @status = STATUS_OPEN_FAIL
         false
       end
     end
 
     def swiped?
       if self.read == HARDWARE_SUCCESSFUL_READ
-        self.status = STATUS_SUCCESSFUL_READ
+        @status = STATUS_SUCCESSFUL_READ
         return true
       end
       false
@@ -72,7 +72,7 @@ class Device
       @track2 = @tracks[:track2]
       @track3 = @tracks[:track3]
 
-      self.status = STATUS_READ_TRACKS
+      @status = STATUS_READ_TRACKS
       @tracks
     end
   end
