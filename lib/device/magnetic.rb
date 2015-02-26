@@ -16,7 +16,7 @@ class Device
       end
       magnetic.tracks
     ensure
-      magnetic.close
+      magnetic.close if magnetic
     end
 
     HARDWARE_SUCCESSFUL_READ = 1
