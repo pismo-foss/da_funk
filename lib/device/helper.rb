@@ -73,9 +73,9 @@ class Device
       options.each_with_index do |value,i|
         values[i.to_i] = value[1]
         if add_number
-          Device::Display.print("#{i+1} - #{value[0]}", i+2)
+          Device::Display.print("#{i+1} - #{value[0]}", i+2, 0)
         else
-          Device::Display.print(value[0], i+2)
+          Device::Display.print(value[0], i+2, 0)
         end
       end
 
