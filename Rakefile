@@ -54,7 +54,6 @@ FILES = FileList[
 ]
 
 DaFunk::RakeTask.new do |t|
-  t.mruby = "mruby -b"
   t.main_out  = "./out/da_funk.mrb"
   t.libs = FILES
 end
