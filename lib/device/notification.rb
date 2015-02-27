@@ -36,9 +36,10 @@ class Device
     end
 
     def self.setup
-      NotificationCallback.new "APP_UPDATE", :on => Proc.new { }
-      NotificationCallback.new "SETUP_DEVICE_CONFIG", :on => Proc.new { }
-      NotificationCallback.new "RESET_DEVICE_CONFIG", :on => Proc.new { }
+      NotificationCallback.new "APP_UPDATE", :on => Proc.new { Device::ParamsDat.update_apps(true) }
+      NotificationCallback.new "SETUP_DEVICE_CONFIG", :on => Proc.new { Device::ParamsDat.update_apps(true) }
+      NotificationCallback.new "RESET_DEVICE_CONFIG", :on => Proc.new { Device::ParamsDat.format! }
+
       NotificationCallback.new "SYSTEM_UPDATE", :on => Proc.new { |file| }
       NotificationCallback.new "CANCEL_SYSTEM_UPDATE", :on => Proc.new { }
     end
