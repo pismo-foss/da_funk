@@ -59,8 +59,10 @@ class Device
       end
     end
 
-    def self.update_apps
-      self.download unless self.status
+    def self.update_apps(force = false)
+      if force || ! self.status
+        self.download
+      end
       if self.status
         Device::Display.clear
         Device::Display.print("Press to Download #{@apps.size} apps", 3)
