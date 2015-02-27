@@ -32,7 +32,7 @@ class Device
 
     def self.setup
       @file = FileDb.new(FILE_PATH, DEFAULT)
-      self.host = HOST_STAGING if self.staging
+      self.host = HOST_STAGING if self.staging?
       @file
     end
 
