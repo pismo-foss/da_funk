@@ -8,7 +8,7 @@ class Device
       attr_accessor :file, :apps, :status
     end
 
-    self.apps = Hash.new
+    self.apps = Array.new
 
     # To control if there is any app and parse worked
     self.status = false
@@ -29,9 +29,9 @@ class Device
     # After: "1 - App,pc2_app.posxml,posxml,E0A0;"
     # After: "1 - App,pc2_app.zip,ruby,E0A0;"
     def self.parse_apps
+      @apps = []
       return unless self.setup
 
-      @apps = []
       self.file["apps_list"].to_s.gsub("\"", "").split(";").each do |app|
         @apps << Device::Application.new(*app.split(","))
       end
