@@ -74,6 +74,15 @@ class Device
       end
     end
 
+    def self.format!
+      self.apps.each do |app|
+        File.delete(app.zip) if File.exists?(app.zip)
+        Dir.delete(app.file_no_ext) if File.exists?(app.file_no_ext) && File.exists?(app.file_no_ext)
+      end
+      File.delete(FILE_NAME) if Flie.exists?(FILE_NAME)
+      Device::System.restart
+    end
+
     def self.update_app(application)
       if attach && application
         Device::Display.clear
