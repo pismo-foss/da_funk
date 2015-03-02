@@ -61,10 +61,18 @@ class Device
       value
     end
 
-    # {"option X" => {:detail => 10}, "option Y" => {:detail => 11}}
-    def menu(title, options, add_number = true)
+    # {
+    #   :default => {:detail => 10}, # default value to return if enter
+    #   :number => true, # Add number to label or not
+    #   "option X" => {:detail => 10},
+    #   "option Y" => {:detail => 11}
+    # }
+    def menu(title, options)
+      add_number = options.delete(:number) || true
+      default    = options.delete(:default)
+
       Device::Display.clear
-      puts(title)
+      puts("#{title} (#{default}):")
       values = Hash.new
       options.each_with_index do |value,i|
         values[i.to_i] = value[1]
@@ -75,7 +83,10 @@ class Device
         end
       end
 
-      [values[getc.to_i - 1]].flatten.first
+      key = getc
+
+      return default if key == IO::ENTER && key == IO::CANCEL
+      [values[key.to_i - 1]].flatten.first
     end
 
     def number_to_currency(value, options = {})
