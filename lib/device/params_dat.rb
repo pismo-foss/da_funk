@@ -64,10 +64,6 @@ class Device
         self.download
       end
       if self.status
-        Device::Display.clear
-        Device::Display.print("Press to Download #{@apps.size} apps", 3)
-        getc
-
         @apps.each do |app|
           self.update_app(app)
         end
@@ -120,4 +116,3 @@ class Device
     end
   end
 end
-
