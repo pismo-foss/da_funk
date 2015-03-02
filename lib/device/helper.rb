@@ -4,16 +4,12 @@ class Device
       base.extend Device::Helper
     end
 
-    def form(txt, min=0, max=8, default="", is_number=true)
+    def form(label, options = {})
       Device::Display.clear
-      puts txt
-
-      if is_number
-        string = get_format(min, max, mode: IO::IO_INPUT_NUMBERS)
-      else
-        string = get_format(min, max)
-      end
-      return default if string.empty?
+      options = form_default(options)
+      puts "#{label} (#{options[:default]}):"
+      string = get_format(min, max, options)
+      return default if string.nil? || string.empty?
       string
     end
 
@@ -132,5 +128,15 @@ class Device
         string_plain
       end
     end
+
+    private
+    def form_default(options = {})
+      options[:default] ||= ""
+      options[:mode]    ||= Device::IO::IO_INPUT_LETTERS
+      options[:min]     ||= 0
+      options[:max]     ||= 20
+      options
+    end
   end
 end
+
