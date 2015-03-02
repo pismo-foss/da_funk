@@ -58,3 +58,4 @@ class HelperTest < DaFunk::Test.case
     assert HelperKlass.new.methods.include? :attach
   end
 end
+
