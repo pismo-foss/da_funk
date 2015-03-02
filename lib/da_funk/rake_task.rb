@@ -24,7 +24,7 @@ module DaFunk
       @out_path          ||= File.join(root_path, "out", @name)
       @main_out          ||= File.join(out_path, "main.mrb")
       @test_out          ||= File.join(out_path, "test.mrb")
-      @mruby             ||= "cloudwalk"
+      @mruby             ||= "cloudwalk run"
       @mrbc              = get_mrbc_bin(@mrbc)
 
       define
