@@ -8,3 +8,4 @@ stats
 stats/*
 out/da_funk.mrb
 out/da_funk/*
+out/*
