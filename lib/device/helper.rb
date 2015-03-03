@@ -7,7 +7,8 @@ class Device
     def form(label, options = {})
       Device::Display.clear
       options = form_default(options)
-      puts "#{label} (#{options.delete(:default)}):"
+      default = options.delete(:default)
+      puts "#{label} (#{default}):"
       string = get_format(options.delete(:min), options.delete(:max), options)
       return default if string.nil? || string.empty?
       string
