@@ -125,7 +125,7 @@ class Device
       private
 
       def get_response_size(bytes)
-        return -1 if bytes.size <= 0
+        return -1 if bytes.to_s.size <= 0
         bytes.to_s.unpack("N*").first
       end
 
