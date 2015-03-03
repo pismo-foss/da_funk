@@ -113,7 +113,7 @@ class Device
     def self.application_menu
       options = executable_apps.sort{|app| app.label}.group_by{|app| app.label}
       options[:number] = false
-      menu("Application Menu", options)
+      menu("Main Menu", options)
     end
   end
 end
