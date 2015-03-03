@@ -73,6 +73,7 @@ module DaFunk
         FileUtils.rm_rf File.join(root_path, "out")
         FileUtils.mkdir_p out_path
         FileUtils.mkdir_p File.join(root_path, "out", "main")
+        FileUtils.mkdir_p File.join(root_path, "out", "shared")
 
         resources.each do |file|
           FileUtils.cp(file, out_path) if File.file?(file)
