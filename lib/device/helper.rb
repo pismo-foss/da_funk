@@ -68,17 +68,15 @@ class Device
     #   "option X" => {:detail => 10},
     #   "option Y" => {:detail => 11}
     # }
-    def menu(title, options)
-      add_number = options.delete(:number)
-      add_number = true if add_number.nil?
-      default    = options.delete(:default)
+    def menu(title, selection, options = {})
+      options[:number] = true if options[:number].nil?
 
       Device::Display.clear
-      puts("#{title} (#{default}):")
+      print_title(title, options[:default])
       values = Hash.new
-      options.each_with_index do |value,i|
+      selection.each_with_index do |value,i|
         values[i.to_i] = value[1]
-        if add_number
+        if options[:number]
           Device::Display.print("#{i+1} - #{value[0]}", i+2, 0)
         else
           Device::Display.print(value[0], i+2, 0)
@@ -149,6 +147,14 @@ class Device
       options[:min]     ||= 0
       options[:max]     ||= 20
       options
+    end
+
+    def print_title(string, default)
+      if default
+        puts("#{string} (#{default}):")
+      else
+        puts("#{string}:")
+      end
     end
   end
 end

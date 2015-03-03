@@ -111,9 +111,9 @@ class Device
     end
 
     def self.application_menu
-      options = executable_apps.sort{|app| app.label}.group_by{|app| app.label}
-      options[:number] = false
-      menu("Main Menu", options)
+      options = Hash.new
+      executable_apps.each { |app| options[app.label] = app }
+      menu("Main Menu", options.sort{|value, app| value}, {:number => false})
     end
   end
 end
