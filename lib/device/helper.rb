@@ -69,7 +69,8 @@ class Device
     #   "option Y" => {:detail => 11}
     # }
     def menu(title, options)
-      add_number = options.delete(:number) || true
+      add_number = options.delete(:number)
+      add_number = true if add_number.nil?
       default    = options.delete(:default)
 
       Device::Display.clear
