@@ -1,7 +1,8 @@
 class Device
   class Notification
-    DEFAULT_TIMEOUT  = 15
-    DEFAULT_INTERVAL = 10
+    DEFAULT_TIMEOUT        = 15
+    DEFAULT_INTERVAL       = 10
+    DEFAULT_STREAM_TIMEOUT = 0
 
     class << self
       attr_accessor :callbacks, :current
@@ -9,7 +10,7 @@ class Device
 
     self.callbacks = Hash.new
 
-    attr_reader :fiber, :timeout, :interval, :last_check
+    attr_reader :fiber, :timeout, :interval, :last_check, :stream_timeout
 
     def self.check
       self.current.check if self.current
@@ -28,10 +29,17 @@ class Device
       self.callbacks[callback.description] << callback
     end
 
+    def self.config
+      notification_timeout        = Device::Setting.notification_timeout.empty? ? DEFAULT_TIMEOUT : Device::Setting.notification_timeout.to_i
+      notification_interval       = Device::Setting.notification_interval.empty? ? DEFAULT_INTERVAL : Device::Setting.notification_interval.to_i
+      notification_stream_timeout = Device::Setting.notification_stream_timeout.empty? ? DEFAULT_STREAM_TIMEOUT : Device::Setting.notification_stream_timeout.to_i
+      [notification_timeout, notification_interval, notification_stream_timeout]
+    end
+
     def self.start
       unless Device::Setting.logical_number.empty? || Device::Setting.company_name.empty? || (! Device::Network.connected?)
         unless Device::Notification.current && Device::Notification.current.closed?
-          self.new
+          self.new(*self.config)
         end
       end
     end
@@ -45,9 +53,10 @@ class Device
       NotificationCallback.new "CANCEL_SYSTEM_UPDATE", :on => Proc.new { }
     end
 
-    def initialize(timeout = DEFAULT_TIMEOUT, interval = DEFAULT_INTERVAL)
-      @timeout  = timeout
-      @interval = interval
+    def initialize(timeout = DEFAULT_TIMEOUT, interval = DEFAULT_INTERVAL, stream_timeout = DEFAULT_STREAM_TIMEOUT)
+      @timeout        = timeout
+      @stream_timeout = stream_timeout
+      @interval       = interval
       Device::Notification.current = self
       @fiber = create_fiber
     end
@@ -82,7 +91,7 @@ class Device
     private
     def create_fiber
       Fiber.new do
-        Serfx.connect(socket_block: socket_callback, timeout: timeout) do |conn|
+        Serfx.connect(socket_block: socket_callback, timeout: timeout, stream_timeout: stream_timeout) do |conn|
           conn.stream("user:#{Device::Setting.company_name};#{Device::Setting.logical_number}")
         end
         true
