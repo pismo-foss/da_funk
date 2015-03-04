@@ -93,9 +93,9 @@ module Serfx
     # @param types [String] comma separated list of events
     # @return  [Thread, Response]
     def stream(types, &block)
-      res = request(:stream, 'Type' => types)
+      res = request(:stream, {'Type' => types})
       loop do
-        header, ev = read_data
+        header, ev = read_data(self.stream_timeout)
         check_rpc_error!(header)
         break unless fiber_yield!(ev)
       end

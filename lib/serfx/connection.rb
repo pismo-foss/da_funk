@@ -29,7 +29,7 @@ module Serfx
 
     include Serfx::Commands
 
-    attr_reader :host, :port, :seq, :socket, :socket_tcp, :socket_block, :timeout
+    attr_reader :host, :port, :seq, :socket, :socket_tcp, :socket_block, :timeout, :stream_timeout
 
     def close
       @socket_tcp.close
@@ -54,6 +54,7 @@ module Serfx
         @socket_tcp = opts[:socket_tcp]
       end
       @timeout = opts[:timeout] || DEFAULT_TIMEOUT
+      @stream_timeout = opts[:stream_timeout] || DEFAULT_TIMEOUT
       @seq = 0
       @authkey = opts[:authkey]
       @requests = {}
@@ -64,8 +65,8 @@ module Serfx
     # deserialization
     #
     # @return [Hash]
-    def read_data
-      buf = read_buffer
+    def read_data(read_timeout = self.timeout)
+      buf = read_buffer(read_timeout)
       return if buf.nil?
 
       # TODO Check first and second(header and body) packet size
@@ -77,12 +78,11 @@ module Serfx
       end
     end
 
-    def read_buffer
-      time_timeout = Time.now + timeout
+    def read_buffer(read_timeout)
+      time_timeout = Time.now + read_timeout
       loop do
         if socket.bytes_available > 0
           return socket.read(MAX_MESSAGE_SIZE)
-          break
         end
         break unless (time_timeout > Time.now)
         sleep 1
@@ -126,8 +126,8 @@ module Serfx
     #
     # @param command [String] RPC command name for which response will be read
     # @return [Response]
-    def read_response(command)
-      header, body = read_data
+    def read_response(command, read_timeout = self.timeout)
+      header, body = read_data(read_timeout)
       check_rpc_error!(header)
       if COMMANDS[command].include?(:body)
         Response.new(header, body)
@@ -141,9 +141,9 @@ module Serfx
     # @param command [String] name of the RPC command
     # @param body [Hash] an optional request body for the RPC command
     # @return [Response]
-    def request(command, body = nil)
+    def request(command, body = nil, read_timeout = self.timeout)
       tcp_send(command, body)
-      read_response(command)
+      read_response(command, read_timeout)
     end
 
     def fiber_yield!(ev)
