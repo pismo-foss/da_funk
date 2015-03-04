@@ -105,7 +105,7 @@ class Device
       handshake = "#{Device::System.serial};#{Device::System.app};#{Device::Setting.logical_number};#{Device.version}"
       socket.write("#{handshake.size.chr}#{handshake}")
 
-      company_name = socket.read(3)
+      company_name = socket_tcp.close? ? nil : socket.read(3)
       return false if company_name == "err" || company_name.nil?
 
       Device::Setting.company_name = company_name
