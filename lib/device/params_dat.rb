@@ -113,7 +113,7 @@ class Device
     def self.application_menu
       options = Hash.new
       executable_apps.each { |app| options[app.label] = app }
-      menu("Application Menu", options.sort{|value, app| value}, {:number => false})
+      menu("Application Menu", options, {:number => true})
     end
   end
 end
