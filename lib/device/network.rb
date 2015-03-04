@@ -90,7 +90,7 @@ class Device
     end
 
     def self.handshake_ssl(tcp)
-      return if tcp.close?
+      return if tcp.closed?
       entropy = PolarSSL::Entropy.new
       ctr_drbg = PolarSSL::CtrDrbg.new entropy
       s_ssl = PolarSSL::SSL.new
@@ -105,7 +105,7 @@ class Device
       handshake = "#{Device::System.serial};#{Device::System.app};#{Device::Setting.logical_number};#{Device.version}"
       socket.write("#{handshake.size.chr}#{handshake}")
 
-      company_name = socket_tcp.close? ? nil : socket.read(3)
+      company_name = socket_tcp.closed? ? nil : socket.read(3)
       return false if company_name == "err" || company_name.nil?
 
       Device::Setting.company_name = company_name
