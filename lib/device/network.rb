@@ -90,6 +90,7 @@ class Device
     end
 
     def self.handshake_ssl(tcp)
+      return if tcp.close?
       entropy = PolarSSL::Entropy.new
       ctr_drbg = PolarSSL::CtrDrbg.new entropy
       s_ssl = PolarSSL::SSL.new
