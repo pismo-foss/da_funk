@@ -6,28 +6,31 @@ class Device
     HOST_STAGING    = "switch-staging.cloudwalk.io"
 
     DEFAULT     = {
-      "host"               => "switch.cloudwalk.io",
-      "host_port"          => "31416",
-      "ssl"                => "1",
-      "user"               => "",
-      "password"           => "", #WIFI
-      "apn"                => "",
-      "authentication"     => "", #WIFI
-      "essid"              => "", #WIFI
-      "bssid"              => "", #WIFI
-      "cipher"             => "", #WIFI
-      "mode"               => "", #WIFI
-      "channel"            => "", #WIFI
-      "media"              => "",
-      "ip"                 => "",
-      "gateway"            => "",
-      "dns1"               => "",
-      "dns2"               => "",
-      "subnet"             => "",
-      "logical_number"     => "",
-      "network_configured" => "",
-      "environment"        => "",
-      "company_name"       => ""
+      "host"                        => "switch-staging.cloudwalk.io",
+      "host_port"                   => "31416",
+      "ssl"                         => "1",
+      "user"                        => "",
+      "password"                    => "", #WIFI
+      "apn"                         => "",
+      "authentication"              => "", #WIFI
+      "essid"                       => "", #WIFI
+      "bssid"                       => "", #WIFI
+      "cipher"                      => "", #WIFI
+      "mode"                        => "", #WIFI
+      "channel"                     => "", #WIFI
+      "media"                       => "",
+      "ip"                          => "",
+      "gateway"                     => "",
+      "dns1"                        => "",
+      "dns2"                        => "",
+      "subnet"                      => "",
+      "logical_number"              => "",
+      "network_configured"          => "",
+      "environment"                 => "",
+      "notification_timeout"        => "",
+      "notification_interval"       => "",
+      "notification_stream_timeout" => "",
+      "company_name"                => ""
     }
 
     def self.setup
