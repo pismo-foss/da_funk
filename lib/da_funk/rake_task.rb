@@ -9,7 +9,7 @@ module DaFunk
   class RakeTask < ::Rake::TaskLib
     include ::Rake::DSL if defined?(::Rake::DSL)
 
-    attr_accessor :name, :libs, :tests, :tests_unit, :tests_integration, :root_path, :main_out, :test_out, :resources, :mrbc, :mruby, :out_path
+    attr_accessor :name, :libs, :tests, :tests_unit, :tests_integration, :root_path, :main_out, :test_out, :resources, :mrbc, :mruby, :out_path, :resources_out
 
     def initialize
       yield self if block_given?
@@ -18,12 +18,13 @@ module DaFunk
       @tests             ||= FileList['test/**/*test.rb']
       @tests_integration ||= FileList['test/integration/**/*test.rb']
       @tests_unit        ||= FileList['test/unit/**/*test.rb']
-      @resources         ||= FileList['resources/**/*']
       @root_path         ||= File.expand_path("./")
       @name              ||= File.basename(root_path)
       @out_path          ||= File.join(root_path, "out", @name)
       @main_out          ||= File.join(out_path, "main.mrb")
       @test_out          ||= File.join(out_path, "test.mrb")
+      @resources         ||= FileList['resources/**/*']
+      @resources_out     ||= @resources.pathmap("%{resources,#{out_path}}x")
       @mruby             ||= "cloudwalk run"
       @mrbc              = get_mrbc_bin(@mrbc)
 
@@ -75,8 +76,8 @@ module DaFunk
         FileUtils.mkdir_p File.join(root_path, "out", "main")
         FileUtils.mkdir_p File.join(root_path, "out", "shared")
 
-        resources.each do |file|
-          FileUtils.cp(file, out_path) if File.file?(file)
+        resources.each_with_index do |file,dest_i|
+          FileUtils.cp(file, resources_out[dest_i]) if File.file?(file)
         end
       end
 
