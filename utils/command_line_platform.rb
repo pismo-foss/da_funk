@@ -1,6 +1,6 @@
 
 module GetC
-  def getc
+  def getc(timeout = 0)
     gets.chomp[0]
   end
 
