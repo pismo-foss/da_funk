@@ -17,6 +17,7 @@ class Device
 
     def self.execute(event)
       calls = self.callbacks[event.callback]
+      return unless calls
       [:before, :on, :after].each do |moment|
         calls.each{|callback| callback.call(event, moment)}
       end
