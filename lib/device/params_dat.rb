@@ -75,7 +75,7 @@ class Device
         File.delete(app.zip) if File.exists?(app.zip)
         Dir.delete(app.file_no_ext) if File.exists?(app.file_no_ext) && File.exists?(app.file_no_ext)
       end
-      File.delete(FILE_NAME) if Flie.exists?(FILE_NAME)
+      File.delete(FILE_NAME) if File.exists?(FILE_NAME)
       Device::System.restart
     end
 
