@@ -67,6 +67,10 @@ class CommandLinePlatform
     def self.serial
       "50111541"
     end
+
+    def self.restart
+      puts "Restart terminal!"
+    end
   end
 
   def self.version
