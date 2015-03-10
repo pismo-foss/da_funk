@@ -85,7 +85,7 @@ class Device
 
       key = getc
 
-      return default if key == IO::ENTER || key == IO::CANCEL
+      return options[:default] if key == IO::ENTER || key == IO::CANCEL
       [values[key.to_i - 1]].flatten.first
     end
 
