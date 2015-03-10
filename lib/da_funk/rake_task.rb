@@ -63,7 +63,7 @@ module DaFunk
     def execute_tests(files)
       all_files = FileList["test/test_helper.rb"] + libs + files + [File.join(File.dirname(__FILE__), "..", "..", "utils", "command_line_platform.rb")] + [File.join(File.dirname(__FILE__), "..", "..", "utils", "test_run.rb")]
       if sh("#{mrbc} -g -o #{test_out} #{all_files.uniq}")
-        puts "cd #{out_path}"
+        puts "cd #{File.dirname(out_path)}"
         FileUtils.cd File.dirname(out_path)
         sh("#{mruby} #{File.join(out_path, "test.mrb")}")
       end
