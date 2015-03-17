@@ -102,9 +102,15 @@ class Device
       Proc.new do
         socket_tcp = Device::Network.create_socket
         socket_tcp.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
-        ssl = Device::Network.handshake_ssl(socket_tcp)
-        [ssl, socket_tcp]
+
+        if Device::Setting.ssl == "1"
+          socket = Device::Network.handshake_ssl(socket_tcp)
+        else
+          socket = socket_tcp
+        end
+        [socket, socket_tcp]
       end
     end
   end
 end
+
