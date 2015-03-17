@@ -50,7 +50,6 @@ FILES = FileList[
   "lib/device/application.rb",
   "lib/zip.rb",
   "lib/device/magnetic.rb",
-  "lib/ext/tcp_socket.rb",
   "lib/ext/kernel.rb"
 ]
 
