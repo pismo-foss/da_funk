@@ -18,7 +18,9 @@ class DisplayTest < DaFunk::Test.case
   end
 
   def test_print_bitmap
-    assert_equal nil, Device::Display.print_bitmap("test")
+    assert_raise File::FileError do
+      Device::Display.print_bitmap("test")
+    end
   end
 
   def test_kernel_print_line
