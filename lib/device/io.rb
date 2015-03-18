@@ -1,11 +1,20 @@
 class Device
   class IO < ::IO
-    KEY_TIMEOUT      = 0x12.chr
-    CANCEL           = 0x1B.chr
-    ENTER            = 0x0D.chr
-    BACK             = "\017"
-    F1               = "\020"
+    F1               = "\001"
     F2               = "\002"
+    F3               = "\003"
+    F4               = "\004"
+    FUNC             = "\006"
+    UP               = "\007"
+    DOWN             = "\008"
+    MENU             = "\009"
+    ENTER            = 0x0D.chr
+    CLEAR            = 0x0F.chr
+    ALPHA            = 0x10.chr
+    SHARP            = 0x11.chr
+    KEY_TIMEOUT      = 0x12.chr
+    BACK             = "\017"
+    CANCEL           = 0x1B.chr
     IO_INPUT_NUMBERS = :numbers
     IO_INPUT_LETTERS = :letters
     IO_INPUT_SECRET  = :secret
@@ -68,13 +77,10 @@ class Device
 
     # Read 1 byte on keyboard, wait until be pressed
     #
-    # @return [String] key read from keyboard
-    def self.getc; super; end
-
-    # Read Track 1, 2, and 3 if available on card
+    # @param timeout [Fixnum] Timeout in milliseconds to wait for key.
     #
-    # @return [Hash] key read from keyboard
-    def self.read_card; super; end
+    # @return [String] key read from keyboard
+    def self.getc(timeout = 0); super(timeout); end
   end
 end
 

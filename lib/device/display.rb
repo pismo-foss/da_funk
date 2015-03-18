@@ -4,16 +4,6 @@ class Device
       Device.adapter::Display
     end
 
-    # Same as print, but add "\\n" at end of print
-    #
-    # @param buf [String] Text to be printed.
-    # @param row [Fixnum] Row to start display.
-    # @param column [Fixnum] Column to start display.
-    # @return [NilClass] nil.
-    def self.puts(buf, row = nil, column = nil)
-      self.print("#{buf}\n", row, column)
-    end
-
     # Display buffer
     #
     # @param buf [String] Text to be printed.
@@ -22,10 +12,14 @@ class Device
     # @return [NilClass] nil.
     def self.print(buf, row = nil, column = nil)
       if row.nil? && column.nil?
-        Kernel.print(buf)
+        adapter.print(buf)
       else
-        Kernel.print_line(buf, row, column)
+        adapter.print_in_line(buf, row, column)
       end
+    end
+
+    def self.print_line(buf, row = 0, column = 0)
+      adapter.print(buf, row, column)
     end
 
     # Display bitmap

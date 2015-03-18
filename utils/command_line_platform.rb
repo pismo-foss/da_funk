@@ -1,16 +1,8 @@
-
-module GetC
+module Kernel
   def getc(timeout = 0)
     gets.chomp[0]
   end
-
-  def print_line(buf, row = nil, column = nil)
-    buf = (" " * column) + buf if column != nil && column > 0
-    puts buf
-  end
 end
-
-include GetC
 
 class CommandLinePlatform
   IO = ::IO
@@ -19,24 +11,16 @@ class CommandLinePlatform
     def self.get_string(min, max, option = nil)
       str = ""
       while
-        str << Kernel.gets.chomp
+        str << gets.chomp
         return str if str.size >= min
       end
-    end
-
-    def self.display(buf, row = 0, column = 0)
-      self.print_line(buf, row, column)
-    end
-
-    def self.display_clean
-      # No way to clear from the CLI yet
-      # we could use ncurses, but that's painful
     end
   end
 
   class Display
-    def self.print(*args)
-      self.print_line(*args)
+    def self.print_in_line(buf, row = nil, column = nil)
+      buf = (" " * column) + buf if column != nil && column > 0
+      puts buf
     end
 
     def self.clear
