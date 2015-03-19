@@ -81,10 +81,9 @@ module Serfx
     def read_buffer(read_timeout)
       time_timeout = Time.now + read_timeout
       loop do
-        if socket.bytes_available > 0
-          return socket.read(MAX_MESSAGE_SIZE)
-        end
-        break unless (time_timeout > Time.now)
+        bytes = socket.bytes_available
+        return socket.read(bytes) if bytes > 0
+        break unless time_timeout > Time.now
         sleep 1
       end
       nil
