@@ -20,7 +20,7 @@ module Serfx
     # @param header [Hash] header of the response as hash
     # @param body [Hash] body of the response as hash
     def initialize(header, body = nil)
-      @header = Header.new(header['Seq'], header['Error'])
+      @header = Header.new(header['Seq'], header['Error']) if header
       @body = body
     end
   end
