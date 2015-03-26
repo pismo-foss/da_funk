@@ -19,7 +19,7 @@ class Device
     end
 
     def self.print_line(buf, row = 0, column = 0)
-      adapter.print(buf, row, column)
+      self.print(buf, row, column)
     end
 
     # Display bitmap
