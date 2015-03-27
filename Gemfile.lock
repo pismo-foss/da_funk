@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    da_funk (0.4.1)
-      bundler (>= 1.7)
-      rake (~> 10.4.2)
+    da_funk (0.4.3)
+      bundler (~> 1.7)
+      rake (~> 10.4)
       yard (~> 0.8)
 
 GEM
