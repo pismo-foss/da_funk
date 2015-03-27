@@ -12,8 +12,8 @@ Gem::Specification.new do |spec|
   spec.version       = Device::API_VERSION
   spec.authors       = ["Thiago Scalone"]
   spec.email         = ["thiago@cloudwalk.io"]
-  spec.summary       = "DaFunk API to embedded development"
-  spec.description   = "DaFunk API to embedded development"
+  spec.summary       = "MRuby Framework to embedded devices"
+  spec.description   = "DaFunk is a framework to embedded development optimized for programmer happiness and sustainable productivity. It encourages beautiful code by favoring convention over configuration."
   spec.homepage      = "http://github.com/cloudwalkio/da_funk"
   spec.license       = "MIT"
 
