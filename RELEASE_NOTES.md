@@ -1,5 +1,8 @@
 # DaFunk
 
+### 0.4.4 - 2015-03-27 - Gemspec summary and description.
+- Fix gemspec summary and description.
+
 ### 0.4.3 - 2015-03-27 - Refactoring Display interface
 - Support resource configuration in DaFunk RakeTask.
 - Refactoring IO/Display and UI methods.
