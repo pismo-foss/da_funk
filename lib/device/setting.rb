@@ -47,6 +47,14 @@ class Device
       self.environment == "staging"
     end
 
+    def self.to_production!
+      self.host = HOST_PRODUCTION
+    end
+
+    def self.to_staging!
+      self.host = HOST_STAGING
+    end
+
     def self.method_missing(method, *args, &block)
       setup unless @file
       param = method.to_s
