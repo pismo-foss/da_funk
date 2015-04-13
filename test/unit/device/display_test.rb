@@ -41,3 +41,4 @@ class DisplayTest < DaFunk::Test.case
     assert_equal nil, puts("test", 0, 0)
   end
 end
+
