@@ -4,10 +4,12 @@ class Device
     FILE_PATH       = "./main/config.dat"
     HOST_PRODUCTION = "switch.cloudwalk.io"
     HOST_STAGING    = "switch-staging.cloudwalk.io"
+    PORT_TCP        = "31415"
+    PORT_TCP_SSL    = "31416"
 
     DEFAULT     = {
-      "host"                        => "switch-staging.cloudwalk.io",
-      "host_port"                   => "31416",
+      "host"                        => HOST_PRODUCTION,
+      "host_port"                   => PORT_TCP_SSL,
       "ssl"                         => "1",
       "user"                        => "",
       "password"                    => "", #WIFI
