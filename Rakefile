@@ -50,6 +50,8 @@ FILES = FileList[
   "lib/device/application.rb",
   "lib/zip.rb",
   "lib/device/magnetic.rb",
+  "lib/device/emv_table.rb",
+  "lib/device/emv_row.rb",
   "lib/ext/kernel.rb"
 ]
 
