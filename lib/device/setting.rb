@@ -37,8 +37,16 @@ class Device
 
     def self.setup
       @file = FileDb.new(FILE_PATH, DEFAULT)
-      self.host = HOST_STAGING if self.staging?
+      self.check_environment!
       @file
+    end
+
+    def self.check_environment!
+      if self.staging?
+        self.to_staging!
+      else
+        self.to_production!
+      end
     end
 
     def self.production?
