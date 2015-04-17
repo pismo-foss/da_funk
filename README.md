@@ -66,7 +66,7 @@ Walk Framework API, responsible for managed compatibility between implemented de
 4. Configure Adapter
 
 		class Device # Class from DaFunk
-			self.adapter = PlatformAbstraction
+			self.adapter = PlatformInterface
 		end
 
 5. Compile da_funk into mrb file `$ rake`.
