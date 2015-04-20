@@ -13,12 +13,13 @@ class Device
     # To control if there is any app and parse worked
     self.status = false
 
+    def self.file
+      self.setup unless @file
+      @file
+    end
+
     def self.setup
-      if File.exists?(FILE_NAME)
-        @file = FileDb.new(FILE_NAME)
-      else
-        false
-      end
+      @file = FileDb.new(FILE_NAME)
     end
 
     # TODO Scalone: Change after @bmsatierf change the format
