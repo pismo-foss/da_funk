@@ -69,6 +69,16 @@ module DaFunk
       end
     end
 
+    def check_gem_out(gem)
+      if File.exists?(path = File.join(gem.full_gem_path, "out", gem.name)) && File.file?(path)
+      elsif File.exists?(path = File.join(gem.full_gem_path, "out", gem.name, "main.mrb")) && File.file?(path)
+      elsif File.exists?(path = File.join(gem.full_gem_path, "out", gem.name, "#{gem.name}.mrb")) && File.file?(path)
+      else
+        return nil
+      end
+      return path
+    end
+
     def define
       task :resources do
         FileUtils.rm_rf File.join(root_path, "out")
@@ -86,7 +96,8 @@ module DaFunk
         FileUtils.mkdir_p out_path
 
         Bundler.load.specs.each do |gem|
-          sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb #{out_path}/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
+          path = check_gem_out(gem)
+          FileUtils.cp(path, File.join(out_path, "#{gem.name}.mrb")) if path
         end
 
         sh "#{mrbc} -g -o #{main_out} #{libs} "

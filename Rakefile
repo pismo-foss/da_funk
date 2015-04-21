@@ -54,7 +54,7 @@ FILES = FileList[
 ]
 
 DaFunk::RakeTask.new do |t|
-  t.main_out  = "./out/main/da_funk.mrb"
+  t.main_out  = "./out/da_funk/da_funk.mrb"
   t.libs = FILES
 end
 
