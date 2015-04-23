@@ -37,6 +37,7 @@ class Device
     #  4 Battery icon displays 4 grids
     #  5 Powered by external power supply and the battery in charging. Battery icon displays form empty to full cycle. The battery status indicator on the bottom of terminal is displaying red
     # ￼6 Powered by external power supply and the battery charging 6 finished. Battery icon displays full grids. The battery status indicator on the bottom of terminal is displaying green.
+    # ￼7 Powered by external power supply and has no battery.
     def self.battery
       adapter.battery
     end
