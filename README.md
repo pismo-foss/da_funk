@@ -18,34 +18,19 @@ Walk Framework API, responsible for managed compatibility between implemented de
 
 ### Steps
 
-1. Add da_funk as submodule `$ git submodule add git@github.com:cloudwalkio/da_funk.git <path/to/lib/da_funk>`
+1. Add da_funk as submodule of your platform project, check the sample  [here](https://github.com/cloudwalkio/around_the_world) `$ git submodule add git@github.com:cloudwalkio/da_funk.git <path/to/lib/da_funk>`
 
-2. Develop start method in platform abstraction.
+2. Develop setup method in platform abstraction.
 
-	Start method is responsible for start the runtime in our platform. And should require the da_funk lib(common lib between platforms).
+	Setup method will be called in every app execution, should be use to filesystem preparation or any shore needed by the app environment. Check the sample [here](https://github.com/cloudwalkio/mruby-cloudwalk-platform).
 
 		class PlatformInterface
-		  	def self.start(file = "./main.mrb")
-			    begin
-					require "./da_funk.mrb"
-					require "./platform.mrb"
-					require file
-
-					app = Device::Support.path_to_class file
-
-					loop do
-						app.call
-					end
-			    rescue => @exception
-					puts "#{@exception.class}: #{@exception.message}"
-					puts "#{@exception.backtrace[0..2].join("\n")}"
-    				IO.getc
-					return nil
-				end
-			end
+		    def self.setup
+		        # Configuration and initialization before apps execution
+		    end
 		end
 		
-3. Develop interface required by DaFunk on PlatformInterface, could be the same file you have start method.
+3. Develop interface required by DaFunk on PlatformInterface, could be the same file you have setup method.
 
 		class PlatformInterface
 			Network = ::Network # Implemented on C
