@@ -2,8 +2,9 @@
 class Device
   class Network
 
-    MEDIA_GPRS = "gprs"
-    MEDIA_WIFI = "wifi"
+    MEDIA_GPRS     = "gprs"
+    MEDIA_WIFI     = "wifi"
+    MEDIA_ETHERNET = "ethernet"
 
     AUTH_NONE_OPEN       = "open"
     AUTH_NONE_WEP        = "wep"
@@ -149,7 +150,7 @@ class Device
       while(ret == PROCESSING)
         ret = Device::Network.connected?
       end
-      if ret == SUCCESS && wifi?
+      if ret == SUCCESS && (wifi? || ethernet?)
         Device::Network.dhcp_client(20000)
       end
       ret
@@ -177,6 +178,8 @@ class Device
           cipher:         Device::Setting.cipher,
           mode:           Device::Setting.mode
         }
+      elsif ethernet?
+        Hash.new
       end
     end
 
@@ -186,6 +189,10 @@ class Device
 
     def self.wifi?
       Device::Setting.media == "wifi"
+    end
+
+    def self.ethernet?
+      Device::Setting.media == "ethernet"
     end
   end
 end
