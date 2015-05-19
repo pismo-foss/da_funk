@@ -6,7 +6,7 @@ unless Object.const_defined?(:MTest)
   require file_path + "/device/display.rb"
   require file_path + "/device/io.rb"
   require file_path + "/device/network.rb"
-  require file_path + "/device/printer.rb"
+  require file_path + "/device/print.rb"
   require file_path + "/device/setting.rb"
   require file_path + "/device/system.rb"
   require file_path + "/device/version.rb"
