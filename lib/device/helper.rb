@@ -96,6 +96,7 @@ class Device
 
       if value.is_a? Float
         number, unit = value.to_s.split(".")
+        unit = unit.to_s
         len = number.size + unit.size
       else
         len    = value.to_s.size
