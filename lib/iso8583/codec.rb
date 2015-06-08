@@ -1,3 +1,7 @@
+# Copyright 2009 by Tim Becker (tim.becker@kuriostaet.de)
+# MIT License, for details, see the LICENSE file accompaning
+# this distribution
+
 #require 'date'
 
 module ISO8583
@@ -52,6 +56,9 @@ module ISO8583
   # [+Null_Codec+]        passes anything along untouched.
   # [<tt>Track2</tt>]     rudimentary check that string conforms to Track2
   # [+MMDDhhmmssCodec+]   encodes Time, Datetime or String to the described date format, checking 
+  #                       that it is a valid date. Decodes to a DateTime instance, decoding and 
+  #                       encoding perform validity checks!
+  # [+MMDDCodec+]   encodes Time, Datetime or String to the described date format, checking 
   #                       that it is a valid date. Decodes to a DateTime instance, decoding and 
   #                       encoding perform validity checks!
   # [+YYMMDDhhmmssCodec+] encodes Time, Datetime or String to the described date format, checking 
@@ -130,7 +137,7 @@ module ISO8583
 
   ANS_Codec = Codec.new
   ANS_Codec.encoder = lambda{|str|
-    raise ISO8583Exception.new("Invalid value: #{str} must be [\x20-\x7E]") unless str =~ /^[\x20-\x7E]*$/
+    raise ISO8583Exception.new("Invalid value: #{str} must be [\\x20-\\x7E]") unless str =~ /^[\x20-\x7E]*$/
     str
   }
   ANS_Codec.decoder = PASS_THROUGH_DECODER
@@ -191,7 +198,6 @@ module ISO8583
   HhmmssCodec       = _date_codec("%H%M%S")
   YYMMDDhhmmssCodec = _date_codec("%y%m%d%H%M%S")
   YYMMCodec         = _date_codec("%y%m")
-  MMDDCodec         = _date_codec("%m%d")      
-  YYMMDDCodec       = _date_codec("%y%m%d")  
+  MMDDCodec         = _date_codec("%m%d")
 
 end

@@ -1,3 +1,6 @@
+# Copyright 2009 by Tim Becker (tim.becker@kuriostaet.de)
+# MIT License, for details, see the LICENSE file accompaning
+# this distribution
 
 module ISO8583
 
@@ -37,7 +40,7 @@ module ISO8583
   # be accessed later either via their name or value:
   #
   #    mes = MyMessage.new 1100
-  #
+  # 
   # or
   #    mes = MyMessage.new "Authorization Request Acquirer Gateway"
   #
@@ -107,44 +110,22 @@ module ISO8583
   class Message
 
     # The value of the MTI (Message Type Indicator) of this message.
-    attr_reader :mti, :size_endianness
+    attr_reader :mti 
+
+    # ISO8583 allows hex or binary bitmap, so it should be configurable
+    attr_reader :use_hex_bitmap
 
     # Instantiate a new instance of this type of Message
     # optionally specifying an mti. 
-    def initialize(mti = nil, size_endianness = :little, format = :ascii)
+    def initialize(mti = nil, use_hex_bitmap = false)
       # values is an internal field used to collect all the
       # bmp number | bmp name | field en/decoders | values
       # which are set in this message.
       @values = {}
-      @size_endianness = size_endianness
-      @format = :ascii
+
       self.mti = mti if mti
-    end
+      @use_hex_bitmap = use_hex_bitmap
 
-    def build
-      message = self.to_b
-      message_size = self.size(message)
-
-      if size_endianness == :little
-        binary_size = [message_size].pack("s")
-      elsif size_endianness == :big
-        binary_size = [message_size].pack("s>")
-      else
-        raise ISO8583Exception.new "size endianness no recognized"
-      end
-
-      binary_size + message
-    end
-
-    def size(message)
-      case format
-      when :ascii
-        message.size
-      when :bcd
-        (message.size / 2)
-      else
-        raise ISO8583Exception.new "format no recognized"
-      end
     end
 
     # Set the mti of the Message using either the actual value
@@ -163,7 +144,7 @@ module ISO8583
       num, name = _get_mti_definition(value)
       @mti = num
     end
-
+    
     # Set a field in this message, `key` is either the
     # bmp number or it's name.
     # ===Example
@@ -172,9 +153,13 @@ module ISO8583
     #    mes[2]=47474747                          # bmp 2 is generally the PAN
     #    mes["Primary Account Number"]=47474747   # if thats what you called the field in Message.bmp.
     def []=(key, value)
-      bmp_def              = _get_definition key
-      bmp_def.value        = value
-      @values[bmp_def.bmp] = bmp_def 
+      if value.nil?
+        @values.delete(key)
+      else
+        bmp_def              = _get_definition key
+        bmp_def.value        = value
+        @values[bmp_def.bmp] = bmp_def
+      end
     end
 
     # Retrieve the decoded value of the contents of a bitmap
@@ -196,14 +181,6 @@ module ISO8583
       raise ISO8583Exception.new "no MTI set!" unless mti
       mti_enc = self.class._mti_format.encode(mti)
       mti_enc << _body.join
-
-      # length = mti_enc.length.to_s(16).rjust(4, '0')
-
-      length_dec = [mti_enc.length]
-      length_hex = length_dec.pack("s>")
-      mti_enc = length_hex + mti_enc
-
-      return mti_enc
     end
 
     # Returns a nicely formatted representation of this
@@ -226,7 +203,7 @@ module ISO8583
 
     # METHODS starting with an underscore are meant for
     # internal use only ...
-
+    
     # Returns an array of two byte arrays:
     # [bitmap_bytes, message_bytes]
     def _body
@@ -237,7 +214,12 @@ module ISO8583
         enc_value = @values[bmp_num].encode
         message << enc_value
       end
-      [ bitmap.to_s.to_i(2).to_s(16).upcase, message ]
+
+      if use_hex_bitmap
+	      [bitmap.to_hex, message]
+      else
+	      [bitmap.to_bytes, message]
+      end
     end
 
     def _get_definition(key) #:nodoc:
@@ -283,7 +265,7 @@ module ISO8583
         _handle_opts(f, opts)
         @mti_format = f
       end
-
+      
       # Defines the message types allowed for this type of message and
       # gives them names
       # 
@@ -332,8 +314,8 @@ module ISO8583
         field.name = name
         field.bmp  = bmp
         _handle_opts(field, opts) if opts
-
-        bmp_def = ISO8583::BMP.new bmp, name, field
+        
+        bmp_def = BMP.new bmp, name, field
 
         @defs[bmp]  = bmp_def
         @defs[name] = bmp_def
@@ -370,23 +352,28 @@ module ISO8583
           # @values[bmp] = bmp_def
         }
       end
-
+      
       # Parse the bytes `str` returning a message of the defined type.
-      def parse(str)
-        message = self.new
+      def parse(str, use_hex_bitmap = false)
+        message = self.new(nil, use_hex_bitmap)
+
         message.mti, rest = _mti_format.parse(str)
 
-        bmp,rest = Bitmap.parse(rest)
+        bmp, rest = Bitmap.parse(rest, use_hex_bitmap)
+
         bmp.each {|bit|
-          if bit > 1 && bit <= 128
-            bmp_def      = _definitions[bit]
-            value, rest  = bmp_def.field.parse(rest)
-            message[bit] = value
-          end
+          bmp_def      = _definitions[bit]
+
+	  unless bmp_def
+		  raise ISO8583ParseException.new "The message contains fields not defined"
+	  end
+
+          value, rest  = bmp_def.field.parse(rest)
+          message[bit] = value
         }
         message
       end
-
+      
       # access the mti definitions applicable to the Message
       #
       # returns a pair of hashes containing:
@@ -398,7 +385,7 @@ module ISO8583
       def _mti_definitions
         [@mtis_v, @mtis_n]
       end
-
+      
       # Access the field definitions of this class, this is a
       # hash containing [bmp_number, BMP] and [bitmap_name, BMP]
       # pairs.
@@ -421,7 +408,7 @@ module ISO8583
       # in through the `bmp` and `mti_format` class methods.
       #
       def _handle_opts(field, opts)
-        opts.each {|key, value|
+        opts.each_pair {|key, value|
           key = (key.to_s+"=").to_sym
           if field.respond_to?(key)
             field.send(key, value)
@@ -451,5 +438,5 @@ module ISO8583
       field.encode(value)
     end
   end
-end
 
+end
