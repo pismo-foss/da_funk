@@ -21,16 +21,16 @@ module ISO8583
 
       message ? initialize_from_message(message) : nil
     end
-    
+
     def hex_bitmap?
-	    !!@hex_bitmap
+      !!@hex_bitmap
     end
 
     # yield once with the number of each set field.
     def each #:yields: each bit set in the bitmap except the first bit.
       @bmp[1..-1].each_with_index {|set, i| yield i+2 if set}
     end
-    
+
     # Returns whether the bit is set or not.
     def [](i)
       @bmp[i-1]
@@ -51,7 +51,7 @@ module ISO8583
     def set(i)
       self[i] = true
     end
-    
+
     # Unsets bit #i
     def unset(i)
       self[i] = false
@@ -67,7 +67,7 @@ module ISO8583
     alias_method :to_b, :to_bytes
 
     def to_hex
-	    "%02x" % self.to_s.to_i(2)
+      "%02x" % self.to_s.to_i(2)
     end
 
     # Generate a String representation of this bitmap in the form:
@@ -79,7 +79,7 @@ module ISO8583
 
       str = ""
       1.upto(high) do|i|
-	      str << (self[i] ? '1' : '0')
+        str << (self[i] ? '1' : '0')
       end
 
       str
@@ -90,17 +90,17 @@ module ISO8583
 
     def initialize_from_message(message)
       bmp = if hex_bitmap?
-		    rjust(message[0..15].to_i(16).to_s(2), 64, '0')
-	    else
-		    message.unpack("B64")[0]
-	    end
+              rjust(message[0..15].to_i(16).to_s(2), 64, '0')
+            else
+              message.unpack("B64")[0]
+            end
 
       if bmp[0,1] == "1"
-	      bmp = if hex_bitmap?
-			    rjust(message[0..31].to_i(16).to_s(2), 128,'0')
-		    else
-			    message.unpack("B128")[0]
-		    end
+        bmp = if hex_bitmap?
+                rjust(message[0..31].to_i(16).to_s(2), 128,'0')
+              else
+                message.unpack("B128")[0]
+              end
       end
 
       0.upto(bmp.length-1) do |i|
@@ -112,23 +112,18 @@ module ISO8583
       # Parse the bytes in string and return the Bitmap and bytes remaining in `str`
       # after the bitmap is taken away.
       def parse(str, hex_bitmap = false)
-	bmp  = Bitmap.new(str, hex_bitmap)
+        bmp  = Bitmap.new(str, hex_bitmap)
 
-	 rest = if bmp.hex_bitmap?
-			 bmp[1] ? str[32, str.length] : str[16, str.length]
-		else
-			 bmp[1] ? str[16, str.length] : str[8, str.length]
-		end
+        rest = if bmp.hex_bitmap?
+                 bmp[1] ? str[32, str.length] : str[16, str.length]
+               else
+                 bmp[1] ? str[16, str.length] : str[8, str.length]
+               end
 
         [ bmp, rest ]
       end
     end
-    
+
   end
 end
 
-if __FILE__==$0
-  mp = ISO8583::Bitmap.new
-  20.step(128,7) {|i| mp.set(i)}
-  print mp.to_bytes
-end

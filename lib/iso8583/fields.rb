@@ -163,7 +163,7 @@ module ISO8583
   YYMM        = Field.new
   YYMM.codec  = YYMMCodec
   YYMM.length = 4
-  
+
   MMDD        = Field.new
   MMDD.codec  = MMDDCodec
   MMDD.length = 4
@@ -171,5 +171,5 @@ module ISO8583
   Hhmmss        = Field.new
   Hhmmss.codec  = HhmmssCodec
   Hhmmss.length = 6
-
 end
+

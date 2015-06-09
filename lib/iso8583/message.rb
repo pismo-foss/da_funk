@@ -144,7 +144,7 @@ module ISO8583
       num, name = _get_mti_definition(value)
       @mti = num
     end
-    
+
     # Set a field in this message, `key` is either the
     # bmp number or it's name.
     # ===Example
@@ -203,7 +203,7 @@ module ISO8583
 
     # METHODS starting with an underscore are meant for
     # internal use only ...
-    
+
     # Returns an array of two byte arrays:
     # [bitmap_bytes, message_bytes]
     def _body
@@ -216,9 +216,9 @@ module ISO8583
       end
 
       if use_hex_bitmap
-	      [bitmap.to_hex, message]
+        [bitmap.to_hex, message]
       else
-	      [bitmap.to_bytes, message]
+        [bitmap.to_bytes, message]
       end
     end
 
@@ -265,7 +265,7 @@ module ISO8583
         _handle_opts(f, opts)
         @mti_format = f
       end
-      
+
       # Defines the message types allowed for this type of message and
       # gives them names
       # 
@@ -314,7 +314,7 @@ module ISO8583
         field.name = name
         field.bmp  = bmp
         _handle_opts(field, opts) if opts
-        
+
         bmp_def = BMP.new bmp, name, field
 
         @defs[bmp]  = bmp_def
@@ -352,7 +352,7 @@ module ISO8583
           # @values[bmp] = bmp_def
         }
       end
-      
+
       # Parse the bytes `str` returning a message of the defined type.
       def parse(str, use_hex_bitmap = false)
         message = self.new(nil, use_hex_bitmap)
@@ -364,16 +364,16 @@ module ISO8583
         bmp.each {|bit|
           bmp_def      = _definitions[bit]
 
-	  unless bmp_def
-		  raise ISO8583ParseException.new "The message contains fields not defined"
-	  end
+          unless bmp_def
+            raise ISO8583ParseException.new "The message contains fields not defined"
+          end
 
           value, rest  = bmp_def.field.parse(rest)
           message[bit] = value
         }
         message
       end
-      
+
       # access the mti definitions applicable to the Message
       #
       # returns a pair of hashes containing:
@@ -385,7 +385,7 @@ module ISO8583
       def _mti_definitions
         [@mtis_v, @mtis_n]
       end
-      
+
       # Access the field definitions of this class, this is a
       # hash containing [bmp_number, BMP] and [bitmap_name, BMP]
       # pairs.
@@ -438,5 +438,5 @@ module ISO8583
       field.encode(value)
     end
   end
-
 end
+

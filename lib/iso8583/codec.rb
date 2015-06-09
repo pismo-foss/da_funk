@@ -201,3 +201,4 @@ module ISO8583
   MMDDCodec         = _date_codec("%m%d")
 
 end
+
