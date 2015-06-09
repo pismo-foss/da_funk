@@ -1,5 +1,16 @@
 # DaFunk
 
+### 0.4.5 - 2015-06-09 - ISO8583, environment and abstraction classes
+- Implementing support to change host environment configuration with Setting.to_production! and Setting.to_staging!.
+- Fix da_funk.mrb out path getting the app name to output da_funk.mrb.
+- Add tests to FileDb and ParamsDat.
+- Improve README adding chapters about AroundTheWorld project.
+- Add return 7 to Device::System.battery, which means power supply connected and has no battery.
+- Support to Network::Ethernet abstraction.
+- Support to Print abstraction.
+- Fix number_to_currency on the 1.1.0 mruby version.
+- Update ISO8583 library.
+
 ### 0.4.4 - 2015-03-27 - Gemspec summary and description.
 - Fix gemspec summary and description.
 
