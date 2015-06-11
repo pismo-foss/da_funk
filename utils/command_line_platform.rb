@@ -64,5 +64,4 @@ end
 
 Device.adapter ||= CommandLinePlatform
 Device::System.klass = "main"
-Device::System.logical_number = "1234"
 
