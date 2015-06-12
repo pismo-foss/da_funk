@@ -33,7 +33,7 @@ class Device
       "notification_interval"       => "",
       "notification_stream_timeout" => "",
       "cw_switch_version"           => "",
-      "cw_pos_version"              => "",
+      "cw_pos_timezone"             => "",
       "company_name"                => ""
     }
 
