@@ -32,6 +32,8 @@ class Device
       "notification_timeout"        => "",
       "notification_interval"       => "",
       "notification_stream_timeout" => "",
+      "cw_switch_version"           => "",
+      "cw_pos_version"              => "",
       "company_name"                => ""
     }
 
