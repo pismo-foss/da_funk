@@ -70,7 +70,7 @@ module DaFunk
     end
 
     def check_gem_out(gem)
-      if File.exists?(path = File.join(gem.full_gem_path, "out", gem.name)) && File.file?(path)
+      if File.exists?(path = File.join(gem.full_gem_path, "out", "#{gem.name}.mrb")) && File.file?(path)
       elsif File.exists?(path = File.join(gem.full_gem_path, "out", gem.name, "main.mrb")) && File.file?(path)
       elsif File.exists?(path = File.join(gem.full_gem_path, "out", gem.name, "#{gem.name}.mrb")) && File.file?(path)
       else
