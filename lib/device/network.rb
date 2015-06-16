@@ -84,65 +84,6 @@ class Device
       ret
     end
 
-    def self.handshake_ssl!
-      @socket_ssl = self.handshake_ssl(@socket_tcp)
-      @ssl = true
-      @socket = @socket_ssl
-    end
-
-    def self.handshake_ssl(tcp)
-      return if tcp.closed?
-      entropy = PolarSSL::Entropy.new
-      ctr_drbg = PolarSSL::CtrDrbg.new entropy
-      s_ssl = PolarSSL::SSL.new
-      s_ssl.set_endpoint PolarSSL::SSL::SSL_IS_CLIENT
-      s_ssl.set_rng ctr_drbg
-      s_ssl.set_socket tcp
-      s_ssl.handshake
-      s_ssl
-    end
-
-    def self.handshake!
-      handshake = "#{Device::System.serial};#{Device::System.app};#{Device::Setting.logical_number};#{Device.version}"
-      socket.write("#{handshake.size.chr}#{handshake}")
-
-      company_name = socket_tcp.closed? ? nil : socket.read(3)
-      return false if company_name == "err" || company_name.nil?
-
-      Device::Setting.company_name = company_name
-      true
-    end
-
-    # Create Socket in Walk Switch
-    def self.walk_socket
-      if @socket
-        @socket
-      else
-        @socket_tcp = create_socket
-        if Device::Setting.ssl == "1"
-          handshake_ssl!
-        else
-          @socket = @socket_tcp
-        end
-        handshake!
-        @socket
-      end
-    end
-
-    def self.create_socket
-      TCPSocket.new(Device::Setting.host, Device::Setting.host_port)
-    end
-
-    def self.close_socket
-      @socket.close
-      if @socket != @socket_tcp
-        @socket_tcp.close
-      end
-      @socket     = nil
-      @socket_tcp = nil
-      @socket_ssl = nil
-    end
-
     def self.attach
       Device::Network.init(*self.config)
       ret = Device::Network.connect
