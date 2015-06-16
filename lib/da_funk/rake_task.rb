@@ -89,26 +89,21 @@ module DaFunk
         resources.each_with_index do |file,dest_i|
           FileUtils.cp(file, resources_out[dest_i]) if File.file?(file)
         end
-      end
-
-      desc "Compile app to mrb and process resources"
-      task :build => :resources do
-        FileUtils.mkdir_p out_path
 
         Bundler.load.specs.each do |gem|
           path = check_gem_out(gem)
           FileUtils.cp(path, File.join(out_path, "#{gem.name}.mrb")) if path
         end
+      end
 
+      desc "Compile app to mrb and process resources"
+      task :build => :resources do
         sh "#{mrbc} -g -o #{main_out} #{libs} "
       end
 
       namespace :test do
         task :setup => :resources do
           ENV["RUBY_PLATFORM"] = "mruby"
-          Bundler.load.specs.each do |gem|
-            sh "cp #{File.join(gem.full_gem_path, "out", gem.name)}.mrb #{out_path}/#{gem.name}.mrb" if File.exists? "#{File.join(gem.full_gem_path, "out", gem.name)}.mrb"
-          end
         end
 
         desc "Run unit test on mruby"
