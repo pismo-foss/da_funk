@@ -10,7 +10,6 @@ unless Object.const_defined?(:MTest)
   require file_path + "/device/setting.rb"
   require file_path + "/device/system.rb"
   require file_path + "/device/version.rb"
-  require file_path + "/device/walk.rb"
   require file_path + "/device/params_dat.rb"
   require file_path + "/device.rb"
   require file_path + "/file_db.rb"
