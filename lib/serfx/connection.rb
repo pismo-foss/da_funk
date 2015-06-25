@@ -4,7 +4,7 @@ module Serfx
   # implement the actual RPC commands available via [Commands]
   class Connection
     MAX_MESSAGE_SIZE = 1024
-    DEFAULT_TIMEOUT  = 15
+    DEFAULT_TIMEOUT  = 5
     COMMANDS = {
       handshake:        [:header],
       auth:             [:header],
