@@ -29,29 +29,26 @@ module Serfx
 
     include Serfx::Commands
 
-    attr_reader :host, :port, :seq, :socket, :socket_tcp, :socket_block, :timeout, :stream_timeout
+    attr_reader :host, :port, :seq, :socket, :socket_block, :timeout, :stream_timeout
 
     def close
-      @socket_tcp.close
       @socket.close
     end
 
     def closed?
-      @socket_tcp.closed?
+      @socket.closed?
     end
 
     # @param  opts [Hash] Specify the RPC connection details
-    # @option opts [TCPSocket] :socket_tcp Socket
     # @option opts [SSL] :socket Socket SSL or normal tcp socket
     # @option opts [Fixnum] :timeout Timeout in seconds to wait for a event and return Fiber
     # @option opts [Symbol] :authkey encryption key for RPC communication
-    # @option opts [Block] :socket_block Callback to create socket if socket was closed, should return [socket, socket_tcp]
+    # @option opts [Block] :socket_block Callback to create socket if socket was closed, should return [socket]
     def initialize(opts = {})
       if @socket_block = opts[:socket_block]
-        @socket, @socket_tcp = @socket_block.call
+        @socket = @socket_block.call(true)
       else
         @socket = opts[:socket]
-        @socket_tcp = opts[:socket_tcp]
       end
       @timeout = opts[:timeout] || DEFAULT_TIMEOUT
       @stream_timeout = opts[:stream_timeout] || DEFAULT_TIMEOUT
