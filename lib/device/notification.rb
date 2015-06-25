@@ -94,10 +94,21 @@ class Device
     end
 
     private
+    def reply(conn, ev)
+      if ev.is_a?(Hash)
+        if ev["Event"] == "user" && ev["Payload"].nil?
+          conn.event("user")
+        elsif ev["Event"] == "user" && ev["Payload"] && ev["Payload"]["Id"]
+          conn.respond(ev["Payload"]["Id"], nil)
+        end
+      end
+    end
+
     def create_fiber
       Fiber.new do
-        Serfx.connect(socket_block: socket_callback, timeout: timeout, stream_timeout: stream_timeout) do |conn|
-          conn.stream("user:#{Device::Setting.company_name};#{Device::Setting.logical_number}")
+        auth = CloudwalkTOTP.at
+        Serfx.connect(authkey: auth, socket_block: Device::Network.socket, timeout: timeout, stream_timeout: stream_timeout) do |conn|
+          conn.stream("user:#{Device::Setting.company_name};#{Device::Setting.logical_number}") { |ev| reply(conn, ev) }
         end
         true
       end
