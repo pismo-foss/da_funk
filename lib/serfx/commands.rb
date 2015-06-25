@@ -97,6 +97,7 @@ module Serfx
       loop do
         header, ev = read_data(self.stream_timeout)
         check_rpc_error!(header)
+        block.call(ev) if block_given?
         break unless fiber_yield!(ev)
       end
       res
@@ -136,6 +137,7 @@ module Serfx
       loop do
         header, ev = read_data
         check_rpc_error!(header)
+        block.call(ev) if block_given?
         break unless fiber_yield!(ev)
       end
       res
