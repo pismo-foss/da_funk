@@ -51,9 +51,6 @@ class Device
         ret = Device::Transaction::Download.request_param_file(FILE_NAME)
         if value = check_download_error(ret)
           puts "Downloaded Successfully"
-          Device::Network.close_socket
-          # TODO
-          #Device::Network.walk_socket.close unless Device::Network.walk_socket.closed?
           parse_apps
         end
         value
@@ -85,9 +82,6 @@ class Device
         Device::Display.clear
         puts "Downloading #{application.file}..."
         ret = Device::Transaction::Download.request_file(application.file, application.zip)
-        Device::Network.close_socket
-        # TODO
-        #Device::Network.walk_socket.close unless Device::Network.walk_socket.closed?
 
         unless check_download_error ret
           sleep 2

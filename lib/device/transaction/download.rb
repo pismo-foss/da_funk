@@ -22,7 +22,7 @@ class Device
 
       def self.request_file(remote_path, local_path)
         download = Device::Transaction::Download.new(Device::System.serial, "", Device.version)
-        download.perform(Device::Network.walk_socket,
+        download.perform(Device::Network.socket,
                          Device::Setting.company_name,
                          remote_path, local_path, Device::System.app,
                          Device::Setting.logical_number)
@@ -44,8 +44,8 @@ class Device
       # -1: Commnucation error
       # -2: Mapreduce response error
       # -3: IO Error
-      def perform(socket, company_name, remote_path, filepath, current_app, logical_number, file_crc = nil)
-        @socket, @buffer, @request, @first_packet = socket, "", "", ""
+      def perform(socket_proc, company_name, remote_path, filepath, current_app, logical_number, file_crc = nil)
+        @socket, @buffer, @request, @first_packet = socket_proc.call, "", "", ""
         @crc = file_crc ? file_crc : generate_crc(filepath)
         key = "#{company_name}_#{remote_path}"
 
@@ -107,6 +107,7 @@ class Device
 
         # receive 6A
         @socket.read(1) if response_size > 1024
+        @socket.close unless @socket.closed?
 
         return_code
       end
