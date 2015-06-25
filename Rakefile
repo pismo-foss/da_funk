@@ -27,7 +27,6 @@ FILES = FileList[
   "lib/device/transaction/download.rb",
   "lib/device/transaction/emv.rb",
   "lib/device/version.rb",
-  "lib/device/walk.rb",
   "lib/file_db.rb",
   "lib/iso8583/bitmap.rb",
   "lib/iso8583/codec.rb",
