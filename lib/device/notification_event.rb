@@ -19,11 +19,21 @@ class Device
       @name     = values["Name"]
       @event    = values["Event"]
 
-      @message  = payload.gsub('=>', ' : ')
-      @value    = JSON.parse(message)
-      @body     = value["Body"]
+      @message  = payload.to_s.gsub("=>", " : ")
+      @value    = JSON.parse(@message) unless @message.empty?
+      @body     = extract_body(value)
 
       @callback, *@parameters = @body.to_s.split("|")
     end
+
+    def extract_body(value)
+      unless value.nil?
+        return value["Body"] if value["Body"]
+        # TODO: For some reason the JSON parse has a problem
+        # and extract "B" from "Body"
+        return value["ody"] if value["ody"]
+      end
+    end
   end
 end
+
