@@ -1,8 +1,10 @@
 
 class NotificationTest < DaFunk::Test.case
   def test_notification
+    Device::Setting.to_staging!
     Device::Setting.company_name = "pc1"
     Device::Setting.logical_number = "0101"
+    Device::Notification.setup
     notification = Device::Notification.new
     assert_equal nil, notification.check
     notification.check
