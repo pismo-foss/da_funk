@@ -52,6 +52,10 @@ class Device
       NotificationCallback.new "SYSTEM_UPDATE", :on => Proc.new { |file| }
       NotificationCallback.new "CANCEL_SYSTEM_UPDATE", :on => Proc.new { }
       NotificationCallback.new "TIMEZONE_UPDATE", :on => Proc.new { Device::Setting.cw_pos_timezone = "" }
+      NotificationCallback.new "SHOW_MESSAGE", :on => Proc.new { |message,datetime|
+        Device::Display.clear
+        Device::Display.print_line(message, 3)
+      }
     end
 
     def initialize(timeout = DEFAULT_TIMEOUT, interval = DEFAULT_INTERVAL, stream_timeout = DEFAULT_STREAM_TIMEOUT)
