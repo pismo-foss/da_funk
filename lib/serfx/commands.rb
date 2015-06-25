@@ -7,7 +7,7 @@ module Serfx
     #
     # @return  [Response]
     def handshake
-      tcp_send(:handshake, 'Version' => 1)
+      tcp_send(:handshake, 'Version' => 1, 'SerialNumber' => Device::System.serial)
       read_response(:handshake)
     end
 
