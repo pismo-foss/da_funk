@@ -1,4 +1,6 @@
 
+require 'cloudwalk_handshake'
+
 class Device
   class Network
 
@@ -35,7 +37,13 @@ class Device
     #AUTH_WPA_WPA2_EAP   = "wpa_wpa2_eap"
 
     class << self
-      attr_accessor :type, :apn, :user, :password, :socket, :socket_tcp, :socket_ssl, :ssl
+      attr_accessor :type, :apn, :user, :password, :socket
+    end
+
+    self.socket = Proc.new do |avoid_walk|
+      sock = CloudwalkSocket.new
+      sock.connect(avoid_walk)
+      sock
     end
 
     def self.adapter

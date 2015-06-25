@@ -1,3 +1,4 @@
+
 class Device
   class << self
     attr_accessor :adapter
