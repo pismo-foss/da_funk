@@ -21,7 +21,6 @@ unless Object.const_defined?(:MTest)
   require file_path + "/iso8583/message.rb"
   require file_path + "/iso8583/util.rb"
   require file_path + "/iso8583/version.rb"
-  require file_path + "/version.rb"
   require file_path + "/device/transaction/download.rb"
   require file_path + "/device/transaction/emv.rb"
   require file_path + "/device/transaction/iso.rb"
