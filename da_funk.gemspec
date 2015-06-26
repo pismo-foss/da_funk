@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 tasks = File.expand_path('../tasks', __FILE__)
 $LOAD_PATH.unshift(tasks) unless $LOAD_PATH.include?(tasks)
 
-require 'version.rb'
+require './device/version.rb'
 
 Gem::Specification.new do |spec|
   spec.name          = "da_funk"
