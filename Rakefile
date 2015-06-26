@@ -9,6 +9,7 @@ DA_FUNK_ROOT = File.dirname(File.expand_path(__FILE__))
 FileUtils.cd DA_FUNK_ROOT
 
 FILES = FileList[
+  "lib/device/version.rb",
   "lib/da_funk.rb",
   "lib/da_funk/test.rb",
   "lib/device.rb",
@@ -26,7 +27,6 @@ FILES = FileList[
   "lib/device/system.rb",
   "lib/device/transaction/download.rb",
   "lib/device/transaction/emv.rb",
-  "lib/device/version.rb",
   "lib/file_db.rb",
   "lib/iso8583/bitmap.rb",
   "lib/iso8583/codec.rb",
@@ -36,7 +36,6 @@ FILES = FileList[
   "lib/iso8583/message.rb",
   "lib/iso8583/util.rb",
   "lib/iso8583/version.rb",
-  "lib/version.rb",
   "lib/device/transaction/iso.rb",
   "lib/serfx.rb",
   "lib/serfx/commands.rb",
