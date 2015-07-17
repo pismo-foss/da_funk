@@ -96,10 +96,10 @@ class Device
     private
     def reply(conn, ev)
       if ev.is_a?(Hash)
-        if ev["Event"] == "user" && ev["Payload"].nil?
-          conn.event("user")
-        elsif ev["Event"] == "user" && ev["Payload"] && ev["Payload"]["Id"]
-          conn.respond(ev["Payload"]["Id"], nil)
+        if ev["Event"] == "user" && ev["Payload"] && ev["Payload"].include?("Id")
+          index = ev["Payload"].index("\"Id")
+          id = ev["Payload"][(index+7)..(index+38)]
+          conn.event(event_name, "{\"Id\"=>\"#{id}\"}", false)
         end
       end
     end
