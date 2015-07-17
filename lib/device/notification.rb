@@ -108,10 +108,18 @@ class Device
       Fiber.new do
         auth = CloudwalkTOTP.at
         Serfx.connect(authkey: auth, socket_block: Device::Network.socket, timeout: timeout, stream_timeout: stream_timeout) do |conn|
-          conn.stream("user:#{Device::Setting.company_name};#{Device::Setting.logical_number}") { |ev| reply(conn, ev) }
+          conn.stream(subscription) { |ev| reply(conn, ev) }
         end
         true
       end
+    end
+
+    def subscription
+      "user:#{event_name}"
+    end
+
+    def event_name
+      "#{Device::Setting.company_name};#{Device::Setting.logical_number}"
     end
 
     def socket_callback
