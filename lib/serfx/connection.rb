@@ -67,11 +67,11 @@ module Serfx
       return if buf.nil?
 
       # TODO Check first and second(header and body) packet size
-      first_packet, second_packet = buf.split("\x85")
-      if second_packet.nil?
+      first_packet, second_packet = buf[0..12], buf[13..-1]
+      if second_packet.nil? || second_packet.empty?
         [MessagePack.unpack(first_packet), nil]
       else
-        [MessagePack.unpack(first_packet), MessagePack.unpack("\x85" + second_packet)]
+        [MessagePack.unpack(first_packet), MessagePack.unpack(second_packet)]
       end
     end
 
