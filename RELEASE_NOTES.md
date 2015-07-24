@@ -1,5 +1,17 @@
 # DaFunk
 
+### 0.4.7 - 2015-06-09 - New Notication Spec
+- Fix gem out moving on mrb compilation.
+- Abstract CloudWalk Handshake to other gem.
+- Support new CloudWalk Notifcation spec.
+- Support Notification timezone update.
+- Support Notification show message.
+- Changed Notification event check timeout for 5 seconds.
+
+### 0.4.6 - 2015-06-12 - Timezone Setting
+- Support cw_pos_timezone.
+- Support cw_pos_version.
+
 ### 0.4.5 - 2015-06-09 - ISO8583, environment and abstraction classes
 - Implementing support to change host environment configuration with Setting.to_production! and Setting.to_staging!.
 - Fix da_funk.mrb out path getting the app name to output da_funk.mrb.
