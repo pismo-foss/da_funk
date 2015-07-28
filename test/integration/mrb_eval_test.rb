@@ -10,7 +10,7 @@ class MrbEvalTest < DaFunk::Test.case
     Device::Notification.check
 
     http = SimpleHttp.new('http', 'http://google.com', 443)
-    http.socket = Device::Network.walk_socket
+    http.socket = Device::Network.socket.call
     assert_equal 302, http.get('/').code
 
     command =<<EOF
@@ -24,7 +24,7 @@ class MrbEvalTest < DaFunk::Test.case
 
     Device::Network.socket = nil
     http = SimpleHttp.new('http', 'http://google.com', 80)
-    http.socket = Device::Network.walk_socket
+    http.socket = Device::Network.socket.call
     response = http.get('/')
     Device::Network.socket = nil
     response.code
