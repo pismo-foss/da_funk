@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/scalone/walk-simplehttp-poc.git
-  revision: faff47627d0308f5a3083f35767d594533c5ab1b
+  revision: 9dad485f7a7c4e783651805b3e75a4779629b0cb
   specs:
-    simplehttp (0.3.1)
+    simplehttp (0.4.0)
 
 PATH
   remote: .
