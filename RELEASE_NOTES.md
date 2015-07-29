@@ -1,5 +1,8 @@
 # DaFunk
 
+### 0.4.8 - 2015-07-29 - CloudwalkHandshake as dependency
+- Add CloudwalkHandshake as dependency.
+
 ### 0.4.7 - 2015-06-09 - New Notication Spec
 - Fix gem out moving on mrb compilation.
 - Abstract CloudWalk Handshake to other gem.
