@@ -72,4 +72,5 @@ end
 
 Device.adapter ||= CommandLinePlatform
 Device::System.klass = "main"
+CommandLinePlatform.setup
 
