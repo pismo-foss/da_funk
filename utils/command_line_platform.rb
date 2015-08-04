@@ -11,7 +11,7 @@ class CommandLinePlatform
     begin
       require 'cloudwalk_handshake'
       CloudwalkHandshake.configure!
-    rescue
+    rescue LoadError
     end
   end
 
