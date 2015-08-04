@@ -14,7 +14,6 @@ module DaFunk
     end
 
     def setup
-      Device.adapter.setup
     end
 
     def platform
