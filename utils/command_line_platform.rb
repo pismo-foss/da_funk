@@ -12,6 +12,7 @@ class CommandLinePlatform
       require 'cloudwalk_handshake'
       CloudwalkHandshake.configure!
     rescue LoadError
+    rescue NameError
     end
   end
 
