@@ -71,6 +71,7 @@ module DaFunk
     end
 
     # TODO Scalone Refactor tests/libs for mruby and cruby checking project configuration
+    # A good approach could be consider each test a runtime execution
     def self.configure
       yield self if block_given?
 
