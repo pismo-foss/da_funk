@@ -1,5 +1,8 @@
 # DaFunk
 
+### 0.4.9 - 2015-08-04 - CloudwalkHandshake loading fix
+- Fixes problem to load CloudwalkHandshake.
+
 ### 0.4.8 - 2015-07-29 - CloudwalkHandshake as dependency
 - Add CloudwalkHandshake as dependency.
 
