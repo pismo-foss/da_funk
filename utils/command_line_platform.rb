@@ -7,6 +7,14 @@ end
 class CommandLinePlatform
   IO = ::IO
 
+  def self.setup
+    begin
+      require 'cloudwalk_handshake'
+      CloudwalkHandshake.configure!
+    rescue
+    end
+  end
+
   class IO
     def self.get_string(min, max, option = nil)
       str = ""
