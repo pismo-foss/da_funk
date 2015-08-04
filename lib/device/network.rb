@@ -1,6 +1,4 @@
 
-require 'cloudwalk_handshake'
-
 class Device
   class Network
 
@@ -40,9 +38,9 @@ class Device
       attr_accessor :type, :apn, :user, :password, :socket
     end
 
-    self.socket = Proc.new do |avoid_walk|
-      sock = CloudwalkSocket.new
-      sock.connect(avoid_walk)
+    self.socket = Proc.new do |avoid_handshake|
+      sock = TCPSocket.new Device::Setting.host, Device::Setting.host_port
+      sock.connect(avoid_handshake)
       sock
     end
 
