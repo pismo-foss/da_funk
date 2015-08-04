@@ -14,11 +14,7 @@ module DaFunk
     end
 
     def setup
-      # TODO Scalone check this
-      #libs.each do |file|
-        #p file
-        ##require file
-      #end
+      Device.adapter.setup
     end
 
     def platform
