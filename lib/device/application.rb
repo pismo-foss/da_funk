@@ -22,7 +22,7 @@ class Device
       @zip ||= "#{file_no_ext}.zip"
     end
 
-    def valid_local_crc?
+    def outdated?
       return false unless File.exists?(@file_path)
       file = File.open(@file_path)
       Device::Crypto.crc16_hex(file.read) == @crc

@@ -78,7 +78,7 @@ class Device
     end
 
     def self.update_app(application)
-      if attach && application && ! application.valid_local_crc?
+      if attach && application && application.outdated?
         Device::Display.clear
         puts "Downloading #{application.file}..."
         ret = Device::Transaction::Download.request_file(application.file, application.zip)
