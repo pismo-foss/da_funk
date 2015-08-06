@@ -23,10 +23,11 @@ class Device
     end
 
     def valid_local_crc?
+      return false unless File.exists?(@file_path)
       file = File.open(@file_path)
       Device::Crypto.crc16_hex(file.read) == @crc
     ensure
-      file.close
+      file.close if file
     end
 
     def execute(json = "")

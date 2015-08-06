@@ -11,13 +11,18 @@ class ApplicationTest < DaFunk::Test.case
   end
 
   def test_check_crc_true
-    @application = Device::Application.new("TTT", @file_path, "ruby", @crc)
-    assert_equal true, @application.valid_local_crc?
+    application = Device::Application.new("TTT", @file_path, "ruby", @crc)
+    assert_equal true, application.valid_local_crc?
   end
 
   def test_check_crc_false
-    @application = Device::Application.new("TTT", @file_path, "ruby", "1111")
-    assert_equal false, @application.valid_local_crc?
+    application = Device::Application.new("TTT", @file_path, "ruby", "1111")
+    assert_equal false, application.valid_local_crc?
+  end
+
+  def test_check_crc_non_file
+    application = Device::Application.new("TTT", "./non_exists", "ruby", "1111")
+    assert_equal false, application.valid_local_crc?
   end
 
   def teardown
