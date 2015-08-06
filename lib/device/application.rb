@@ -22,6 +22,13 @@ class Device
       @zip ||= "#{file_no_ext}.zip"
     end
 
+    def valid_local_crc?
+      file = File.open(@file_path)
+      Device::Crypto.crc16_hex(file.read) == @crc
+    ensure
+      file.close
+    end
+
     def execute(json = "")
       Device::Runtime.execute(file_no_ext, json)
     end
