@@ -62,12 +62,13 @@ class Device
       value
     end
 
-    # {
-    #   :default => {:detail => 10}, # default value to return if enter
-    #   :number => true, # Add number to label or not
-    #   "option X" => {:detail => 10},
-    #   "option Y" => {:detail => 11}
-    # }
+    # @example
+    #   {
+    #     :default => {:detail => 10}, # default value to return if enter
+    #     :number => true, # Add number to label or not
+    #     "option X" => {:detail => 10},
+    #     "option Y" => {:detail => 11}
+    #   }
     def menu(title, selection, options = {})
       options[:number] = true if options[:number].nil?
 

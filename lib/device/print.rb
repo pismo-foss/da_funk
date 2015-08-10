@@ -34,12 +34,11 @@ class Device
     # @param multicode_height [Fixnum] The height control of multiple code font
     #  The value ranges from 12 to 64.
     #
-    # @retval RET_OK Success.
-    # @retval ERR_FONT_NOT_EXIST Font does not exist.
-    # @retval ERR_INVALID_PARAM Invalid parameter.
-    # @retval ERR_DEV_BUSY Device is busy.
-    #
     # @return [Fixnum] Return number.
+    # @return [Fixnum] RET_OK Success.
+    # @return [Fixnum] ERR_FONT_NOT_EXIST Font does not exist.
+    # @return [Fixnum] ERR_INVALID_PARAM Invalid parameter.
+    # @return [Fixnum] ERR_DEV_BUSY Device is busy.
     def self.start(singlecode_width=DEFAULT_SINGLE_WIDTH,
                    singlecode_height=DEFAULT_SINGLE_HEIGHT,
                    multicode_width=DEFAULT_MULTI_WIDTH,
@@ -49,12 +48,11 @@ class Device
 
     # Check printer status, useful for paper check.
     #
-    # @retval RET_OK Success.
-    # @retval ERR_FONT_NOT_EXIST Font does not exist.
-    # @retval ERR_INVALID_PARAM Invalid parameter.
-    # @retval ERR_DEV_BUSY Device is busy.
-    #
     # @return [Fixnum] Return number.
+    # @return [Fixnum] RET_OK Success.
+    # @return [Fixnum] ERR_FONT_NOT_EXIST Font does not exist.
+    # @return [Fixnum] ERR_INVALID_PARAM Invalid parameter.
+    # @return [Fixnum] ERR_DEV_BUSY Device is busy.
     def self.open
       self.adapter.open
     end
@@ -75,11 +73,11 @@ class Device
 
     # Selects print font.
     #
-    # @param filename [String] Font filename.
+    # @param path [String] Font path.
     #
-    # @retval RET_OK Success.
-    # @retval ERR_FONT_NOT_EXIST Font does not exist.
-    # @retval ERR_INVALID_PARAM Invalid parameter.
+    # @return [Fixnum] RET_OK Success.
+    # @return [Fixnum] ERR_FONT_NOT_EXIST Font does not exist.
+    # @return [Fixnum] ERR_INVALID_PARAM Invalid parameter.
     def self.font=(path)
       self.adapter.font = path
     end
@@ -163,12 +161,12 @@ class Device
 
     # Check printer status, useful for paper check.
     #
-    # @retval RET_OK Success.
-    # @retval ERR_FONT_NOT_EXIST Font does not exist.
-    # @retval ERR_INVALID_PARAM Invalid parameter.
-    # @retval ERR_PRN_BUSY Printer is busy.
-    # @retval ERR_PRN_PAPEROUT Out of paper.
-    # @retval ERR_PRN_OVERHEAT Printer overheating.
+    # @return [Fixnum] RET_OK Success.
+    # @return [Fixnum] ERR_FONT_NOT_EXIST Font does not exist.
+    # @return [Fixnum] ERR_INVALID_PARAM Invalid parameter.
+    # @return [Fixnum] ERR_PRN_BUSY Printer is busy.
+    # @return [Fixnum] ERR_PRN_PAPEROUT Out of paper.
+    # @return [Fixnum] ERR_PRN_OVERHEAT Printer overheating.
     def self.check
       self._check
     end
