@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.4.10 - 2015-08-14 - Check CRC during App Update
+- Update CloudwalkHandshake version.
+- Support to check CRC during app update, avoiding unnecessary download.
+- Fix Helper class Documentation.
+
 ### 0.4.9 - 2015-08-04 - CloudwalkHandshake loading fix
 - Fixes problem to load CloudwalkHandshake.
 
