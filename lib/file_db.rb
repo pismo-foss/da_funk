@@ -20,8 +20,9 @@ class FileDb
   def parse(text)
     text.split("\n").compact.each do |line|
       key_value = line.split("=")
-      if key_value[1] && (@hash[key_value[0]].nil? || @hash[key_value[0]].empty?)
-        @hash[key_value[0]] = key_value[1]
+      key, value = key_value[0].to_s.strip, key_value[1].to_s.strip
+      if key_value[1] && (@hash[key].nil? || @hash[key].empty?)
+        @hash[key] = value
       end
     end
   end
