@@ -20,7 +20,7 @@ class FileDb
   def parse(text)
     text.split("\n").compact.each do |line|
       key_value = line.split("=")
-      key, value = key_value[0].to_s.strip, key_value[1].to_s.strip
+      key, value = sanitize(key_value[0]), sanitize(key_value[1])
       if key_value[1] && (@hash[key].nil? || @hash[key].empty?)
         @hash[key] = value
       end
@@ -43,6 +43,15 @@ class FileDb
 
   def [](key)
     @hash[key]
+  end
+
+  private
+  def sanitize(string)
+    new_string = string.to_s.strip
+    if new_string[0] == "\"" && new_string[-1] == "\""
+      new_string = new_string[1..-2]
+    end
+    new_string
   end
 end
 
