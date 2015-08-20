@@ -19,7 +19,7 @@ class Device
       puts "Connecting..."
       if Device::Network.connected? < 0
         if (ret = Device::Network.attach) == 0
-          puts "Connected #{ret}"
+          puts "Successfully Connected"
         else
           puts "Attach fail #{ret}"
           sleep 4
