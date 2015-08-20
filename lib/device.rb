@@ -19,6 +19,8 @@ class Device
   end
 
   def self.app_loop(&block)
+    Device::Display.clear
+    puts "Checking Notifications..."
     Notification.setup
     loop do
       Notification.check
