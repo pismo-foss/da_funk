@@ -97,7 +97,7 @@ class Device
     def self.executable_app
       selected = self.executable_apps
       if selected.size == 1
-        selected[selected.keys.first]
+        selected.first
       end
     end
 
