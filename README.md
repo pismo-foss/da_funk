@@ -7,14 +7,23 @@ Walk Framework API, responsible for managed compatibility between implemented de
 1. Install Ruby 1.9.3 (mruby compatible)
 
 2. Bundle `$ bundle install`
-	
+
+## Load
+
+### All 
+    require 'da_funk'
+
+### Only ISO8583 module 
+
+    require 'da_funk/iso8583'
+
 	
 ## Docs (yard)
 
 1. Generate: `$ rake yard`
 2. Open: `open docs/index.html`
 
-## How to
+## How to create Device
 
 ### Steps
 
