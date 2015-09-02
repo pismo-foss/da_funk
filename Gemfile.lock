@@ -7,7 +7,7 @@ GIT
 PATH
   remote: .
   specs:
-    da_funk (0.4.10)
+    da_funk (0.4.11)
       bundler (~> 1.7)
       cloudwalk_handshake (~> 0.4)
       rake (~> 10.4)

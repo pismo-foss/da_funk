@@ -1,5 +1,15 @@
 # DaFunk
 
+### 0.4.11 - 2015-09-02 - Minor fixes and ISO
+- Bug fix strip key and value strings of FileDb.
+- Add FileDb#sanitize to strip and clean string(from quotes).
+- Update connection message.
+- Remove application crc check for while.
+- Add UI message to Notification process.
+- Fix application selection when just a single application is available.
+- Create DaFunk::Helper from Device::Helper.
+- Isolate ISO8583 to be load individually by require, `require 'da_funk/iso8583'`.
+
 ### 0.4.10 - 2015-08-14 - Check CRC during App Update
 - Update CloudwalkHandshake version.
 - Support to check CRC during app update, avoiding unnecessary download.
