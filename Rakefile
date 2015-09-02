@@ -10,6 +10,7 @@ FileUtils.cd DA_FUNK_ROOT
 
 FILES = FileList[
   "lib/device/version.rb",
+  "lib/da_funk/helper.rb",
   "lib/da_funk.rb",
   "lib/da_funk/test.rb",
   "lib/device.rb",
