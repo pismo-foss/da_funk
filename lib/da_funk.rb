@@ -1,6 +1,9 @@
 unless Object.const_defined?(:MTest)
   file_path = File.dirname(File.realpath(__FILE__))
   require file_path + "/da_funk/helper.rb"
+  require file_path + "/da_funk/iso8583.rb"
+  require file_path + "/da_funk/rake_task.rb"
+  require file_path + "/da_funk/test.rb"
   require file_path + "/device/support.rb"
   require file_path + "/device/helper.rb"
   require file_path + "/device/crypto.rb"
@@ -25,8 +28,6 @@ unless Object.const_defined?(:MTest)
   require file_path + "/device/transaction/download.rb"
   require file_path + "/device/transaction/emv.rb"
   require file_path + "/device/transaction/iso.rb"
-  require file_path + "/da_funk/rake_task.rb"
-  require file_path + "/da_funk/test.rb"
   require file_path + "/../utils/command_line_platform.rb"
 end
 

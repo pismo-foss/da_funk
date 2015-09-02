@@ -11,7 +11,7 @@ module ISO8583
   # In all likelyhood, you won't be using this class much, it's used
   # transparently by the Message class.
   class Bitmap
-    include Device::Helper
+    include DaFunk::Helper
     # create a new Bitmap object. In case an iso message
     # is passed in, that messages bitmap will be parsed. If
     # not, this initializes and empty bitmap.
