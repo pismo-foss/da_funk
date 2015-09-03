@@ -1,6 +1,9 @@
 # DaFunk
 
-### 0.4.11 - 2015-09-02 - Minor fixes and ISO
+### 0.4.12 - 2015-09-02 - helper on ISO8583 load
+- Bug fix helper load on iso8583.
+
+### 0.4.11 - 2015-09-02 - Minor fixes and ISO8583
 - Bug fix strip key and value strings of FileDb.
 - Add FileDb#sanitize to strip and clean string(from quotes).
 - Update connection message.
