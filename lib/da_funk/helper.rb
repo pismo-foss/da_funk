@@ -86,7 +86,7 @@ module DaFunk
 
       key = getc
 
-      return options[:default] if key == IO::ENTER || key == IO::CANCEL
+      return options[:default] if key == Device::IO::ENTER || key == Device::IO::CANCEL
       [values[key.to_i - 1]].flatten.first
     end
 
