@@ -23,6 +23,19 @@ class Device
 
     NUMBERS = %w(1 2 3 4 5 6 7 8 9 0)
 
+    ONE   = "1qzQZ _,."
+    TWO   = "2abcABC"
+    THREE = "3defDEF"
+    FOUR  = "4ghiGHI"
+    FIVE  = "5jklJKL"
+    SIX   = "6mnoMNO"
+    SEVEN = "7prsPRS"
+    EIGHT = "8tuvTUV"
+    NINE  = "9wxyWXY"
+    ZERO  = "0spSP"
+
+    KEYS_RANGE = [ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO]
+
     include Device::Helper
 
     # Restricted to terminals, get strings and numbers.
@@ -51,28 +64,40 @@ class Device
     # @return [String] buffer read from keyboard
     def self.get_format(min, max, options = {})
       options[:mode] ||= IO_INPUT_LETTERS
-      if options[:mode] == IO_INPUT_MONEY || options[:mode] == IO_INPUT_DECIMAL
+      text = ""
+      key = ""
 
-        text = ""
-        key = ""
-
-        while key != CANCEL
-          Device::Display.clear 2
-          Device::Display.print_line number_to_currency(text, options), 2, 0
-          key = getc
-          if key == BACK
-            text = text[0..-2]
-          elsif text.size >= max
-            next
-          elsif NUMBERS.include? key
-            text << key
-          elsif key == ENTER
-            return text
-          end
+      while key != CANCEL
+        Device::Display.clear 2
+        Device::Display.print_line format(text, options), 2, 0
+        key = getc
+        if key == BACK
+          text = text[0..-2]
+        elsif text.size >= max
+          next
+        elsif key == ENTER
+          return text
+        elsif key ==  F1 || key == DOWN || key == UP
+          change_next(text) if (options[:mode] != IO_INPUT_MONEY) && (options[:mode] != IO_INPUT_DECIMAL)
+          next
+        elsif insert_key?(key, options)
+          text << key
         end
-      else
-        get_string(min, max, options[:mode])
       end
+    end
+
+    def self.change_next(text)
+      char = text[-1]
+      if range = KEYS_RANGE.detect { |range| range.include?(char) }
+        index = range.index(char)
+        new_value = range[index+1]
+        if new_value
+          text[-1] = new_value
+        else
+          text[-1] = range.first
+        end
+      end
+      text
     end
 
     # Read 1 byte on keyboard, wait until be pressed
@@ -81,6 +106,27 @@ class Device
     #
     # @return [String] key read from keyboard
     def self.getc(timeout = 0); super(timeout); end
+
+    def self.format(string, options)
+      if options[:mode] == IO_INPUT_MONEY || options[:mode] == IO_INPUT_DECIMAL
+        number_to_currency(string, options)
+      #elsif options[:mode] == IO_INPUT_LETTERS
+      elsif options[:mode] == IO_INPUT_SECRET
+        "*" * string.size
+      else
+        string
+      end
+    end
+
+    def self.insert_key?(key, options)
+      if options[:mode] == IO_INPUT_MONEY || options[:mode] == IO_INPUT_DECIMAL || options[:mode] == IO_INPUT_NUMBERS
+        NUMBERS.include?(key)
+      elsif options[:mode] != IO_INPUT_NUMBERS && options[:mode] != IO_INPUT_MONEY && options[:mode] != IO_INPUT_DECIMAL
+        true
+      else
+        false
+      end
+    end
   end
 end
 
