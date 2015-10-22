@@ -73,12 +73,12 @@ class Device
         key = getc
         if key == BACK
           text = text[0..-2]
-        elsif text.size >= max
-          next
         elsif key == ENTER
           return text
         elsif key ==  F1 || key == DOWN || key == UP
           change_next(text) if (options[:mode] != IO_INPUT_MONEY) && (options[:mode] != IO_INPUT_DECIMAL)
+          next
+        elsif text.size >= max
           next
         elsif insert_key?(key, options)
           text << key
