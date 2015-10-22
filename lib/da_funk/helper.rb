@@ -84,7 +84,7 @@ module DaFunk
         end
       end
 
-      key = getc
+      key = getc(Device::IO.timeout)
 
       return options[:default] if key == Device::IO::ENTER || key == Device::IO::CANCEL
       [values[key.to_i - 1]].flatten.first
