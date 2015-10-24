@@ -21,6 +21,8 @@ class Device
     IO_INPUT_DECIMAL = :decimal
     IO_INPUT_MONEY   = :money
 
+    DEFAULT_TIMEOUT  = 30000
+
     NUMBERS = %w(1 2 3 4 5 6 7 8 9 0)
 
     ONE   = "1qzQZ _,."
@@ -37,6 +39,12 @@ class Device
     KEYS_RANGE = [ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO]
 
     include Device::Helper
+
+    class << self
+      attr_accessor :timeout
+    end
+
+    self.timeout = DEFAULT_TIMEOUT
 
     # Restricted to terminals, get strings and numbers.
     # The switch method between uppercase, lowercase and number characters is to keep pressing a same button quickly. The timeout of this operation is 1 second.
@@ -103,9 +111,11 @@ class Device
     # Read 1 byte on keyboard, wait until be pressed
     #
     # @param timeout [Fixnum] Timeout in milliseconds to wait for key.
+    # If not sent the default timeout is 30_000.
+    # If nil should be blocking.
     #
     # @return [String] key read from keyboard
-    def self.getc(timeout = 0); super(timeout); end
+    def self.getc(timeout = self.timeout); super(timeout); end
 
     def self.format(string, options)
       if options[:mode] == IO_INPUT_MONEY || options[:mode] == IO_INPUT_DECIMAL
