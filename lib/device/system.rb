@@ -47,7 +47,11 @@ class Device
     end
 
     def self.restart
-      adapter.restart
+      adapter.reboot
+    end
+
+    def self.reboot
+      adapter.reboot
     end
 
     def self.app
