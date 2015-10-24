@@ -8,6 +8,7 @@ class IOTest < DaFunk::Test.case
     assert_equal "TEST", Device::IO.change_next(text)
     assert_equal "TESU", Device::IO.change_next(text)
     assert_equal "TESV", Device::IO.change_next(text)
+    assert_equal "TES8", Device::IO.change_next(text)
   end
 
   def test_io_insert_key_number

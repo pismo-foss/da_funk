@@ -102,7 +102,7 @@ class Device
         if new_value
           text[-1] = new_value
         else
-          text[-1] = range.first
+          text[-1] = range[0]
         end
       end
       text
