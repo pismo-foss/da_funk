@@ -9,11 +9,13 @@ module DaFunk
   class RakeTask < ::Rake::TaskLib
     include ::Rake::DSL if defined?(::Rake::DSL)
 
-    attr_accessor :name, :libs, :tests, :tests_unit, :tests_integration, :root_path, :main_out, :test_out, :resources, :mrbc, :mruby, :out_path, :resources_out
+    attr_accessor :name, :libs, :tests, :tests_unit, :tests_integration, :root_path, :main_out,
+      :test_out, :resources, :mrbc, :mruby, :out_path, :resources_out, :debug
 
     def initialize
       yield self if block_given?
 
+      @debug             ||= true
       @libs              ||= FileList['lib/**/*.rb']
       @tests             ||= FileList['test/**/*test.rb']
       @tests_integration ||= FileList['test/integration/**/*test.rb']
@@ -29,6 +31,14 @@ module DaFunk
       @mrbc              = get_mrbc_bin(@mrbc)
 
       define
+    end
+
+    def debug_flag
+      if @debug
+        "-g"
+      else
+        ""
+      end
     end
 
     def get_mrbc_bin(from_user)
@@ -61,6 +71,7 @@ module DaFunk
     end
 
     def execute_tests(files)
+      # Debug is always on during tests(-g)
       all_files = FileList["test/test_helper.rb"] + libs + files + [File.join(File.dirname(__FILE__), "..", "..", "utils", "command_line_platform.rb")] + [File.join(File.dirname(__FILE__), "..", "..", "utils", "test_run.rb")]
       if sh("#{mrbc} -g -o #{test_out} #{all_files.uniq}")
         puts "cd #{File.dirname(out_path)}"
@@ -98,7 +109,7 @@ module DaFunk
 
       desc "Compile app to mrb and process resources"
       task :build => :resources do
-        sh "#{mrbc} -g -o #{main_out} #{libs} "
+        sh "#{mrbc} #{debug_flag} -o #{main_out} #{libs} "
       end
 
       namespace :test do
