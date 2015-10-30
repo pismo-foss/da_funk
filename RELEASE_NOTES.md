@@ -1,5 +1,16 @@
 # DaFunk
 
+### 0.4.13 - 2015-10-30 - Implement get_string byt getc
+- Implement Debug Flag.
+- Fix Device::IO.change_next to return the first option and restart the loop.
+- Refactor System.restart/reboot
+- Implement timeout on Device::IO.
+- Send nil to getc when show notification message to be blocking.
+- Invert the check of string size on get_string.
+- Use default timeout to menu getc.
+- Call IO::ENTER adding Device:: scope on helpers.
+- Change Device::IO.get_string to work only by getc formatting letters and secret. - Implement DeviceIOTest class.
+
 ### 0.4.12 - 2015-09-02 - helper on ISO8583 load
 - Bug fix helper load on iso8583.
 
