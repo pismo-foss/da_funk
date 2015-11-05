@@ -71,13 +71,15 @@ class Device
     #
     # @return [String] buffer read from keyboard
     def self.get_format(min, max, options = {})
-      options[:mode] ||= IO_INPUT_LETTERS
+      options[:mode]   ||= IO_INPUT_LETTERS
+      options[:line]   ||= 2
+      options[:column] ||= 0
       text = ""
       key = ""
 
       while key != CANCEL
-        Device::Display.clear 2
-        Device::Display.print_line format(text, options), 2, 0
+        Device::Display.clear options[:line]
+        Device::Display.print_line format(text, options), options[:line], options[:column]
         key = getc
         if key == BACK
           text = text[0..-2]
