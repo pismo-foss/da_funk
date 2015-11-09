@@ -63,12 +63,22 @@ module DaFunk
     end
 
     # @example
-    #   {
-    #     :default => {:detail => 10}, # default value to return if enter
-    #     :number => true, # Add number to label or not
-    #     "option X" => {:detail => 10},
-    #     "option Y" => {:detail => 11}
+    #   options = {
+    #     # default value to return if enter, you can work with complex data.
+    #     :default => 10,
+    #     # Add number to label or not
+    #     :number => true,
+    #     # Input Timeout in miliseconds
+    #     :timeout => 30_000
     #   }
+    #
+    #   selection = {
+    #     "option X" => 10,
+    #     "option Y" => 11
+    #   }
+    #
+    #   menu("Option menu", selection, options)
+    #
     def menu(title, selection, options = {})
       options[:number] = true if options[:number].nil?
 
