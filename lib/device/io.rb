@@ -20,6 +20,7 @@ class Device
     IO_INPUT_SECRET  = :secret
     IO_INPUT_DECIMAL = :decimal
     IO_INPUT_MONEY   = :money
+    IO_INPUT_MASK    = :mask
 
     DEFAULT_TIMEOUT  = 30000
 
@@ -122,9 +123,10 @@ class Device
     def self.format(string, options)
       if options[:mode] == IO_INPUT_MONEY || options[:mode] == IO_INPUT_DECIMAL
         number_to_currency(string, options)
-      #elsif options[:mode] == IO_INPUT_LETTERS
       elsif options[:mode] == IO_INPUT_SECRET
         "*" * string.size
+      elsif options[:mode] == IO_INPUT_MASK
+        string.to_mask(options[:mask])
       else
         string
       end
