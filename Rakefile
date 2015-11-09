@@ -49,7 +49,8 @@ FILES = FileList[
   "lib/device/application.rb",
   "lib/zip.rb",
   "lib/device/magnetic.rb",
-  "lib/ext/kernel.rb"
+  "lib/ext/kernel.rb",
+  "lib/ext/string.rb"
 ]
 
 DaFunk::RakeTask.new do |t|
