@@ -62,6 +62,15 @@ module DaFunk
       value
     end
 
+
+    # Create a form menu.
+    #
+    # @param title [String] Text to display on line 0. If nil title won't be
+    #   displayed and Display.clear won't be called on before the option show.
+    # @param selection [Hash] Hash (display text => value that will return)
+    #   containing the list options.
+    # @param options [Hash] Hash containing options to change the menu behaviour.
+    #
     # @example
     #   options = {
     #     # default value to return if enter, you can work with complex data.
