@@ -144,6 +144,18 @@ class Device
       self.adapter.puts(string)
     end
 
+    # Write text on print buffer changing the size only for this print.
+    #   Big size is  (24, 64, 64, 64)
+    #
+    # @param string [String] Text to be printed.
+    #
+    # @return [NilClass] Allways returns nil.
+    def self.print_big(string)
+      size(24, 48, 48, 48)
+      self.adapter.print(string)
+      size
+    end
+
     # Print bmp file.
     #
     # Details:
