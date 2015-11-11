@@ -82,8 +82,10 @@ module DaFunk
     def menu(title, selection, options = {})
       options[:number] = true if options[:number].nil?
 
-      Device::Display.clear
-      print_title(title, options[:default])
+      if title
+        Device::Display.clear
+        print_title(title, options[:default])
+      end
       values = Hash.new
       selection.each_with_index do |value,i|
         values[i.to_i] = value[1]
