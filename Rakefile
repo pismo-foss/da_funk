@@ -21,7 +21,7 @@ FILES = FileList[
   "lib/device/io.rb",
   "lib/device/network.rb",
   "lib/device/params_dat.rb",
-  "lib/device/print.rb",
+  "lib/device/printer.rb",
   "lib/device/runtime.rb",
   "lib/device/setting.rb",
   "lib/device/support.rb",
