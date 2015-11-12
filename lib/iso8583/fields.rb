@@ -187,5 +187,8 @@ module ISO8583
   Hhmmss        = Field.new
   Hhmmss.codec  = HhmmssCodec
   Hhmmss.length = 6
+
+  # Unknown
+  UNKNOWN = Field.new
 end
 
