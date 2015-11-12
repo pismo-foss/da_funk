@@ -123,6 +123,12 @@ module ISO8583
     sprintf("%0#{len}d", val)
   }
 
+  XN        = BCDField.new
+  XN.codec  = ASCII_Number
+  XN.padding = lambda {|val, len|
+    sprintf("%0#{len}d", val)
+  }
+
   N_BCD = BCDField.new
   N_BCD.codec = Packed_Number
 
