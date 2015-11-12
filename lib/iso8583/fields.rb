@@ -90,6 +90,11 @@ module ISO8583
   LLVAR_ANS.length = LL
   LLVAR_ANS.codec  = ANS_Codec
 
+  # Thre byte variable length ASCII numeral, payload Track2 data
+  LLLVAR_Z         = Field.new
+  LLLVAR_Z.length  = LLL
+  LLLVAR_Z.codec   = Track2
+
   # Three byte variable length ASCII numeral, payload ASCII, fixed length, zeropadded (right)
   LLLVAR_AN        = Field.new
   LLLVAR_AN.length = LLL
