@@ -166,7 +166,7 @@ module DaFunk
     private
     def form_default(options = {})
       options[:default] ||= ""
-      options[:mode]    ||= Device::IO::IO_INPUT_LETTERS
+      options[:mode]    ||= Device::IO::IO_INPUT_ALPHA
       options[:min]     ||= 0
       options[:max]     ||= 20
       options
