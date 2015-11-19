@@ -91,14 +91,17 @@ class Device
     end
 
     def self.attach
-      Device::Network.init(*self.config)
-      ret = Device::Network.connect
-      ret = Device::Network.connected? if ret != SUCCESS
-      while(ret == PROCESSING)
-        ret = Device::Network.connected?
-      end
-      if ret == SUCCESS && (wifi? || ethernet?)
-        Device::Network.dhcp_client(20000)
+      ret = Device::Network.connected?
+      if ret != SUCCESS
+        ret = Device::Network.init(*self.config)
+        ret = Device::Network.connect
+        ret = Device::Network.connected? if ret != SUCCESS
+        while(ret == PROCESSING)
+          ret = Device::Network.connected?
+        end
+        if ret == SUCCESS && (wifi? || ethernet?)
+          Device::Network.dhcp_client(20000)
+        end
       end
       ret
     end
