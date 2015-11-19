@@ -154,7 +154,7 @@ class Device
 
     def self.change_next(text, mask_type = Device::IO::MASK_ALPHA)
       char = text[-1]
-      if range = KEYS_RANGE[mask_type].detect { |range| range.include?(char) }
+      if char && (range = KEYS_RANGE[mask_type].detect { |range| range.include?(char) })
         index = range.index(char)
         new_value = range[index+1]
         if new_value
