@@ -34,6 +34,7 @@ class Device
       "notification_stream_timeout" => "",
       "cw_switch_version"           => "",
       "cw_pos_timezone"             => "",
+      "iso8583_recv_tries"          => "0",
       "company_name"                => ""
     }
 
