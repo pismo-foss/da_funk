@@ -147,6 +147,8 @@ class Device
         Device::IO::MASK_LETTERS
       elsif options[:mode] == Device::IO::IO_INPUT_MASK
         options[:mask_clean][text.length - 1].match(/[0-9]/) ? Device::IO::MASK_NUMBERS : Device::IO::MASK_LETTERS
+      else
+        Device::IO::MASK_ALPHA
       end
     end
 
