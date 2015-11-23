@@ -76,7 +76,7 @@ module DaFunk
       if sh("#{mrbc} -g -o #{test_out} #{all_files.uniq}")
         puts "cd #{File.dirname(out_path)}"
         FileUtils.cd File.dirname(out_path)
-        sh("#{mruby} #{File.join(out_path, "test.mrb")}")
+        sh("#{mruby} #{File.join(name, "test.mrb")}")
       end
     end
 
