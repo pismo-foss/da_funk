@@ -1,5 +1,21 @@
 # DaFunk
 
+### 0.4.14 - 2015-11-23 - Improve IO functions
+- Update cloudwalk_handshake to version 0.4.5.
+- Apply relative path on compilation and tests paths to make it work properly on windows.
+- Move from Print to Printer.
+- Implement Device::Print.print_big.
+- Support to display in line at Device::IO.get_format.
+- On Helper.menu support Device::IO.timeout if timeout isn’t send.
+- Refactoring the documentation of Helper.menu.
+- Refactoring Device::IO.get_format: Add support masquerade values; Improve the input letters and numbers; Add input alpha.
+- Add the compilation of lib/ext/string.rb on Rakefile.
+- Implement ISO8583 fields Unknown, XN(BCD), LLLVAR_Z and Z (LL Track2).
+- Add iso8583_recv_tries setting.
+- Add uclreceivetimeout to Setting.
+- Add ISO8583::FileParser to parse bitmap.dat file.
+
+
 ### 0.4.13 - 2015-10-30 - Implement get_string byt getc
 - Implement Debug Flag.
 - Fix Device::IO.change_next to return the first option and restart the loop.
