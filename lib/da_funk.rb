@@ -28,7 +28,6 @@ unless Object.const_defined?(:MTest)
   require file_path + "/device/transaction/download.rb"
   require file_path + "/device/transaction/emv.rb"
   require file_path + "/device/transaction/iso.rb"
-  require file_path + "/../utils/command_line_platform.rb"
 end
 
 module DaFunk
