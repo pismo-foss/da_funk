@@ -1,5 +1,8 @@
 # DaFunk
 
+### 0.4.15 - 2015-11-24 - Screen limitation abstraction
+- Implement class Screen to replace STDOUT and perform column and line display abstraction on place that doesn’t support screen display by STDOUT.
+
 ### 0.4.14 - 2015-11-23 - Improve IO functions
 - Update cloudwalk_handshake to version 0.4.5.
 - Apply relative path on compilation and tests paths to make it work properly on windows.
