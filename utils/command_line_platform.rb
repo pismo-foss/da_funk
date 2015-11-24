@@ -29,9 +29,13 @@ class CommandLinePlatform
   end
 
   class Display
+    class << self
+      attr_accessor :standard_output
+    end
+
     def self.print_in_line(buf, row = nil, column = nil)
       buf = (" " * column) + buf if column != nil && column > 0
-      puts buf
+      _puts buf
     end
 
     def self.clear
@@ -45,6 +49,10 @@ class CommandLinePlatform
     end
 
     def self.display_bitmap(path, row, column)
+    end
+
+    def self._puts(*args)
+      standard_output.puts(*args)
     end
   end
 
