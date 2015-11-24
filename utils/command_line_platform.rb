@@ -8,6 +8,8 @@ class CommandLinePlatform
   IO = ::IO
 
   def self.setup
+    CommandLinePlatform::Display.standard_output = STDOUT
+    Screen.setup(21, 20)
     begin
       require 'cloudwalk_handshake'
       CloudwalkHandshake.configure!

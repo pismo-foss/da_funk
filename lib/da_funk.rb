@@ -4,6 +4,7 @@ unless Object.const_defined?(:MTest)
   require file_path + "/da_funk/iso8583.rb"
   require file_path + "/da_funk/rake_task.rb"
   require file_path + "/da_funk/test.rb"
+  require file_path + "/da_funk/screen.rb"
   require file_path + "/device/support.rb"
   require file_path + "/device/helper.rb"
   require file_path + "/device/crypto.rb"

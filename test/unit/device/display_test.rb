@@ -40,4 +40,46 @@ class DisplayTest < DaFunk::Test.case
     assert_equal nil, puts("test", 0)
     assert_equal nil, puts("test", 0, 0)
   end
+
+  def test_kernel_puts_break_line
+    $stdout.fresh
+    assert_equal nil, puts("\n")
+    assert_equal 0, $stdout.x
+    assert_equal 2, $stdout.y
+    assert_equal nil, puts("")
+    assert_equal 0, $stdout.x
+    assert_equal 3, $stdout.y
+  end
+
+  def test_kernel_puts_string_20_plus_1
+    $stdout.fresh
+    assert_equal nil, puts("12345678901234567890")
+    assert_equal 20, $stdout.x
+    assert_equal 1, $stdout.y
+    assert_equal nil, puts("1")
+    assert_equal 1, $stdout.x
+    assert_equal 2, $stdout.y
+  end
+
+  def test_kernel_puts_string_21
+    $stdout.fresh
+    assert_equal nil, puts("123456789012345678901")
+    assert_equal 0, $stdout.x
+    assert_equal 2, $stdout.y
+  end
+
+  def test_kernel_puts_string_43
+    $stdout.fresh
+    assert_equal nil, puts("1234567890123456789012345678901234567890123")
+    assert_equal 1, $stdout.x
+    assert_equal 3, $stdout.y
+  end
+
+  def test_kernel_puts_string_22
+    $stdout.fresh
+    assert_equal nil, puts("1234567890123456789012")
+    assert_equal 1, $stdout.x
+    assert_equal 2, $stdout.y
+  end
 end
+

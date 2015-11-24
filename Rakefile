@@ -13,6 +13,7 @@ FILES = FileList[
   "lib/da_funk/helper.rb",
   "lib/da_funk.rb",
   "lib/da_funk/test.rb",
+  "lib/da_funk/screen.rb",
   "lib/device.rb",
   "lib/device/audio.rb",
   "lib/device/crypto.rb",
