@@ -1,5 +1,8 @@
 # DaFunk
 
+### 0.4.16 - 2015-11-27 - Serial and logical_number configuration on rake test
+- Support to serial and logical_number configuration on rake test.
+
 ### 0.4.15 - 2015-11-24 - Screen limitation abstraction
 - Implement class Screen to replace STDOUT and perform column and line display abstraction on place that doesn’t support screen display by STDOUT.
 
