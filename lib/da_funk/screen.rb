@@ -23,13 +23,6 @@ class Screen
   end
 
   def jump_line(value = 1)
-    #CommandLinePlatform::Display._puts "=" * 50
-    #CommandLinePlatform::Display._puts x
-    #CommandLinePlatform::Display._puts y
-    #CommandLinePlatform::Display._puts max_x
-    #CommandLinePlatform::Display._puts max_y
-    #CommandLinePlatform::Display._puts "=" * 50
-
     @y += value
     @x = 0
     @y = 0 if (@y > (@max_y-1))
