@@ -67,8 +67,8 @@ class CommandLinePlatform
   end
 
   class System
-    def self.serial
-      "50111541"
+    class << self
+      attr_accessor :serial
     end
 
     def self.restart

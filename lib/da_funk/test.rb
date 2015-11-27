@@ -48,7 +48,7 @@ module DaFunk
 
   class Test
     class << self
-      attr_accessor :root_path, :libs, :tests
+      attr_accessor :root_path, :libs, :tests, :logical_number, :serial
 
       if Object.const_defined?(:MTest)
         include DaFunk::MRuby
@@ -70,7 +70,9 @@ module DaFunk
     def self.configure
       yield self if block_given?
 
-      @root_path ||= File.dirname("./")
+      @root_path      ||= File.dirname("./")
+      @serial         ||= "1111111111"
+      @logical_number ||= "00001"
       if self.cruby?
         @libs      ||= FileList[File.join(root_path, 'lib/**/*.rb')]
         @tests     ||= FileList[File.join(root_path, 'test/**/*test.rb')]
