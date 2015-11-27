@@ -21,40 +21,10 @@ module DaFunk
     end
   end
 
-  module CRuby
-    def case
-      engine::TestCase
-    end
-
-    def engine
-      ::Test::Unit
-    end
-
-    def run; end
-
-    def setup
-      require 'fileutils'
-      require 'test/unit'
-
-      libs.each do |file|
-        require file
-      end
-    end
-
-    def platform
-      :cruby
-    end
-  end
-
   class Test
     class << self
       attr_accessor :root_path, :libs, :tests, :logical_number, :serial
-
-      if Object.const_defined?(:MTest)
-        include DaFunk::MRuby
-      else
-        include DaFunk::CRuby
-      end
+      include DaFunk::MRuby
     end
 
     def self.mruby?
