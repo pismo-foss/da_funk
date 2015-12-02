@@ -1,5 +1,8 @@
 # DaFunk
 
+### 0.4.17 - 2015-12-01 - Update CloudWalkHandshake
+- Update CloudWalkHandshake to version 0.4.6.
+
 ### 0.4.16 - 2015-11-27 - Serial and logical_number configuration on rake test
 - Support to serial and logical_number configuration on rake test.
 
