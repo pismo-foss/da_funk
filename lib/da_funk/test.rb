@@ -23,7 +23,7 @@ module DaFunk
 
   class Test
     class << self
-      attr_accessor :root_path, :libs, :tests, :logical_number, :serial
+      attr_accessor :root_path, :libs, :tests, :logical_number, :serial, :name
       include DaFunk::MRuby
     end
 
@@ -43,6 +43,7 @@ module DaFunk
       @root_path      ||= File.dirname("./")
       @serial         ||= "1111111111"
       @logical_number ||= "00001"
+      @name           ||= "main"
       if self.cruby?
         @libs      ||= FileList[File.join(root_path, 'lib/**/*.rb')]
         @tests     ||= FileList[File.join(root_path, 'test/**/*test.rb')]
