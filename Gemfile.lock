@@ -16,7 +16,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    cloudwalk_handshake (0.4.5)
+    cloudwalk_handshake (0.4.6)
     rake (10.4.2)
     yard (0.8.7.6)
 
