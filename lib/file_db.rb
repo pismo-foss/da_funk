@@ -45,6 +45,13 @@ class FileDb
     @hash[key]
   end
 
+  def update_attributes(values = Hash.new)
+    values.each do |key, value|
+      @hash[key] = value
+    end
+    save
+  end
+
   private
   def sanitize(string)
     new_string = string.to_s.strip
