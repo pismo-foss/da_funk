@@ -1,5 +1,8 @@
 # DaFunk
 
+### 0.4.18 - 2015-12-03 - Automatically configure Application running
+- Automatically configure Application running.
+
 ### 0.4.17 - 2015-12-01 - Update CloudWalkHandshake
 - Update CloudWalkHandshake to version 0.4.6.
 
