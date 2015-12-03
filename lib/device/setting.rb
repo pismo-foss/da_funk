@@ -61,12 +61,20 @@ class Device
       self.environment == "staging"
     end
 
-    def self.to_production!
-      self.host = HOST_PRODUCTION
+   def self.to_production!
+      if self.environment != "production"
+        update_attributes(:company_name => "", :environment => "production", :host => HOST_PRODUCTION)
+        return true
+      end
+      false
     end
 
     def self.to_staging!
-      self.host = HOST_STAGING
+      if self.environment != "staging"
+        update_attributes(:company_name => "", :environment => "staging", :host => HOST_STAGING)
+        return true
+      end
+      false
     end
 
     def self.method_missing(method, *args, &block)
