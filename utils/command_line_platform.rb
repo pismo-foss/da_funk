@@ -8,7 +8,7 @@ class CommandLinePlatform
   IO = ::IO
 
   def self.setup
-    Device::Setting.klass              = DaFunk::Test.name
+    Device::System.klass               = DaFunk::Test.name
     Device::Setting.logical_number     = DaFunk::Test.logical_number
     CommandLinePlatform::System.serial = DaFunk::Test.serial
     CommandLinePlatform::Display.standard_output = STDOUT
