@@ -124,20 +124,6 @@ class Device
     def event_name
       "#{Device::Setting.company_name};#{Device::Setting.logical_number}"
     end
-
-    def socket_callback
-      Proc.new do
-        socket_tcp = Device::Network.create_socket
-        socket_tcp.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
-
-        if Device::Setting.ssl == "1"
-          socket = Device::Network.handshake_ssl(socket_tcp)
-        else
-          socket = socket_tcp
-        end
-        [socket, socket_tcp]
-      end
-    end
   end
 end
 
