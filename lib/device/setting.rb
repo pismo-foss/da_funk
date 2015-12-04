@@ -63,7 +63,7 @@ class Device
 
    def self.to_production!
       if self.environment != "production"
-        @file.update_attributes(:company_name => "", :environment => "production", :host => HOST_PRODUCTION)
+        @file.update_attributes("company_name" => "", "environment" => "production", "host" => HOST_PRODUCTION)
         return true
       end
       false
@@ -71,7 +71,7 @@ class Device
 
     def self.to_staging!
       if self.environment != "staging"
-        @file.update_attributes(:company_name => "", :environment => "staging", :host => HOST_STAGING)
+        @file.update_attributes("company_name" => "", "environment" => "staging", "host" => HOST_STAGING)
         return true
       end
       false
