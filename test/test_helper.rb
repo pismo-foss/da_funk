@@ -12,5 +12,3 @@ DaFunk::Test.configure do |t|
   t.name           = APP_NAME
 end
 
-Device::Setting.to_staging!
-
