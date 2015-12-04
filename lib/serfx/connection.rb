@@ -65,13 +65,16 @@ module Serfx
     def read_data(read_timeout = self.timeout)
       buf = read_buffer(read_timeout)
       return if buf.nil?
+      parse_package(buf)
+    end
 
-      # TODO Check first and second(header and body) packet size
-      first_packet, second_packet = buf[0..12], buf[13..-1]
-      if second_packet.nil? || second_packet.empty?
-        [MessagePack.unpack(first_packet), nil]
+    def parse_package(buf)
+      object = MessagePack.unpack(buf)
+      check = MessagePack.pack(object)
+      if check.size == buf.size
+        [object, nil]
       else
-        [MessagePack.unpack(first_packet), MessagePack.unpack(second_packet)]
+        [object, MessagePack.unpack(buf[check.size..-1])]
       end
     end
 
