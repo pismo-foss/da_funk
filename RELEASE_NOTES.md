@@ -1,5 +1,11 @@
 # DaFunk
 
+### 0.4.19 - 2015-12-04 - Refactoring Device::Setting.to_production!/.to_staging!
+- Implement FileDb#update_attributes to update more than one key in a unique save.
+- Refactoring Device::Setting.to_production!/.to_staging! to clean company_name if the last environment is different.
+- Update cloudwalk_handshake version to 0.4.7.
+- Fix debug flag setup to check if is_a? FalseClass class to define true/false.
+
 ### 0.4.18 - 2015-12-03 - Automatically configure Application running
 - Automatically configure Application running.
 
