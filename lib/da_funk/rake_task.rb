@@ -15,7 +15,7 @@ module DaFunk
     def initialize
       yield self if block_given?
 
-      @debug             ||= true
+      @debug               = @debug.is_a?(FalseClass) ? false : true
       @libs              ||= FileList['lib/**/*.rb']
       @tests             ||= FileList['test/**/*test.rb']
       @tests_integration ||= FileList['test/integration/**/*test.rb']
