@@ -109,11 +109,15 @@ class Device
 
     def create_fiber
       Fiber.new do
-        auth = CloudwalkTOTP.at
-        Serfx.connect(authkey: auth, socket_block: Device::Network.socket, timeout: timeout, stream_timeout: stream_timeout) do |conn|
-          conn.stream(subscription) { |ev| reply(conn, ev) }
+        begin
+          auth = CloudwalkTOTP.at
+          Serfx.connect(authkey: auth, socket_block: Device::Network.socket, timeout: timeout, stream_timeout: stream_timeout) do |conn|
+            conn.stream(subscription) { |ev| reply(conn, ev) }
+          end
+          true
+        rescue => RPCError
+          false
         end
-        true
       end
     end
 
