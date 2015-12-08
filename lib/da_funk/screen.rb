@@ -56,7 +56,7 @@ class Screen
     value_y = @y unless value_y
     value_x = @x unless value_x
 
-    str.lines.each_with_index do |string, index|
+    str.to_s.lines.each_with_index do |string, index|
       jump_line if string[-1] == "\n"
       string = string.chomp
       if (@x + string.size) < @max_x
