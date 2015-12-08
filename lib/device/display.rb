@@ -38,6 +38,7 @@ class Device
     # @param line [Fixnum] Line to clear
     def self.clear(line = nil)
       if line.nil?
+        STDOUT.fresh
         adapter.clear
       else
         adapter.clear_line line
