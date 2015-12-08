@@ -103,10 +103,12 @@ module Serfx
         'Command' => command.to_s.gsub('_', '-'),
         'Seq' => seq
       }
+
       buff = MessagePack::Packer.new
       buff.write(header)
       buff.write(body) unless body.nil?
-      res = socket.write(buff.to_str)
+
+      res = socket.write(buff.to_str) unless buff.to_str.empty?
       @requests[seq] = { header: header, ack?: false }
       seq
     end
