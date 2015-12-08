@@ -17,7 +17,7 @@ class Screen
     self.fresh
   end
 
-  def fresh(value_y = nil, value_x = nil)
+  def fresh(value_y = 0, value_x = 0)
     @x = value_x || 0
     @y = value_y || 0
   end
