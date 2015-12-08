@@ -62,6 +62,15 @@ module DaFunk
       value
     end
 
+    def try(tries, &block)
+      tried = 0
+      ret = false
+      while (tried < tries && ! ret)
+        ret = block.call(tried)
+        tried += 1
+      end
+      ret
+    end
 
     # Create a form menu.
     #
