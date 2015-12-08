@@ -15,8 +15,8 @@ module Serfx
     # `auth` has to be second command, immediately after `handshake`.
     #
     # @return  [Response]
-    def auth
-      tcp_send(:auth, 'AuthKey' => @authkey)
+    def auth(key = @authkey)
+      tcp_send(:auth, 'AuthKey' => key)
       read_response(:auth)
     end
     # fires an user event
