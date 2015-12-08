@@ -7,8 +7,8 @@ class Screen
 
   def self.setup(max_x = SCREEN_X_SIZE, max_y = SCREEN_Y_SIZE)
     $stdout.close
-    Kernel.const_set(:STDOUT, self.new(max_x, max_y))
-    $stdout = Kernel::STDOUT
+    Object.const_set(:STDOUT, self.new(max_x, max_y))
+    $stdout = Object::STDOUT
   end
 
   def initialize(max_x = SCREEN_X_SIZE, max_y = SCREEN_Y_SIZE)
