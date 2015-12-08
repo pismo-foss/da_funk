@@ -12,7 +12,7 @@ class Device
     # @return [NilClass] nil.
     def self.print(buf, row = nil, column = nil)
       if row.nil? && column.nil?
-        adapter.print(buf)
+        STDOUT.print(buf)
       else
         adapter.print_in_line(buf, row, column)
       end
