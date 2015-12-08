@@ -46,13 +46,14 @@ class Device
 
     def self.download
       if attach
-        Device::Display.clear
-        puts "Downloading Params"
-        ret = Device::Transaction::Download.request_param_file(FILE_NAME)
-        if value = check_download_error(ret)
-          puts "Downloaded Successfully"
-          parse_apps
+        value = try(3) do |tried|
+          Device::Display.clear
+          puts "Downloading (#{tried})"
+          puts "Parameters"
+          ret = Device::Transaction::Download.request_param_file(FILE_NAME)
+          check_download_error(ret)
         end
+        parse_apps if value
         value
       end
     end
@@ -79,12 +80,15 @@ class Device
 
     def self.update_app(application)
       if attach && application
-        Device::Display.clear
-        puts "Downloading #{application.file}..."
-        ret = Device::Transaction::Download.request_file(application.file, application.zip)
+        try(3) do |tried|
+          Device::Display.clear
+          puts "Downloading (#{tried})"
+          puts "#{application.file}..."
+          ret = Device::Transaction::Download.request_file(application.file, application.zip)
 
-        unless check_download_error ret
-          sleep 2
+          ret = check_download_error(ret)
+          sleep(1)
+          ret
         end
       end
     end
