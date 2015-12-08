@@ -107,6 +107,12 @@ class Device
       end
     end
 
+    def check_authentication(error)
+      if error.message == "Invalid authentication token"
+        Device::Setting.cw_pos_timezone = "" # Clear timezone if authentication error
+      end
+    end
+
     def create_fiber
       Fiber.new do
         begin
@@ -116,6 +122,7 @@ class Device
           end
           true
         rescue Serfx::RPCError => error
+          check_authentication(error)
           false
         end
       end
