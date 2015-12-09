@@ -51,13 +51,27 @@ class DisplayTest < DaFunk::Test.case
     assert_equal 3, $stdout.y
   end
 
+  def test_kernel_print_small
+    $stdout.fresh
+    assert_equal nil, print("1234")
+    assert_equal 4, $stdout.x
+    assert_equal 0, $stdout.y
+  end
+
+  def test_kernel_puts_small
+    $stdout.fresh
+    assert_equal nil, puts("1234")
+    assert_equal 0, $stdout.x
+    assert_equal 1, $stdout.y
+  end
+
   def test_kernel_puts_string_20_plus_1
     $stdout.fresh
-    assert_equal nil, puts("12345678901234567890")
+    assert_equal nil, print("12345678901234567890")
     assert_equal 20, $stdout.x
-    assert_equal 1, $stdout.y
+    assert_equal 0, $stdout.y
     assert_equal nil, puts("1")
-    assert_equal 1, $stdout.x
+    assert_equal 0, $stdout.x
     assert_equal 2, $stdout.y
   end
 
@@ -71,15 +85,29 @@ class DisplayTest < DaFunk::Test.case
   def test_kernel_puts_string_43
     $stdout.fresh
     assert_equal nil, puts("1234567890123456789012345678901234567890123")
-    assert_equal 1, $stdout.x
+    assert_equal 0, $stdout.x
     assert_equal 3, $stdout.y
+  end
+
+  def test_kernel_print_string_43
+    $stdout.fresh
+    assert_equal nil, print("1234567890123456789012345678901234567890123")
+    assert_equal 1, $stdout.x
+    assert_equal 2, $stdout.y
   end
 
   def test_kernel_puts_string_22
     $stdout.fresh
     assert_equal nil, puts("1234567890123456789012")
-    assert_equal 1, $stdout.x
+    assert_equal 0, $stdout.x
     assert_equal 2, $stdout.y
+  end
+
+  def test_kernel_print_string_22
+    $stdout.fresh
+    assert_equal nil, print("1234567890123456789012")
+    assert_equal 1, $stdout.x
+    assert_equal 1, $stdout.y
   end
 end
 
