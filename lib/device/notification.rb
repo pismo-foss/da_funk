@@ -61,7 +61,7 @@ class Device
         date = datetime.sub(" ", "-").split("-")
         Device::Display.print_line("#{date[1]}/#{date[0]}/#{date[2]} #{date[3]}", 0)
         Device::Display.print_line("#{message}", 2)
-        getc nil
+        getc(0)
       }
     end
 
