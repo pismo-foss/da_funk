@@ -60,11 +60,11 @@ class Screen
       jump_line if string[-1] == "\n"
       string = string.chomp
       if (@x + string.size) < @max_x
-        Device::Display.print_line(string, @y, @x)
         @x += string.size
+        Device::Display.print(buf, @y, @x)
       else
         space = @max_x - @x
-        Device::Display.print_line("#{string[0..(space - 1)]}", @y, @x)
+        Device::Display.print("#{string[0..(space - 1)]}", @y, @x)
         jump_line
         loop_split_strings("#{string[(space)..-1]}")
       end
