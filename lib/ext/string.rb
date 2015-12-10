@@ -5,5 +5,9 @@ class String
     str = mask_string.chars.map{|s| s.match(/[0-9A-Za-z]/) ? "%s" : s }.join
     str % self.ljust(mask_clean.size, " ").chars
   end
+
+  def chars
+    self.split("")
+  end
 end
 
