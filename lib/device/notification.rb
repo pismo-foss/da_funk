@@ -107,10 +107,14 @@ class Device
       end
     end
 
-    def check_authentication(error)
-      if error.message == "Invalid authentication token"
+    def check_errors(exception)
+      case exception.message
+      when "Invalid authentication token"
         Device::Setting.cw_pos_timezone = "" # Clear timezone if authentication error
+      when "Socket closed"
+      else
       end
+      false
     end
 
     def create_fiber
@@ -121,9 +125,8 @@ class Device
             conn.stream(subscription) { |ev| reply(conn, ev) }
           end
           true
-        rescue Serfx::RPCError => error
-          check_authentication(error)
-          false
+        rescue Serfx::RPCError => exception
+          check_errors(exception)
         end
       end
     end
