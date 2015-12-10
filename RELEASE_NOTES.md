@@ -1,5 +1,20 @@
 # DaFunk
 
+### 0.4.20 - 2015-12-10 - Refactoring Notification
+- Implement try method on helper to be use on by communication tries.
+- Serfx#auth now receives the authentication key as a parameter too, so that could be called externally in a determined moment, example TOTP authentication on the right moment (after socket open, avoiding authentication problems).
+- Treat authentication error clearing cw_pos_timezone to perform entire handshake on next time.
+- Make Device::Display.print call STDOUT.print if row and column are not sent.
+- On Device::Display#clear call STDOUT.fresh to change the Screen state to 0(x and y).
+- Refactor download of file on ParamsDat to implement method try, adopted initially 3 times.
+- On Screen.setup define STDOUT on Object, instead of Kernel.
+- Update cloudwalk_handshake to version 0.4.11.
+- Fix Screen jump line to not jump before print if size is less than max_x.
+- Support to keep alive Notifications restarting in intervals.
+- On Notification Callback to display message use `getc(0)` (wait a key to be pressed forever) instead of getc(nil) (wait a key to be pressed in default time.
+- Implement String#chars extension.
+- Support to execute a unique file test, example: `rake test test/unit/file_test.rb`.
+
 ### 0.4.19 - 2015-12-04 - Refactoring Device::Setting.to_production!/.to_staging!
 - Implement FileDb#update_attributes to update more than one key in a unique save.
 - Refactoring Device::Setting.to_production!/.to_staging! to clean company_name if the last environment is different.
