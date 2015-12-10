@@ -1,14 +1,17 @@
+
 class Device
   class Notification
-    DEFAULT_TIMEOUT        = 15
-    DEFAULT_INTERVAL       = 10
-    DEFAULT_STREAM_TIMEOUT = 0
+    DEFAULT_TIMEOUT           = 20
+    DEFAULT_INTERVAL          = 10
+    DEFAULT_STREAM_TIMEOUT    = 0
+    DEFAULT_CREATION_INTERVAL = 3600
 
     class << self
-      attr_accessor :callbacks, :current
+      attr_accessor :callbacks, :current, :last_creation, :creation_interval
     end
 
     self.callbacks = Hash.new
+    self.creation_interval = DEFAULT_CREATION_INTERVAL
 
     attr_reader :fiber, :timeout, :interval, :last_check, :stream_timeout
 
@@ -30,6 +33,7 @@ class Device
     end
 
     def self.config
+      self.creation_interval      = Device::Setting.notification_socket_timeout.empty? DEFAULT_CREATION_INTERVAL : Device::Setting.notification_socket_timeout.to_i
       notification_timeout        = Device::Setting.notification_timeout.empty? ? DEFAULT_TIMEOUT : Device::Setting.notification_timeout.to_i
       notification_interval       = Device::Setting.notification_interval.empty? ? DEFAULT_INTERVAL : Device::Setting.notification_interval.to_i
       notification_stream_timeout = Device::Setting.notification_stream_timeout.empty? ? DEFAULT_STREAM_TIMEOUT : Device::Setting.notification_stream_timeout.to_i
@@ -37,7 +41,7 @@ class Device
     end
 
     def self.start
-      unless Device::Setting.logical_number.empty? || Device::Setting.company_name.empty? || (! Device::Network.connected?)
+      if create_fiber? && Device::Network.connected?
         unless Device::Notification.current && Device::Notification.current.closed?
           self.new(*self.config)
         end
@@ -61,6 +65,18 @@ class Device
       }
     end
 
+    def self.create_fiber?
+      (! Device::Setting.company_name.empty?) && (! Device::Setting.logical_number.empty?) && self.valid_creation_interval?
+    end
+
+    def self.valid_creation_interval?
+      if @last_creation
+        (@last_creation + self.creation_interval) < Time.now
+      else
+        true
+      end
+    end
+
     def initialize(timeout = DEFAULT_TIMEOUT, interval = DEFAULT_INTERVAL, stream_timeout = DEFAULT_STREAM_TIMEOUT)
       @timeout        = timeout
       @stream_timeout = stream_timeout
@@ -71,24 +87,34 @@ class Device
 
     # Check if there is any notification
     def check
-      if @fiber.alive? && valid_interval? && Device::Network.connected?
-        if (notification = @fiber.resume)
-          Notification.execute(NotificationEvent.new(notification))
+      if valid_check_interval? && Device::Network.connected?
+        if @fiber.alive?
+          if (notification = @fiber.resume)
+            Notification.execute(NotificationEvent.new(notification))
+          end
+          @last_check = Time.now
+          if Device::Notification.create_fiber?
+            self.close
+            @fiber = create_fiber
+          end
         end
-        @last_check = Time.now
       end
     end
 
     # Close socket and finish Fiber execution
     def close
-      @fiber.resume "close"
+      if closed?
+        true
+      else
+        ! @fiber.resume "close"
+      end
     end
 
     def closed?
       ! @fiber.alive?
     end
 
-    def valid_interval?
+    def valid_check_interval?
       if @last_check
         (@last_check + self.interval) < Time.now
       else
@@ -122,6 +148,7 @@ class Device
         begin
           Serfx.connect(socket_block: Device::Network.socket, timeout: timeout, stream_timeout: stream_timeout) do |conn|
             conn.auth(CloudwalkTOTP.at)
+            Device::Notification.last_creation = Time.now
             conn.stream(subscription) { |ev| reply(conn, ev) }
           end
           true

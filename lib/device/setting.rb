@@ -29,9 +29,10 @@ class Device
       "logical_number"              => "",
       "network_configured"          => "",
       "environment"                 => "",
-      "notification_timeout"        => "",
-      "notification_interval"       => "",
-      "notification_stream_timeout" => "",
+      "notification_socket_timeout" => "", # Period to create fiber
+      "notification_timeout"        => "", # Time to wait message to read
+      "notification_interval"       => "", # Check interval
+      "notification_stream_timeout" => "", # Time to wait stream message to read
       "cw_switch_version"           => "",
       "cw_pos_timezone"             => "",
       "uclreceivetimeout"           => "0",
