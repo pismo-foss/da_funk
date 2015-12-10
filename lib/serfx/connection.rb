@@ -84,6 +84,7 @@ module Serfx
       loop do
         bytes = socket.bytes_available
         return socket.read(bytes) if bytes > 0
+        return socket.recv_nonblock(bytes) if bytes > 0
         break unless time_timeout > Time.now
         sleep 1
       end
