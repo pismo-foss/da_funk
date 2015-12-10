@@ -129,7 +129,11 @@ module DaFunk
 
         desc "Run all test on mruby"
         task :all => "test:setup" do
-          execute_tests(tests)
+          if ARGV[1]
+            execute_tests(FileList[ARGV[1]])
+          else
+            execute_tests(tests)
+          end
         end
       end
 
