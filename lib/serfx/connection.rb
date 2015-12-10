@@ -65,6 +65,7 @@ module Serfx
     def read_data(read_timeout = self.timeout)
       buf = read_buffer(read_timeout)
       return if buf.nil?
+      return {'Error' => "Socket closed"} if buf.empty?
       parse_package(buf)
     end
 
