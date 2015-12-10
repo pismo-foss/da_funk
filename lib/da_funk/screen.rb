@@ -57,11 +57,11 @@ class Screen
     @x = value_x if value_x
 
     str.to_s.lines.each_with_index do |string, index|
-      jump_line if string[-1] == "\n"
-      string = string.chomp
-      if (@x + string.size) < @max_x
-        @x += string.size
+      buf = string.chomp
+      if (@x + buf.size) < @max_x
         Device::Display.print(buf, @y, @x)
+        @x += buf.size
+        jump_line if string[-1] == "\n"
       else
         space = @max_x - @x
         Device::Display.print("#{string[0..(space - 1)]}", @y, @x)
