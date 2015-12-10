@@ -33,7 +33,7 @@ class Device
     end
 
     def self.config
-      self.creation_interval      = Device::Setting.notification_socket_timeout.empty? DEFAULT_CREATION_INTERVAL : Device::Setting.notification_socket_timeout.to_i
+      self.creation_interval      = Device::Setting.notification_socket_timeout.empty? ? DEFAULT_CREATION_INTERVAL : Device::Setting.notification_socket_timeout.to_i
       notification_timeout        = Device::Setting.notification_timeout.empty? ? DEFAULT_TIMEOUT : Device::Setting.notification_timeout.to_i
       notification_interval       = Device::Setting.notification_interval.empty? ? DEFAULT_INTERVAL : Device::Setting.notification_interval.to_i
       notification_stream_timeout = Device::Setting.notification_stream_timeout.empty? ? DEFAULT_STREAM_TIMEOUT : Device::Setting.notification_stream_timeout.to_i
