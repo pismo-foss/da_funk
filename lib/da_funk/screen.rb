@@ -52,9 +52,9 @@ class Screen
 
   private
   def loop_split_strings(*args)
-    value_y = @y unless value_y
-    value_x = @x unless value_x
     str, value_y, value_x = *args
+    @y = value_y if value_y
+    @x = value_x if value_x
 
     str.to_s.lines.each_with_index do |string, index|
       jump_line if string[-1] == "\n"
