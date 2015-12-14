@@ -84,6 +84,32 @@ class Device
       adapter.signal
     end
 
+    # Scan for wifi aps available
+    #
+    # @return [Array] Return an array of hash values
+    #   containing the values necessary to configure connection
+    #
+    # @example
+    #   aps = Device::Network.scan
+    #   # create a selection to menu method
+    #   selection = aps.inject({}) do |selection, hash|
+    #     selection[hash[:essid]] = hash; selection
+    #   end
+    #   selected = menu("Select SSID:", selection)
+    #
+    #   Device::Setting.password       = form("Password",
+    #     :min => 0, :max => 127, :default => Device::Setting.password)
+    #   Device::Setting.authentication = selected[:authentication]
+    #   Device::Setting.essid          = selected[:essid]
+    #   Device::Setting.channel        = selected[:channel]
+    #   Device::Setting.cipher         = selected[:cipher]
+    #   Device::Setting.mode           = selected[:mode]
+    def self.scan
+      if wifi?
+        adapter.scan if Device::Network.init(*self.config)
+      end
+    end
+
     def self.dhcp_client(timeout)
       time = Time.now + (timeout.to_f / 1000.0)
       ret = adapter.dhcp_client_start
