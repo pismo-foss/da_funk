@@ -77,6 +77,13 @@ class Device
       adapter.disconnect
     end
 
+    # Check signal value
+    #
+    # @return [Fixnum] Signal value between 0 and 5.
+    def self.signal
+      adapter.signal
+    end
+
     def self.dhcp_client(timeout)
       time = Time.now + (timeout.to_f / 1000.0)
       ret = adapter.dhcp_client_start
