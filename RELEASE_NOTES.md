@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.5.0 - 2015-12-14 - Wifi scan
+- Add support to Wifi scan.
+- Add support to check GPRS and Wifi signal.
+- Fix notification socket reading.
+
 ### 0.4.20 - 2015-12-10 - Refactoring Notification
 - Implement try method on helper to be use on by communication tries.
 - Serfx#auth now receives the authentication key as a parameter too, so that could be called externally in a determined moment, example TOTP authentication on the right moment (after socket open, avoiding authentication problems).
