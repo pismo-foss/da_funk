@@ -1,5 +1,8 @@
 # DaFunk
 
+### 0.5.1 - 2015-12-16 - Update cloudwalk_handshake
+- Update cloudwlak_handshake to version 0.4.12.
+
 ### 0.5.0 - 2015-12-14 - Wifi scan
 - Add support to Wifi scan.
 - Add support to check GPRS and Wifi signal.
