@@ -13,13 +13,12 @@ module Zip
     # TODO Refactor file check
     if Dir.exist?(dir)
       files = Dir.entries(dir)
-      if (files.size > 2)
-        files[2..-1].each do |file|
-          if File.file?("#{dir}/#{file}")
-            File.delete("#{dir}/#{file}")
-          else
-            Dir.delete("#{dir}/#{file}")
-          end
+      files.each do |file|
+        next if (file == ".." || file == ".")
+        if File.file?("#{dir}/#{file}")
+          File.delete("#{dir}/#{file}")
+        else
+          Dir.delete("#{dir}/#{file}")
         end
       end
       Dir.delete(dir)
