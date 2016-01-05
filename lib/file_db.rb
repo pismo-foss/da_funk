@@ -36,8 +36,10 @@ class FileDb
   end
 
   def []=(key, value)
+    value = value.to_s
+    old = @hash[key]
     ret = @hash[key] = value
-    save
+    save if old != value
     ret
   end
 
