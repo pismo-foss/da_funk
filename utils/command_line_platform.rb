@@ -8,11 +8,7 @@ class CommandLinePlatform
   IO = ::IO
 
   def self.setup
-    Device::System.klass               = DaFunk::Test.name
-    Device::Setting.logical_number     = DaFunk::Test.logical_number
-    CommandLinePlatform::System.serial = DaFunk::Test.serial
-    CommandLinePlatform::System.brand  = DaFunk::Test.brand
-    CommandLinePlatform::System.model  = DaFunk::Test.model
+    set_system_values
     CommandLinePlatform::Display.standard_output = STDOUT
     Screen.setup(21, 20)
     begin
@@ -21,6 +17,15 @@ class CommandLinePlatform
     rescue LoadError
     rescue NameError
     end
+  end
+
+  def self.set_system_values
+    Device::System.klass                = DaFunk::Test.name
+    Device::Setting.logical_number      = DaFunk::Test.logical_number
+    CommandLinePlatform::System.serial  = DaFunk::Test.serial
+    CommandLinePlatform::System.brand   = DaFunk::Test.brand
+    CommandLinePlatform::System.model   = DaFunk::Test.model
+    CommandLinePlatform::System.battery = DaFunk::Test.battery
   end
 
   class IO
@@ -69,11 +74,19 @@ class CommandLinePlatform
     def self.connected?
       1
     end
+
+    def self.signal
+      "0"
+    end
+
+    def self.sim_id
+      ""
+    end
   end
 
   class System
     class << self
-      attr_accessor :serial, :brand, :model
+      attr_accessor :serial, :brand, :model, :battery, :battery
     end
 
     def self.restart

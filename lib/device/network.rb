@@ -77,6 +77,10 @@ class Device
       adapter.disconnect
     end
 
+    def self.sim_id
+      adapter.sim_id
+    end
+
     # Check signal value
     #
     # @return [Fixnum] Signal value between 0 and 5.
