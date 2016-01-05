@@ -1,5 +1,11 @@
 # DaFunk
 
+### 0.5.2 - 2016-01-05 - Update cloudwalk_handshake
+- FileDb dot not check key value after sanitize to avoid problem on hash creation.
+- Add sim_pim, sim_slot, sim_dual, phone, modem_speed, touchscreen, attach_gprs_timeout, attach_tries, tcp_recv_timeout, iso8583_send_tries, crypto_dukpt_slot and ctls to Setting.
+- Add method model and versions to Device::System.
+- Add support to brand, model and versions to DaFunk tests API.
+
 ### 0.5.1 - 2015-12-16 - Update cloudwalk_handshake
 - Update cloudwlak_handshake to version 0.4.12.
 
