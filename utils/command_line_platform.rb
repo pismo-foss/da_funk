@@ -11,6 +11,8 @@ class CommandLinePlatform
     Device::System.klass               = DaFunk::Test.name
     Device::Setting.logical_number     = DaFunk::Test.logical_number
     CommandLinePlatform::System.serial = DaFunk::Test.serial
+    CommandLinePlatform::System.brand  = DaFunk::Test.brand
+    CommandLinePlatform::System.model  = DaFunk::Test.model
     CommandLinePlatform::Display.standard_output = STDOUT
     Screen.setup(21, 20)
     begin
@@ -71,11 +73,20 @@ class CommandLinePlatform
 
   class System
     class << self
-      attr_accessor :serial
+      attr_accessor :serial, :brand, :model
     end
 
     def self.restart
       puts "Restart terminal!"
+    end
+
+    def self.versions
+      {
+        "OS"     => Device.version,
+        "SDK"    => Device.api_version,
+        "EMV"    => "0.0.1",
+        "Pinpad" => "0.0.1"
+      }
     end
   end
 
