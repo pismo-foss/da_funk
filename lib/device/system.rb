@@ -61,6 +61,14 @@ class Device
     def self.model
       adapter.model
     end
+
+    def self.brand
+      adapter.brand
+    end
+
+    def self.versions
+      adapter.versions
+    end
   end
 end
 
