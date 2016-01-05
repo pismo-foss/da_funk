@@ -14,6 +14,9 @@ class Device
       "user"                        => "",
       "password"                    => "", #WIFI
       "apn"                         => "",
+      "sim_pim"                     => "",
+      "sim_slot"                    => "0",
+      "sim_dual"                    => "0",
       "authentication"              => "", #WIFI
       "essid"                       => "", #WIFI
       "bssid"                       => "", #WIFI
@@ -26,17 +29,25 @@ class Device
       "dns1"                        => "",
       "dns2"                        => "",
       "subnet"                      => "",
+      "phone"                       => "",
+      "modem_speed"                 => "",
       "logical_number"              => "",
       "network_configured"          => "",
+      "touchscreen"                 => "",
       "environment"                 => "",
+      "attach_gprs_timeout"         => "",
+      "attach_tries"                => "",
       "notification_socket_timeout" => "", # Period to create fiber
       "notification_timeout"        => "", # Time to wait message to read
       "notification_interval"       => "", # Check interval
       "notification_stream_timeout" => "", # Time to wait stream message to read
       "cw_switch_version"           => "",
       "cw_pos_timezone"             => "",
-      "uclreceivetimeout"           => "0",
+      "tcp_recv_timeout"            => "0",
       "iso8583_recv_tries"          => "0",
+      "iso8583_send_tries"          => "0",
+      "crypto_dukpt_slot"           => "",
+      "ctls"                        => "",
       "company_name"                => ""
     }
 
