@@ -12,10 +12,12 @@ class Device
     # @param json [String] Parameters to confifure new aplication.
     # @return [Object] From the new runtime instance.
     def self.execute(app, json = nil)
-      zip = "./#{app}.zip"
-      Device::Display.clear
-      raise File::FileError, zip unless File.exists?(zip)
-      raise "Problem to unzip #{zip}" unless Zip.uncompress(zip, app)
+      unless app.include?(".")
+        zip = "./#{app}.zip"
+        Device::Display.clear
+        raise File::FileError, zip unless File.exists?(zip)
+        raise "Problem to unzip #{zip}" unless Zip.uncompress(zip, app)
+      end
       return mrb_eval "Context.start('#{app}', '#{Device.adapter}', '#{json}')"
     end
   end
