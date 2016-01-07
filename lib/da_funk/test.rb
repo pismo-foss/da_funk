@@ -13,9 +13,6 @@ module DaFunk
       engine.new.run
     end
 
-    def setup
-    end
-
     def platform
       :mruby
     end
@@ -52,8 +49,6 @@ module DaFunk
         @libs      ||= FileList[File.join(root_path, 'lib/**/*.rb')]
         @tests     ||= FileList[File.join(root_path, 'test/**/*test.rb')]
       end
-
-      self.setup
     end
   end
 end
