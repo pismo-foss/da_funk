@@ -72,8 +72,10 @@ module DaFunk
 
     def execute_tests(files)
       # Debug is always on during tests(-g)
-      all_files = FileList["test/test_helper.rb"] + libs + files + [File.join(File.dirname(__FILE__), "..", "..", "utils", "command_line_platform.rb")] + [File.join(File.dirname(__FILE__), "..", "..", "utils", "test_run.rb")]
-      if sh("#{mrbc} -g -o #{test_out} #{all_files.uniq}")
+      command_line     = File.join(File.dirname(__FILE__), "..", "..", "utils", "command_line_platform.rb")
+      command_line_obj = File.join(root_path, "out", "main", "command_line_platform.mrb")
+      all_files        = FileList["test/test_helper.rb"] + libs + files + [command_line] + [File.join(File.dirname(__FILE__), "..", "..", "utils", "test_run.rb")]
+      if sh("#{mrbc} -g -o #{command_line_obj} #{command_line}") && sh("#{mrbc} -g -o #{test_out} #{all_files.uniq}")
         puts "cd #{File.dirname(out_path)}"
         FileUtils.cd File.dirname(out_path)
         sh("#{mruby} #{File.join(name, "test.mrb")}")
