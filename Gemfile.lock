@@ -9,7 +9,8 @@ PATH
   specs:
     da_funk (0.5.3)
       bundler (~> 1.7)
-      cloudwalk_handshake (~> 0.4)
+      cloudwalk_handshake (~> 0.5)
+      posxml_parser (~> 0.6)
       rake (~> 10.4)
       yard (~> 0.8)
 
