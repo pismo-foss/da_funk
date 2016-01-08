@@ -1,5 +1,8 @@
 # DaFunk
 
+### 0.5.4 - 2016-01-08 - Update posxml_parser
+- Update posxml_parser to version 0.6.1.
+
 ### 0.5.3 - 2016-01-06 - Update cloudwalk_handshake
 - Update cloudwlak_handshake to version 0.5.0.
 - Support to execute an application as file.

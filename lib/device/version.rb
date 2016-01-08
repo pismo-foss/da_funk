@@ -1,6 +1,6 @@
 
 class Device
-  API_VERSION="0.5.3"
+  API_VERSION="0.5.4"
 
   def self.api_version
     Device::API_VERSION
