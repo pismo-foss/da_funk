@@ -17,6 +17,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     cloudwalk_handshake (0.5.0)
+    posxml_parser (0.6.0)
     rake (10.4.2)
     yard (0.8.7.6)
 
@@ -27,5 +28,6 @@ PLATFORMS
 DEPENDENCIES
   cloudwalk_handshake
   da_funk!
+  posxml_parser
   simplehttp!
   yard
