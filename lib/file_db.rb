@@ -21,7 +21,7 @@ class FileDb
     text.split("\n").compact.each do |line|
       key_value = line.split("=")
       key, value = sanitize(key_value[0]), sanitize(key_value[1])
-      @hash[key] = value if value.empty?
+      @hash[key] = value unless value.empty?
     end
   end
 
