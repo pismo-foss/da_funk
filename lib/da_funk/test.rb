@@ -29,12 +29,6 @@ module DaFunk
       platform == :mruby
     end
 
-    def self.cruby?
-      platform == :cruby
-    end
-
-    # TODO Scalone Refactor tests/libs for mruby and cruby checking project configuration
-    # A good approach could be consider each test a runtime execution
     def self.configure
       yield self if block_given?
 
@@ -45,10 +39,6 @@ module DaFunk
       @brand          ||= "test"
       @model          ||= "test"
       @battery        ||= "100"
-      if self.cruby?
-        @libs      ||= FileList[File.join(root_path, 'lib/**/*.rb')]
-        @tests     ||= FileList[File.join(root_path, 'test/**/*test.rb')]
-      end
     end
   end
 end
