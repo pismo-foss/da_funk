@@ -72,6 +72,16 @@ module DaFunk
       ret
     end
 
+    def try_key(keys, timeout = Device::IO.timeout)
+      key = nil
+      keys = [keys].flatten
+      time = Time.now + timeout / 1000
+      while (! keys.include?(key)) do
+        return Device::IO::KEY_TIMEOUT if time < Time.now
+        key = getc(timeout)
+      end
+    end
+
     # Create a form menu.
     #
     # @param title [String] Text to display on line 0. If nil title won't be
