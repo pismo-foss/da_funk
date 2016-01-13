@@ -4,7 +4,7 @@ module DaFunk
 
     def self.add(method, &block)
       define_method method do
-        @list << CallbackFlow.new(@list.last, &block)
+        @list << CallbackFlow.new(self, @list.last, &block)
         self
       end
     end
@@ -19,11 +19,11 @@ module DaFunk
 
     def start
       first = self.list.first
-      first.call(true) if first
+      first.dispatch(true) if first
     end
 
     def confirm(text)
-      puts text
+      puts text.chomp
       getc(0)
     end
   end

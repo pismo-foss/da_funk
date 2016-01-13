@@ -1,18 +1,19 @@
 module DaFunk
   class CallbackFlow
     attr_accessor :next
-    attr_reader :block, :before
+    attr_reader :block, :before, :bind
 
-    def initialize(callback, &block)
+    def initialize(bind, callback, &block)
+      @bind   = bind
       @block  = block
       @before = callback
       callback.next = self if callback
     end
 
-    def call(result)
+    def dispatch(result)
       return if result.nil?
       Device::Display.clear
-      route(check(block.call(result)))
+      route(check(bind.instance_exec(result, &block)))
     end
 
     def check(value)
@@ -25,13 +26,13 @@ module DaFunk
     def route(result)
       if result
         if @next
-          @next.call(result)
+          @next.dispatch(result)
         else
           true
         end
       elsif result.nil?
       else
-        @before.call(true)
+        @before.dispatch(true)
       end
     end
 
