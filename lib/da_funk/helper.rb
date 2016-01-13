@@ -193,9 +193,9 @@ module DaFunk
 
     def print_title(string, default)
       if default
-        puts("#{string} (#{default}):")
+        puts("#{string} (#{default})")
       else
-        puts("#{string}:")
+        puts("#{string}")
       end
     end
   end
