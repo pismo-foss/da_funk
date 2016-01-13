@@ -75,11 +75,12 @@ module DaFunk
     def try_key(keys, timeout = Device::IO.timeout)
       key = nil
       keys = [keys].flatten
-      time = Time.now + timeout / 1000
+      time = Time.now + timeout / 1000 if (timeout != 0)
       while (! keys.include?(key)) do
-        return Device::IO::KEY_TIMEOUT if time < Time.now
+        return Device::IO::KEY_TIMEOUT if (timeout != 0 && time < Time.now)
         key = getc(timeout)
       end
+      key
     end
 
     # Create a form menu.
