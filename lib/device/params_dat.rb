@@ -100,7 +100,7 @@ class Device
 
     def self.executable_app
       selected = self.executable_apps
-      if selected.size == 1
+      if selected && selected.size == 1
         selected.first
       end
     end
