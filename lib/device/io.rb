@@ -176,6 +176,7 @@ class Device
     def self.getc(timeout = self.timeout); super(timeout); end
 
     def self.format(string, options)
+      options[:label].to_s +
       if options[:mode] == IO_INPUT_MONEY || options[:mode] == IO_INPUT_DECIMAL
         number_to_currency(string, options)
       elsif options[:mode] == IO_INPUT_SECRET
