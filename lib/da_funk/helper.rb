@@ -109,26 +109,79 @@ module DaFunk
     #   menu("Option menu", selection, options)
     #
     def menu(title, selection, options = {})
-      options[:number] = true if options[:number].nil?
-
-      if title
-        Device::Display.clear
-        print_title(title, options[:default])
-      end
-      values = Hash.new
-      selection.each_with_index do |value,i|
-        values[i.to_i] = value[1]
-        if options[:number]
-          Device::Display.print("#{i+1} - #{value[0]}", i+2, 0)
-        else
-          Device::Display.print(value[0], i+2, 0)
+      options[:number]    = true if options[:number].nil?
+      options[:timeout] ||= Device::IO.timeout
+      key, selected = pagination(title, options, selection) do |collection, line_zero|
+        collection.each_with_index do |value,i|
+          display = value.is_a?(Array) ? value[0] : value
+          if options[:number]
+            Device::Display.print("#{i+1} #{display}", i+line_zero, 0)
+          else
+            Device::Display.print("#{display}", i+1, 0)
+          end
         end
       end
 
-      key = getc(options[:timeout] || Device::IO.timeout)
+      if key == Device::IO::ENTER || key == Device::IO::CANCEL
+        options[:default]
+      else
+        selected
+      end
+    end
 
-      return options[:default] if key == Device::IO::ENTER || key == Device::IO::CANCEL
-      [values[key.to_i - 1]].flatten.first
+    # TODO Scalone: Refactor.
+    def pagination(title, options, collection, &block)
+      options[:limit] ||= STDOUT.max_y - 1
+      if collection.size > options[:limit] # minus header
+        key   = Device::IO::F1
+        pages = pagination_page(collection, options[:limit] - 1)
+        page  = 1
+        while(key == Device::IO::F1 || key == Device::IO::F2)
+          Device::Display.clear
+          print_title(title, options[:default]) if title
+          Device::Display.print("< F1 ____ #{page}/#{pages.size} ____ F2 >", 1, 0)
+          values = pages[page].to_a
+          block.call(values, 2)
+          key  = try_key(pagination_keys(values.size))
+          page = pagination_key_page(page, key, pages.size)
+        end
+      else
+        Device::Display.clear
+        print_title(title, options[:default]) if title
+        values = collection.to_a
+        block.call(values, 1)
+        key = try_key(pagination_keys(collection.size))
+      end
+      result = values[key.to_i-1]
+      if result.is_a? Array
+        [key, result[1]]
+      else
+        [key, result]
+      end
+    end
+
+    def pagination_key_page(page, key, size)
+      if key == Device::IO::F1
+        page == 1 ? page : page -= 1
+      elsif key == Device::IO::F2
+        page >= size ? size : page += 1
+      end
+    end
+
+    def pagination_page(values, size)
+      page = 1
+      i = 0
+      values.group_by do |value|
+        if size < (i+=1)
+          page+=1; i=0
+        end
+        page
+      end
+    end
+
+    def pagination_keys(size)
+      (1..size.to_i).to_a.map(&:to_s) + [Device::IO::ENTER, Device::IO::CLEAR,
+        Device::IO::CANCEL, Device::IO::F1, Device::IO::F2]
     end
 
     def number_to_currency(value, options = {})
