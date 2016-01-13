@@ -117,7 +117,7 @@ class Device
         key = getc
         if key == BACK
           text = text[0..-2]
-        elsif key == ENTER
+        elsif key == ENTER || key == KEY_TIMEOUT
           return text
         elsif key ==  F1 || key == DOWN || key == UP
           change_next(text, check_mask_type(text, options))
