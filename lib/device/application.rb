@@ -31,7 +31,11 @@ class Device
     end
 
     def execute(json = "")
-      Device::Runtime.execute(file_no_ext, json)
+      if posxml?
+        Device::Runtime.execute(remote, json)
+      else
+        Device::Runtime.execute(name, json)
+      end
     end
 
     def posxml?
