@@ -3,9 +3,9 @@ module Zip
     Miniz.zip(*args)
   end
 
-  def self.uncompress(filezip, path = ".")
-    dir = "#{path}/#{filezip.split(".")[0]}"
-    clean(dir)
+  def self.uncompress(filezip, path = ".", application = true, clear_dir = true)
+    dir = "#{path}/#{filezip.split(".")[0]}" if application
+    clean(dir) if clear_dir
     Miniz.unzip(filezip, path)
   end
 
