@@ -30,16 +30,20 @@ class I18n
 
   def self.t(symbol, options = {})
     if ! options[:time].nil?
-      parse_time(language[symbol], options[:time])
-    elsif options[:args].nil?
-      language[symbol]
+      parse_time(get(symbol), options[:time])
+    elsif options[:args]
+      get(symbol) % options[:args]
     else
-      language[symbol] % options[:args]
+      get(symbol)
     end
   end
 
-  def self.pt(symbol)
-    puts(t(symbol))
+  def self.get(symbol)
+    language[symbol] || "No Translation"
+  end
+
+  def self.pt(symbol, options = {})
+    puts(t(symbol, options))
   end
 
   def self.parse_time(value, time)
