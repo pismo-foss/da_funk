@@ -20,12 +20,12 @@ class Device
       MAPREDUCE_RESPONSE_ERROR = -2
       IO_ERROR                 = -3
 
-      def self.request_file(remote_path, local_path)
+      def self.request_file(remote_path, local_path, crc = "")
         download = Device::Transaction::Download.new(Device::System.serial, "", Device.version)
         download.perform(Device::Network.socket,
                          Device::Setting.company_name,
                          remote_path, local_path, Device::System.app,
-                         Device::Setting.logical_number)
+                         Device::Setting.logical_number, crc)
       end
 
       def self.request_param_file(file = PARAMS_FILE)
