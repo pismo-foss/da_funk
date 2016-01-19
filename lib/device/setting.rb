@@ -48,6 +48,7 @@ class Device
       "iso8583_send_tries"          => "0",
       "crypto_dukpt_slot"           => "",
       "ctls"                        => "",
+      "locale"                      => "en",
       "company_name"                => ""
     }
 
