@@ -34,6 +34,14 @@ class Device
       Device::Runtime.execute(file_no_ext, json)
     end
 
+    def posxml?
+      @type == "posxml" || remote.include?(".posxml")
+    end
+
+    def ruby?
+      @type == "ruby" || (! remote.include? ".posxml")
+    end
+
     private
     def split_label(text)
       if text == "X"
