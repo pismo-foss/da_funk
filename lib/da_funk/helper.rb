@@ -16,12 +16,12 @@ module DaFunk
 
     def attach
       Device::Display.clear
-      puts "Connecting..."
+      I18n.pt(:connecting)
       if Device::Network.connected? < 0
         if (ret = Device::Network.attach) == 0
-          puts "Successfully Connected"
+          I18n.pt(:connected)
         else
-          puts "Attach fail #{ret}"
+          I18n.pt(:attach_fail, :args => [ret.to_s])
           sleep 4
           return false
         end
