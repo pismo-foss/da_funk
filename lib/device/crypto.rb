@@ -1,6 +1,7 @@
 
 class Device
   class Crypto
+    include DaFunk::Helper
     CCITT_16 = [
       0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50A5, 0x60C6, 0x70E7,
       0x8108, 0x9129, 0xA14A, 0xB16B, 0xC18C, 0xD1AD, 0xE1CE, 0xF1EF,
@@ -40,7 +41,7 @@ class Device
       crc = crc16(buf)
       # to swap the number just invert the order of the indexes [0..1] and [2..3]
       #"#{crc.to_s(16).rjust(4,"0")[0..1]}#{crc.to_s(16).rjust(4,"0")[2..3]}".upcase
-      crc.to_s(16).upcase
+      rjust(crc.to_s(16).upcase, 4, "0")
     end
 
     def self.crc16(buf, crc=0)
