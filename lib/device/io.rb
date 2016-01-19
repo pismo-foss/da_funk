@@ -85,6 +85,8 @@ class Device
     # @param max [Fixnum] Maximum length of the input string (127 bytes maximum).
     # @param options [Hash]
     #
+    # :value - Represent the current value, to be initially used.
+    #
     # :precision - Sets the level of precision (defaults to 2).
     #
     # :separator - Sets the separator between the units (defaults to “.”).
@@ -109,7 +111,7 @@ class Device
     # @return [String] buffer read from keyboard
     def self.get_format(min, max, options = {})
       set_default_format_option(options)
-      key = text = ""
+      key = text = options[:value] || ""
 
       while key != CANCEL
         Device::Display.clear options[:line]
