@@ -9,5 +9,11 @@ class String
   def chars
     self.split("")
   end
+
+  def integer?
+    !!Integer(self)
+  rescue ArgumentError
+    return false
+  end
 end
 
