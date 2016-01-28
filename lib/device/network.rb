@@ -78,7 +78,11 @@ class Device
     end
 
     def self.sim_id
-      adapter.sim_id
+      if adapter.respond_to? :sim_id
+        adapter.sim_id
+      else
+        ""
+      end
     end
 
     # Check signal value
