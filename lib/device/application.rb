@@ -42,6 +42,10 @@ class Device
       @name
     end
 
+    def exists?
+      File.exists? file
+    end
+
     def delete
       File.delete(self.file) if File.exists?(self.file)
       Dir.delete(self.dir) if Dir.exist?(self.dir)
