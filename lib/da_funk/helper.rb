@@ -117,7 +117,7 @@ module DaFunk
           if options[:number]
             Device::Display.print("#{i+1} #{display}", i+line_zero, 0)
           else
-            Device::Display.print("#{display}", i+1, 0)
+            Device::Display.print("#{display}", i+line_zero, 0)
           end
         end
       end
@@ -131,7 +131,13 @@ module DaFunk
 
     # TODO Scalone: Refactor.
     def pagination(title, options, collection, &block)
-      options[:limit] ||= STDOUT.max_y - 1
+      if title.nil? 
+        start_line = 0
+        options[:limit] ||= STDOUT.max_y
+      else
+        start_line = 1
+        options[:limit] ||= STDOUT.max_y - 1
+      end
       if collection.size > options[:limit] # minus header
         key   = Device::IO::F1
         pages = pagination_page(collection, options[:limit] - 1)
@@ -139,9 +145,9 @@ module DaFunk
         while(key == Device::IO::F1 || key == Device::IO::F2)
           Device::Display.clear
           print_title(title, options[:default]) if title
-          Device::Display.print("< F1 ____ #{page}/#{pages.size} ____ F2 >", 1, 0)
+          Device::Display.print("< F1 ____ #{page}/#{pages.size} ____ F2 >", start_line, 0)
           values = pages[page].to_a
-          block.call(values, 2)
+          block.call(values, start_line+1)
           key  = try_key(pagination_keys(values.size))
           page = pagination_key_page(page, key, pages.size)
         end
@@ -149,10 +155,10 @@ module DaFunk
         Device::Display.clear
         print_title(title, options[:default]) if title
         values = collection.to_a
-        block.call(values, 1)
+        block.call(values, start_line)
         key = try_key(pagination_keys(collection.size))
       end
-      result = values[key.to_i-1]
+      result = values[key.to_i-1] if key.integer?
       if result.is_a? Array
         [key, result[1]]
       else
