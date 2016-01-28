@@ -5,13 +5,14 @@ class Device
     include Device::Helper
 
     class << self
-      attr_accessor :file, :apps, :status
+      attr_accessor :file, :apps, :valid, :files
     end
 
     self.apps = Array.new
+    self.files = Array.new
 
     # To control if there is any app and parse worked
-    self.status = false
+    self.valid = false
 
     def self.file
       self.setup unless @file
@@ -22,6 +23,47 @@ class Device
       @file = FileDb.new(FILE_NAME)
     end
 
+    def self.exists?
+      File.exists?(FILE_NAME)
+    end
+
+    def self.ready?
+      return unless exists?
+      apps.each {|app| return false if app.outdated? } if apps.size > 0
+      files.each {|f| return false if f.outdated? } if files.size > 0
+      true
+    end
+
+    def self.parse_apps
+      new_apps = []
+      self.file["apps_list"].to_s.gsub("\"", "").split(";").each do |app|
+        label, name, type, crc = app.split(",")
+        if application = get_app(name)
+          application.crc = crc
+        else
+          application = Device::Application.new(label, name, type, crc)
+        end
+        new_apps << application
+      end
+      Device::Application.delete(@apps - new_apps)
+      @apps = new_apps
+    end
+
+    def self.parse_files
+      new_files = []
+      self.file["files_list"].to_s.gsub("\"", "").split(";").each do |f|
+        name, crc = f.split(",")
+        if file_ = get_file(name)
+          file_.crc = crc
+        else
+          file_ = DaFunk::FileParameter.new(name, crc)
+        end
+        new_files << file_
+      end
+      Device::Application.delete(@files - new_files)
+      @files = new_files
+    end
+
     # TODO Scalone: Change after @bmsatierf change the format
     # For each apps on apps_list We'll have:
     # Today: <label>,<arquivo>,<pages>,<crc>;
@@ -29,64 +71,81 @@ class Device
     # Today: "1 - App,pc2_app.posxml,1,E0A0;"
     # After: "1 - App,pc2_app.posxml,posxml,E0A0;"
     # After: "1 - App,pc2_app.zip,ruby,E0A0;"
-    def self.parse_apps
-      @apps = []
+    def self.parse
       return unless self.setup
-
-      self.file["apps_list"].to_s.gsub("\"", "").split(";").each do |app|
-        @apps << Device::Application.new(*app.split(","))
-      end
+      parse_apps
+      parse_files
 
       if (@apps.size >= 1)
-        self.status = true
+        self.valid = true
       else
-        self.status = false
+        self.valid = false
       end
+      self.valid
+    end
+
+    def self.get_app(name)
+      @apps.each {|app| return app if app.original == name}
+      nil
+    end
+
+    def self.get_file(name)
+      @files.each {|file_| return file_ if file_.original == name}
+      nil
     end
 
     def self.download
       if attach
-        value = try(3) do |tried|
+        parse
+        ret = try(3) do |tried|
           Device::Display.clear
-          puts "Downloading (#{tried})"
-          puts "Parameters"
+          I18n.pt(:downloading_content, :args => ["#{tried}", "PARAMETERS"])
           ret = Device::Transaction::Download.request_param_file(FILE_NAME)
           check_download_error(ret)
         end
-        parse_apps if value
-        value
+        parse if ret
+        ret
       end
     end
 
     def self.update_apps(force = false)
-      if force || ! self.status
-        self.download
-      end
-      if self.status
+      self.download if force || ! self.valid
+      if self.valid
         @apps.each do |app|
           self.update_app(app)
+        end
+        @files.each do |file_|
+          self.update_file(file_)
         end
       end
     end
 
-    def self.format!
-      self.apps.each do |app|
-        File.delete(app.zip) if File.exists?(app.zip)
-        Dir.delete(app.file_no_ext) if File.exists?(app.file_no_ext) && File.exists?(app.file_no_ext)
-      end
-      File.delete(FILE_NAME) if File.exists?(FILE_NAME)
-      Device::System.restart
+    def self.format!(restart = true)
+      Device::Application.delete(self.apps)
+      DaFunk::FileParameter.delete(self.files)
+      File.delete(FILE_NAME) if exists?
+      Device::System.restart if restart
     end
 
-    def self.update_app(application)
+    def self.update_app(application, force = false)
       if attach && application
         try(3) do |tried|
           Device::Display.clear
-          puts "Downloading (#{tried})"
-          puts "#{application.file}..."
-          ret = Device::Transaction::Download.request_file(application.file, application.zip)
+          I18n.pt(:downloading_content, :args => ["#{tried}", "#{application.name.upcase}..."])
+          ret = check_download_error(application.download(force))
+          sleep(1)
+          ret
+        end
+      end
+    end
 
-          ret = check_download_error(ret)
+    def self.update_file(file_parameter, force = false)
+      if attach && file_parameter
+        try(3) do |tried|
+          Device::Display.clear
+          I18n.pt(:downloading_content, :args => ["#{tried}", "#{file_parameter.name.upcase}..."])
+          ret = check_download_error(file_parameter.download(force))
+          file_parameter.unzip if ret
           sleep(1)
           ret
         end
@@ -94,8 +153,13 @@ class Device
     end
 
     def self.apps
-      self.parse_apps unless self.status
+      self.parse unless self.valid
       @apps
+    end
+
+    def self.files
+      self.parse unless self.valid
+      @files
     end
 
     def self.executable_app
