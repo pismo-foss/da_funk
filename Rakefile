@@ -18,6 +18,7 @@ FILES = FileList[
   "lib/da_funk/screen_flow.rb",
   "lib/da_funk/i18n_error.rb",
   "lib/da_funk/i18n.rb",
+  "lib/da_funk/file_parameter.rb",
   "lib/device.rb",
   "lib/device/audio.rb",
   "lib/device/crypto.rb",
