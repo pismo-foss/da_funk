@@ -47,8 +47,10 @@ class Device
     end
 
     def delete
-      File.delete(self.file) if File.exists?(self.file)
-      Dir.delete(self.dir) if Dir.exist?(self.dir)
+      File.delete(self.file) if exists?
+      if self.ruby? && Dir.exist?(self.dir) && self.dir != "main"
+        Dir.delete(self.dir)
+      end
     end
 
     def outdated?
