@@ -1,7 +1,7 @@
 class I18n
   include DaFunk::Helper
   class << self
-    attr_accessor :locale, :hash, :block_parse
+    attr_accessor :locale, :hash, :block_parse, :klasses
   end
 
   self.block_parse = Proc.new do |hash_,values_|
@@ -19,9 +19,27 @@ class I18n
 
   def self.configure(klass, locale)
     raise I18nError.new("File not found") if (! File.exists?(filepath(klass)))
-    @hash   = JSON.parse(File.read(filepath(klass))).inject({}, &block_parse)
+    self.parse(klass)
     @locale = locale
     raise I18nError.new("Locale not found") unless language
+  end
+
+  def self.parse(klass)
+    @klasses ||= []
+    if @hash
+      self.merge(JSON.parse(File.read(filepath(klass))).inject({}, &block_parse))
+    else
+      @hash = JSON.parse(File.read(filepath(klass))).inject({}, &block_parse)
+    end
+    @klasses << klass
+  end
+
+  def self.merge(hash2)
+    @hash ||= {}
+    hash2.keys.each do |key|
+      @hash[key] ||= {}
+      @hash[key].merge!(hash2[key] || {})
+    end
   end
 
   def self.language
