@@ -39,8 +39,8 @@ class FileDb
 
   def []=(key, value)
     value = value.to_s
-    old = @hash[key]
-    ret = @hash[key] = value
+    old = @hash[key.to_s]
+    ret = @hash[key.to_s] = value
     save if old != value
     ret
   end
@@ -51,7 +51,7 @@ class FileDb
 
   def update_attributes(values = Hash.new)
     values.each do |key, value|
-      @hash[key] = value
+      @hash[key.to_s] = value.to_s
     end
     save
   end
