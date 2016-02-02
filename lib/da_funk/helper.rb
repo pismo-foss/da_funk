@@ -108,6 +108,7 @@ module DaFunk
     #   menu("Option menu", selection, options)
     #
     def menu(title, selection, options = {})
+      return nil if selection.empty?
       options[:number]    = true if options[:number].nil?
       options[:timeout] ||= Device::IO.timeout
       key, selected = pagination(title, options, selection) do |collection, line_zero|
