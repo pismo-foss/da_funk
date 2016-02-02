@@ -85,7 +85,7 @@ class Device
     end
 
     def self.get_app(name)
-      @apps.each {|app| return app if app.original == name}
+      @apps.each {|app| return app if app.original == name }
       nil
     end
 
@@ -111,27 +111,31 @@ class Device
     def self.update_apps(force = false)
       self.download if force || ! self.valid
       if self.valid
-        @apps.each do |app|
-          self.update_app(app)
+        size_apps = @apps.size
+        @apps.each_with_index do |app, index|
+          self.update_app(app, index+1, size_apps)
         end
-        @files.each do |file_|
-          self.update_file(file_)
+
+        size_files = @files.size
+        @files.each_with_index do |file_, index|
+          self.update_file(file_, index+1, size_files)
         end
       end
     end
 
-    def self.format!(restart = true)
+    def self.format!
       Device::Application.delete(self.apps)
       DaFunk::FileParameter.delete(self.files)
       File.delete(FILE_NAME) if exists?
-      Device::System.restart if restart
+      @apps = []
+      @files = []
     end
 
-    def self.update_app(application, force = false)
+    def self.update_app(application, index = 1, all = 1, force = false)
       if attach && application
         try(3) do |tried|
           Device::Display.clear
-          I18n.pt(:downloading_content, :args => ["#{tried}", "#{application.name.upcase}..."])
+          I18n.pt(:downloading_content, :args => [I18n.t(:apps), index, all])
           ret = check_download_error(application.download(force))
           sleep(1)
           ret
@@ -139,11 +143,11 @@ class Device
       end
     end
 
-    def self.update_file(file_parameter, force = false)
+    def self.update_file(file_parameter, index = 1, all = 1, force = false)
       if attach && file_parameter
         try(3) do |tried|
           Device::Display.clear
-          I18n.pt(:downloading_content, :args => ["#{tried}", "#{file_parameter.name.upcase}..."])
+          I18n.pt(:downloading_content, :args => [I18n.t(:files), index, all])
           ret = check_download_error(file_parameter.download(force))
           file_parameter.unzip if ret
           sleep(1)
