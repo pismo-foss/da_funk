@@ -10,7 +10,8 @@ module DaFunk
     include ::Rake::DSL if defined?(::Rake::DSL)
 
     attr_accessor :name, :libs, :tests, :tests_unit, :tests_integration, :root_path, :main_out,
-      :test_out, :resources, :mrbc, :mruby, :out_path, :resources_out, :debug
+      :test_out, :resources, :mrbc, :mruby, :out_path, :resources_out, :debug,
+      :tests_resources, :tests_res_out
 
     def initialize
       yield self if block_given?
@@ -20,6 +21,7 @@ module DaFunk
       @tests             ||= FileList['test/**/*test.rb']
       @tests_integration ||= FileList['test/integration/**/*test.rb']
       @tests_unit        ||= FileList['test/unit/**/*test.rb']
+      @tests_resources   ||= FileList['test/resources/**/*']
       @root_path         ||= "./"
       @name              ||= File.basename(File.expand_path(@root_path))
       @out_path          ||= File.join(root_path, "out", @name)
@@ -27,6 +29,7 @@ module DaFunk
       @test_out          ||= File.join(out_path, "test.mrb")
       @resources         ||= FileList['resources/**/*']
       @resources_out     ||= @resources.pathmap("%{resources,#{out_path}}p")
+      @tests_res_out     ||= @tests_resources.pathmap("%{test/resources,out}p")
       @mruby             ||= "cloudwalk run"
       @mrbc              = get_mrbc_bin(@mrbc)
 
@@ -117,6 +120,9 @@ module DaFunk
       namespace :test do
         task :setup => :resources do
           ENV["RUBY_PLATFORM"] = "mruby"
+          tests_resources.each_with_index do |file,dest_i|
+            FileUtils.cp(file, tests_res_out[dest_i]) if File.file?(file)
+          end
         end
 
         desc "Run unit test on mruby"
