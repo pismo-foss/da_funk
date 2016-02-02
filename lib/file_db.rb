@@ -30,6 +30,10 @@ class FileDb
     @hash.each do |line_key, line_value|
       file_new.puts("#{line_key}=#{line_value}")
     end
+    true
+  rescue
+    false
+  ensure
     file_new.close
   end
 
