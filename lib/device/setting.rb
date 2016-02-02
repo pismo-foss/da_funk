@@ -90,6 +90,10 @@ class Device
       false
     end
 
+    def self.update_attributes(*args)
+      @file.update_attributes(*args)
+    end
+
     def self.method_missing(method, *args, &block)
       setup unless @file
       param = method.to_s
