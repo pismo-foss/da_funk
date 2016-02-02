@@ -43,6 +43,7 @@ FILES = FileList[
   "lib/iso8583/message.rb",
   "lib/iso8583/util.rb",
   "lib/iso8583/version.rb",
+  "lib/iso8583/file_parser.rb",
   "lib/device/transaction/iso.rb",
   "lib/serfx.rb",
   "lib/serfx/commands.rb",
