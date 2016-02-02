@@ -16,46 +16,45 @@ module DaFunk
 
     def attach
       Device::Display.clear
-      I18n.pt(:connecting)
+      I18n.pt(:attach_connecting)
       if Device::Network.connected? < 0
         if (ret = Device::Network.attach) == 0
-          I18n.pt(:connected)
+          I18n.pt(:attach_connected)
         else
           I18n.pt(:attach_fail, :args => [ret.to_s])
           sleep 4
           return false
         end
       else
-        puts "Already connected"
+        I18n.pt(:attach_already_connected)
       end
       true
     end
 
-    # TODO Add i18n or something
     def check_download_error(ret)
       value = true
       case ret
       when Device::Transaction::Download::SERIAL_NUMBER_NOT_FOUND
-        puts "Serial number not found."
+        I18n.pt(:download_serial_number_not_found, :args => [ret])
         value =  false
       when Device::Transaction::Download::FILE_NOT_FOUND
-        puts "File not found."
+        I18n.pt(:download_file_not_found, :args => [ret])
         value = false
       when Device::Transaction::Download::FILE_NOT_CHANGE
-        puts "File is the same."
+        I18n.pt(:download_file_is_the_same, :args => [ret])
       when Device::Transaction::Download::SUCCESS
-        puts "Success."
+        I18n.pt(:download_success, :args => [ret])
       when Device::Transaction::Download::COMMUNICATION_ERROR
-        puts "Communication failure."
+        I18n.pt(:download_communication_failure, :args => [ret])
         value = false
       when Device::Transaction::Download::MAPREDUCE_RESPONSE_ERROR
-        puts "Encoding error."
+        I18n.pt(:download_encoding_error, :args => [ret])
         value = false
       when Device::Transaction::Download::IO_ERROR
-        puts "IO Error."
+        I18n.pt(:download_io_error, :args => [ret])
         value = false
       else
-        puts "Communication fail."
+        I18n.pt(:download_communication_failure, :args => [ret])
         value = false
       end
 
