@@ -39,7 +39,7 @@ module ISO8583
     # Set the bit to the indicated value. Only `true` sets the
     # bit, any other value unsets it.
     def []=(i, value)
-      if i > 128 
+      if i > 128
         raise ISO8583Exception.new("Bits > 128 are not permitted.")
       elsif i < 2
         raise ISO8583Exception.new("Bits < 2 are not permitted (continutation bit is set automatically)")
@@ -59,15 +59,12 @@ module ISO8583
 
     # Generate the bytes representing this bitmap.
     def to_bytes
-      arr = [self.to_s]
-      # tricky and ugly, setting bit[1] only when generating to_s...
-      count = self[1] ? 128 : 64
-      arr.pack("B#{count}")
+      self.to_s.to_i(2).to_s(16).upcase
     end
     alias_method :to_b, :to_bytes
 
     def to_hex
-      "%02x" % self.to_s.to_i(2)
+      self.to_s.to_i(2).to_s(16).upcase.unpack("H*").first
     end
 
     # Generate a String representation of this bitmap in the form:
