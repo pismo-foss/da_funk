@@ -40,7 +40,7 @@ module ISO8583
   # be accessed later either via their name or value:
   #
   #    mes = MyMessage.new 1100
-  # 
+  #
   # or
   #    mes = MyMessage.new "Authorization Request Acquirer Gateway"
   #
@@ -75,7 +75,7 @@ module ISO8583
   #
   # Constructing own messages works as follows:
   #
-  #     mes = MyMessage.new 1100 
+  #     mes = MyMessage.new 1100
   #     mes[2]= 474747474747
   #     # Alternatively
   #     mes["Primary Account Number (PAN)"]= 4747474747
@@ -106,17 +106,17 @@ module ISO8583
   # Most of the work in implementing a new set of message type lays in
   # figuring out the correct fields to use defining the Message class via
   # bmp.
-  #    
+  #
   class Message
 
     # The value of the MTI (Message Type Indicator) of this message.
-    attr_reader :mti 
+    attr_reader :mti
 
     # ISO8583 allows hex or binary bitmap, so it should be configurable
     attr_reader :use_hex_bitmap
 
     # Instantiate a new instance of this type of Message
-    # optionally specifying an mti. 
+    # optionally specifying an mti.
     def initialize(mti = nil, use_hex_bitmap = false)
       # values is an internal field used to collect all the
       # bmp number | bmp name | field en/decoders | values
@@ -245,7 +245,7 @@ module ISO8583
 
     class << self
 
-      # Defines how the message type indicator is encoded into bytes. 
+      # Defines how the message type indicator is encoded into bytes.
       # ===Params:
       # * field    : the decoder/encoder for the MTI
       # * opts     : the options to pass to this field
@@ -268,7 +268,7 @@ module ISO8583
 
       # Defines the message types allowed for this type of message and
       # gives them names
-      # 
+      #
       # === Example
       #    class MyMessage < Message
       #      (...)
@@ -300,8 +300,8 @@ module ISO8583
       #      (...)
       #    end
       #
-      # creates a class MyMessage that allows for a bitmap 2 which 
-      # is named "PAN" and encoded by an LLVAR_N Field. The maximum 
+      # creates a class MyMessage that allows for a bitmap 2 which
+      # is named "PAN" and encoded by an LLVAR_N Field. The maximum
       # length of the value is 19. This class may be used as follows:
       #
       #    mes = MyMessage.new
