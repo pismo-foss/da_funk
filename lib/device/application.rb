@@ -13,7 +13,10 @@ class Device
 
     def self.delete(collection)
       collection.each do |app|
-        app.delete
+        begin
+          app.delete
+        rescue RuntimeError
+        end
       end
     end
 

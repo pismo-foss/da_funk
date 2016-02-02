@@ -6,7 +6,10 @@ module DaFunk
 
     def self.delete(collection)
       collection.each do |file_|
-        file_.delete
+        begin
+          file_.delete
+        rescue RuntimeError
+        end
       end
     end
 
