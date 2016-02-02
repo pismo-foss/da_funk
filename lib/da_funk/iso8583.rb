@@ -9,4 +9,5 @@ file_path = File.join(File.dirname(File.realpath(__FILE__)), "..")
   require file_path + "/iso8583/message.rb"
   require file_path + "/iso8583/util.rb"
   require file_path + "/iso8583/version.rb"
+  require file_path + "/iso8583/file_parser.rb"
 end
