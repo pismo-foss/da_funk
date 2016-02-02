@@ -8,8 +8,8 @@
 
 class Device
   class Application
-    attr_reader :label, :file, :type, :crc, :order, :name, :remote, :original,
-      :crc_local
+    attr_accessor  :crc
+    attr_reader :label, :file, :type, :order, :name, :remote, :original, :crc_local
 
     def self.delete(collection)
       collection.each do |app|

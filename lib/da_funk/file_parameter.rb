@@ -1,7 +1,8 @@
 module DaFunk
   class FileParameter
     FILEPATH = "./shared"
-    attr_reader :name, :file, :crc, :crc_local, :original, :remote
+    attr_accessor :crc
+    attr_reader :name, :file, :crc_local, :original, :remote
 
     def self.delete(collection)
       collection.each do |file_|
