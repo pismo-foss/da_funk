@@ -43,7 +43,7 @@ class Device
       "notification_stream_timeout" => "", # Time to wait stream message to read
       "cw_switch_version"           => "",
       "cw_pos_timezone"             => "",
-      "tcp_recv_timeout"            => "0",
+      "tcp_recv_timeout"            => "14",
       "iso8583_recv_tries"          => "0",
       "iso8583_send_tries"          => "0",
       "crypto_dukpt_slot"           => "",
