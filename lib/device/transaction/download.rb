@@ -44,8 +44,12 @@ class Device
       # -1: Commnucation error
       # -2: Mapreduce response error
       # -3: IO Error
-      def perform(socket_proc, company_name, remote_path, filepath, current_app, logical_number, file_crc = nil)
-        @socket, @buffer, @request, @first_packet = socket_proc.call, "", "", ""
+      def perform(socket_proc, company_name, remote_path, filepath, current_app, logical_number, file_crc = nil, socket_call = true)
+        if socket_call
+          @socket, @buffer, @request, @first_packet = socket_proc.call, "", "", ""
+        else
+          @socket, @buffer, @request, @first_packet = socket_proc, "", "", ""
+        end
         @crc = file_crc ? file_crc : generate_crc(filepath)
         key = "#{company_name}_#{remote_path}"
 
@@ -107,7 +111,9 @@ class Device
 
         # receive 6A
         @socket.read(1) if response_size > 1024
-        @socket.close unless @socket.closed?
+        if socket_call
+          @socket.close unless @socket.closed?
+        end
 
         return_code
       end
