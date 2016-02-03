@@ -1,102 +1,180 @@
-# DaFunk
+# DaFunk, a.k.a. CloudWalk Framework API
 
-Walk Framework API, responsible for managed compatibility between implemented devices, and treat deprecated syntax or behaviour.
+Our goal at [CloudWalk][1] is to provide you with the
+necessary tools to build Point Of Sales (POS) applications
+in an easy and innovative way. To do so, we've developed
+a setup for MRuby programs that allows you to build and
+ship modern day applications to all of your terminals
+instantaneously. For that purpose, you will need to start
+using the API that is provided by this repository.
 
-## Setup
+## Index
 
-1. Install Ruby 1.9.3 (mruby compatible)
+- [Index](https://gist.github.com/sadasant/7d5f64c7ece7a3eb2b11#index)
+- [What do I have here?](https://gist.github.com/sadasant/7d5f64c7ece7a3eb2b11#what-do-i-have-here)
+- [How do I use this?](https://gist.github.com/sadasant/7d5f64c7ece7a3eb2b11#how-do-i-use-this)
+- [Adding support to other platforms](https://gist.github.com/sadasant/7d5f64c7ece7a3eb2b11#adding-support-to-other-platforms)
+- [I would like to contribute](https://gist.github.com/sadasant/7d5f64c7ece7a3eb2b11#i-would-like-to-contribute)
 
-2. Bundle `$ bundle install`
+## What do I have here?
 
-## Load
+This repository contains a set of files and folder that compose the
+**CloudWalk Framework API**. The structure goes as follows:
 
-### All 
-    require 'da_funk'
+- The `guides` directory, which contains a group of files that are intended to instruct how to use our framework.
+- An `imgs` directory, containing a picture that references the creative origins of this project.
+- A `lib` directory, which holds the main source code of our Framework API.
+- An `out`directory, which has a previous generated binary of this project. All builds target this directory.
+- A `test` directory with example test cases. Tests are divided by _integration_ tests and _unit_ tests.
+- A `utils` folder that contains some scripts which are useful for us to perform tests or interact with the command line environment.
 
-### Only ISO8583 module 
+## How do I use this?
 
-    require 'da_funk/iso8583'
+We strongly recommend using our framework API from our [application skeleton][3],
+it has all the minimal files and the structure needed to build your first application.
 
-	
-## Docs (yard)
+Essentially add to your `Gemfile`:
 
-1. Generate: `$ rake yard`
-2. Open: `open docs/index.html`
+```ruby
+gem 'da_funk', :git => 'https://github.com/cloudwalkio/da_funk.git'
+```
 
-## How to create Device
+Then require `da_funk` in your application file!
 
-### Steps
+```ruby
+require 'da_funk'
+```
 
-1. Add da_funk as submodule of your platform project, check the sample  [here](https://github.com/cloudwalkio/around_the_world) `$ git submodule add git@github.com:cloudwalkio/da_funk.git <path/to/lib/da_funk>`
+For more advanced users only wanting to use the `iso8583` module, here's how you require it:
 
-2. Develop setup method in platform abstraction.
+```ruby
+require 'da_funk/iso8583'
+```
 
-	Setup method will be called in every app execution, should be use to filesystem preparation or any shore needed by the app environment. Check the sample [here](https://github.com/cloudwalkio/mruby-cloudwalk-platform).
+A full tutorial on how to develop your first CloudWalk app
+can be found here: <https://docs.cloudwalk.io/en/cli>,
+or checkout this project's source code!
 
-		class PlatformInterface
-		    def self.setup
-		        # Configuration and initialization before apps execution
-		    end
-		end
-		
-3. Develop interface required by DaFunk on PlatformInterface, could be the same file you have setup method.
+## Adding support to other platforms
 
-		class PlatformInterface
-			Network = ::Network # Implemented on C
-			IO      = ::IO # Implemeted on C
+At CloudWalk we develop our framework targeting several POS terminal brands,
+physical devices and even virtual devices (such as our web emulator).
+To deal with the platform differences, we've created an abstraction layer
+in da_funk that helps us modify our framework's behavior for our targets,
+but ensuring the changes needed are minimal and separated from the
+framework's source code. As an example, we offer our project:
+[around_the_world][4], it is the recipe to have MRuby working on
+non embedded platforms and with full compliance with DaFunk API.
 
-			class Display
-				def self.clear
-					::IO.display_clear
-				end
-				
-				def self.print_line(buf, row, column)
-					# <class created on C or PlatformInterface>._print_line(buf, row, column)
-					PlatformInterface._print_line(buf, row, column)
-				end
-			end
-		end
+The first step is to add `da_funk` as a submodule in your project, let's say you'll be hosting it on a git server,
+proceed with:
 
-4. Configure Adapter
+    git submodule add git@github.com:cloudwalkio/da_funk.git path/to/lib/da_funk
 
-		class Device # Class from DaFunk
-			self.adapter = PlatformInterface
-		end
+Then, in your application, before starting anything, define your
+platform interface. The most important feature it needs to have is
+a `setup` method, which will be called to configure and initialize
+everything before the actual execution.
 
-5. Compile da_funk into mrb file `$ rake`.
-6. Compile platform abstraction into mrb file `$ mrbc -o platform.mrb </path/to/mrblib/**/*/.rb`
-7. Application file `main.rb`(could be use to test).
+```ruby
+class PlatformInterface
+  def self.setup
+    # Configuration and initialization before apps execution
+  end
+end
+```
 
-		class Main
-			def self.call
-				Device::Display.print "Test"
-			end
-		end
+Then you'll need to define your custom classes, but following the structure
+present in our [device][5] source code. These classes can be in the same file
+as the one that has the setup method, here is an example:
 
-	Call method should be implemented on applications.
+```ruby
+class PlatformInterface
+  Network = ::Network # Implemented on C
+  IO      = ::IO # Implemeted on C
 
+  class Display
+    def self.clear
+      ::IO.display_clear
+    end
 
-### Adapter pattern
-Adapter(platform abstraction) should be configured to access by DaFunk Library
+    def self.print_line(buf, row, column)
+      # <class created on C or PlatformInterface>._print_line(buf, row, column)
+      PlatformInterface._print_line(buf, row, column)
+    end
+  end
+end
+```
 
-- [Wiki](http://en.wikipedia.org/wiki/Adapter_pattern)
-- Scheme Image (todo)
+Some important notes regarding your platform interface:
 
+- Be careful with the instance object variable, leave that for DaFunk.
+- Put preference into using class methods instead of making calls as the interface.
+- We might revise this in the future, but for now: any method defined for
+  platform-specific usages has to be defined with a name that starts with `_`,
+  for example: `_myMethod`.
 
-### Platform Interface
+Once you're comfortable with your platform class,
+we need to set it up as the adapter to use by altering DaFunk's device class:
 
-- Be careful with instance object variable, let't for DaFunk.
-- Prefer class methods to call as interface.
-- Any method defined on platform language, access by PlatformAbstraction, should defined with _<method name>. # Revise this point
+```ruby
+class Device # Class from DaFunk
+  self.adapter = PlatformInterface
+end
+```
 
+The adapter pattern is based is a well studied software design pattern,
+we recommend you to read the [Wiki article][7], it's an interesting bit
+of information that is rooted deep in our solutions.
 
-## Contributing
+Finally build it with `rake` or in a more specific manner, with: `mrbc -o platform.mrb </path/to/mrblib/**/*/.rb>`
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Added some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+In [this link][6] there is an example of the whole process. Enjoy the reading! :bowtie:
 
+## I would like to contribute
 
-![DaFunk](imgs/daft-punk-da-funk.jpg)
+So, you want to propose changes to our skeleton??!! Thank you sir! We appreciate it :bowtie:
+
+Please follow the instructions:
+
+1. Fork it under your github account!
+2. Create your feature branch `git checkout -b my-new-feature`
+3. Commit your changes `git commit -am 'Added some feature'`
+4. Push to the branch `git push origin my-new-feature`
+5. Create a new Pull Request!
+
+## License
+
+```
+The MIT License (MIT)
+
+Copyright (c) 2015 CloudWalk, Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+[1]: https://www.cloudwalk.io
+[2]: https://www.cloudwalk.io/cli/
+[3]: https://github.com/cloudwalkio/cloudwalk-skeleton
+[4]: https://github.com/cloudwalkio/around_the_world
+[5]: https://github.com/cloudwalkio/da_funk/tree/master/lib/device
+[6]: https://github.com/cloudwalkio/mruby-cloudwalk-platform
+[7]: https://en.wikipedia.org/wiki/Adapter_pattern
+
+![DaFunk](https://raw.githubusercontent.com/cloudwalkio/da_funk/master/imgs/daft-punk-da-funk.jpg)
