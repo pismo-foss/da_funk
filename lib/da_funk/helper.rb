@@ -131,7 +131,7 @@ module DaFunk
 
     # TODO Scalone: Refactor.
     def pagination(title, options, collection, &block)
-      if title.nil? 
+      if title.nil?
         start_line = 0
         options[:limit] ||= STDOUT.max_y
       else
