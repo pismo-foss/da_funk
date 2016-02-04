@@ -61,8 +61,12 @@ class Device
     end
 
     def self.connected?
-      return NO_CONNECTION unless self.adapter.started?
-      adapter.connected?
+      if self.adapter.started? ||
+        (self.configured? && Device::Network.init(*self.config) == SUCCESS)
+
+        return adapter.connected?
+      end
+      NO_CONNECTION
     end
 
     def self.configured?
