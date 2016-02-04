@@ -143,7 +143,7 @@ class Device
         if ret == SUCCESS && (wifi? || ethernet?)
           Device::Network.dhcp_client(20000)
         end
-        ret != SUCCESS if Device::Setting.network_configured = 0
+        Device::Setting.network_configured = 0 if ret != SUCCESS 
       end
       ret
     end
