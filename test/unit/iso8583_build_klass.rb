@@ -4,6 +4,7 @@ class MessageA < ISO8583::Message
   mti_format N, :length => 4
 
   mti 800, ""
+  mti 810, ""
 
   bmp 1  , "" , N   , :length => 128
   bmp 7  , "" , N   , :length => 10
@@ -32,6 +33,12 @@ class DeviceISO8583BuildKlassTest < DaFunk::Test.case
     @iso_a[70] = @iso_b[70] = 1
 
     assert_equal @iso_a.to_b, @iso_b.to_b
+  end
+
+  def test_parse_from_build_klass
+    iso = "08100038000002401004000043005016020300636500050001800924F7E771BC0F3C20690090020306376550063765599SS23S0EE0N00006043230060432399SS03S0FE0N0000"
+    @klass.mti 810, ""
+    assert_equal @klass.parse(iso, true)[42], "636500050001800"
   end
 end
 
