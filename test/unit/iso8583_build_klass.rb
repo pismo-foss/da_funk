@@ -5,14 +5,14 @@ class MessageA < ISO8583::Message
 
   mti 800, ""
 
-  bmp 1  , "" , B   , :length => 128
-  bmp 7  , "" , B   , :length => 10
-  bmp 11 , "" , B   , :length => 6
-  bmp 12 , "" , B   , :length => 6
-  bmp 13 , "" , B   , :length => 4
+  bmp 1  , "" , N   , :length => 128
+  bmp 7  , "" , N   , :length => 10
+  bmp 11 , "" , N   , :length => 6
+  bmp 12 , "" , N   , :length => 6
+  bmp 13 , "" , N   , :length => 4
   bmp 41 , "" , ANS , :length => 8
   bmp 42 , "" , ANS , :length => 15
-  bmp 70 , "" , B   , :length => 3
+  bmp 70 , "" , N   , :length => 3
 end
 
 class DeviceISO8583BuildKlassTest < DaFunk::Test.case
