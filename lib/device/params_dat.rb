@@ -100,7 +100,7 @@ class Device
         parse
         ret = try(3) do |tried|
           Device::Display.clear
-          I18n.pt(:downloading_content, :args => ["#{tried}", "PARAMETERS"])
+          I18n.pt(:downloading_content, :args => ["PARAMS", 1, 1])
           ret = Device::Transaction::Download.request_param_file(FILE_NAME)
           check_download_error(ret)
         end
