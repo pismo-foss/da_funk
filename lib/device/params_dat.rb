@@ -29,7 +29,6 @@ class Device
 
     def self.ready?
       return unless exists?
-      puts "" # TODO Scalone
       apps.each {|app| return false if app.outdated? } if apps.size > 0
       files.each {|f| return false if f.outdated? } if files.size > 0
       true
