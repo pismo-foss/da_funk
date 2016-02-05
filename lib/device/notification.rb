@@ -41,7 +41,7 @@ class Device
     end
 
     def self.start
-      if create_fiber? && Device::Network.connected?
+      if create_fiber? && Device::Network.connected? == Device::Network::SUCCESS
         unless Device::Notification.current && Device::Notification.current.closed?
           self.new(*self.config)
         end
@@ -87,7 +87,7 @@ class Device
 
     # Check if there is any notification
     def check
-      if valid_check_interval? && Device::Network.connected?
+      if valid_check_interval? && Device::Network.connected? == Device::Network::SUCCESS
         if @fiber.alive?
           if (notification = @fiber.resume)
             Notification.execute(NotificationEvent.new(notification))
