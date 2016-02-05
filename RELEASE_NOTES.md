@@ -1,5 +1,24 @@
 # DaFunk
 
+### 0.6.0 - 2016-02-02 - Support to i18n.
+- Add support to i18n.
+- Add I18n messages to ParamsDat/Files/Apps downloading.
+- Add support to ISO8583 file parser.
+- Implemented DaFunk::Helper#try_keys to abstract a helper responsible to wait for range of key only in a period.
+- Implement classes CallbackFlow and ScreenFlow to abstract the development of complex screen flows.
+- Refactoring Device::IO.get_format.
+- Rjust Device::Crypto.crc16_hex return, 4 chars with “0”.
+- Add support to current value on Device::IO.get_format.
+- Send file CRC on file download.
+- Implement String#integer?.
+- Fix number_to_currency to not include label after conversion.
+- Add pagination on Helper.menu.
+- FileDb always work with key and values as string.
+- Fix System Error during Notification Fiber catching all communication exceptions.
+- Update cloudwalk_handshake version to 0.5.1.
+- Update posxml_parser version to 0.7.1.
+- Update readme file.
+
 ### 0.5.4 - 2016-01-08 - Update posxml_parser
 - Update posxml_parser to version 0.6.1.
 
