@@ -17,7 +17,7 @@ module DaFunk
       @crc      = crc
       @original = name
       @remote   = @original.sub("#{Device::Setting.company_name}_", "")
-      @name     = @original.sub("#{Device::Setting.company_name}_", "").split(".")[0]
+      @name     = @original.sub("#{Device::Setting.company_name}_", "").split(".").first
       @file     = "#{FILEPATH}/#{@remote}"
       @crc_local = @crc if File.exists?(@file)
     end
