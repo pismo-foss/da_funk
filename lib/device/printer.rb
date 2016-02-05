@@ -19,7 +19,7 @@ class Device
     DEFAULT_MULTI_HEIGHT  = 24
 
     def self.adapter
-      Device.adapter::Print
+      Device.adapter::Printer
     end
 
     # Initialize Printer device.
