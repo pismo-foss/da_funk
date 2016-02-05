@@ -152,7 +152,7 @@ class Device
             conn.stream(subscription) { |ev| reply(conn, ev) }
           end
           true
-        rescue Serfx::RPCError => exception
+        rescue => exception
           check_errors(exception)
         end
       end
