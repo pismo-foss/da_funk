@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.6.3 - 2016-02-12 - Update cloudwalk_handshake
+
+- Update cloudwalk_handshake to version 0.5.2.
+
 ### 0.6.2 - 2016-02-12 - Update da_funk binary
 
 - Update da_funk binary.
