@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.6.1 - 2016-02-12 - Update posxml_parser
+
+- Update posxml_parser to version 0.7.2.
+- Replace simplehttp for funky-simplehttp from rubygems.
+
 ### 0.6.0 - 2016-02-02 - Support to i18n.
 - Add support to i18n.
 - Add I18n messages to ParamsDat/Files/Apps downloading.
