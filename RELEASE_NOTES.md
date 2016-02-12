@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.6.2 - 2016-02-12 - Update da_funk binary
+
+- Update da_funk binary.
+
 ### 0.6.1 - 2016-02-12 - Update posxml_parser
 
 - Update posxml_parser to version 0.7.2.
