@@ -5,11 +5,11 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 tasks = File.expand_path('../tasks', __FILE__)
 $LOAD_PATH.unshift(tasks) unless $LOAD_PATH.include?(tasks)
 
-require 'device/version.rb'
+require 'da_funk/version.rb'
 
 Gem::Specification.new do |spec|
   spec.name          = "da_funk"
-  spec.version       = Device::API_VERSION
+  spec.version       = DaFunk::VERSION
   spec.authors       = ["Thiago Scalone"]
   spec.email         = ["thiago@cloudwalk.io"]
   spec.summary       = "MRuby Embedded System Framework"

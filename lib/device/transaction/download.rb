@@ -21,7 +21,7 @@ class Device
       IO_ERROR                 = -3
 
       def self.request_file(remote_path, local_path, crc = "")
-        download = Device::Transaction::Download.new(Device::System.serial, "", Device.version)
+        download = Device::Transaction::Download.new(Device::System.serial, "", DaFunk::VERSION)
         download.perform(Device::Network.socket,
                          Device::Setting.company_name,
                          remote_path, local_path, Device::System.app,

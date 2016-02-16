@@ -1,5 +1,6 @@
 unless Object.const_defined?(:MTest)
   file_path = File.dirname(File.realpath(__FILE__))
+  require file_path + "/da_funk/version.rb"
   require file_path + "/da_funk/helper.rb"
   require file_path + "/da_funk/iso8583.rb"
   require file_path + "/da_funk/rake_task.rb"

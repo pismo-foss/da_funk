@@ -97,7 +97,7 @@ class CommandLinePlatform
     def self.versions
       {
         "OS"     => Device.version,
-        "SDK"    => Device.api_version,
+        "SDK"    => DaFunk::VERSION,
         "EMV"    => "0.0.1",
         "Pinpad" => "0.0.1"
       }
@@ -105,7 +105,7 @@ class CommandLinePlatform
   end
 
   def self.version
-    "0.0.1"
+    DaFunk::VERSION
   end
 end
 
