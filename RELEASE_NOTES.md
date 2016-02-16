@@ -1,5 +1,12 @@
 # DaFunk
 
+### 0.6.4 - 2016-02-16 - Update cloudwalk_handshake
+
+- Update cloudwalk_handshake to version 0.5.3.
+- Add DaFunk::VERSION to define da_funk version.
+- Change Device.version to define platform/device version.
+- Fix Printer.check, syntax error.
+
 ### 0.6.3 - 2016-02-12 - Update cloudwalk_handshake
 
 - Update cloudwalk_handshake to version 0.5.2.
