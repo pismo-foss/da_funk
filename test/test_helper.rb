@@ -4,6 +4,7 @@ APP_NAME = File.basename(File.dirname(ROOT_PATH))
 $LOAD_PATH.unshift "./#{APP_NAME}"
 
 require 'da_funk'
+require 'funky-simplehttp'
 
 DaFunk::Test.configure do |t|
   t.root_path      = ROOT_PATH
