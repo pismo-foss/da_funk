@@ -180,7 +180,7 @@ class Device
     # @return [Fixnum] ERR_PRN_PAPEROUT Out of paper.
     # @return [Fixnum] ERR_PRN_OVERHEAT Printer overheating.
     def self.check
-      self._check
+      self.adapter.check
     end
 
     # Check if printer has paper
