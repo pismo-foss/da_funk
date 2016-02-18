@@ -1,5 +1,11 @@
 # DaFunk
 
+### 0.6.5 - 2016-02-18 - Implement keys map on input functions
+
+- Update cloudwalk_handshake to version 0.5.4.
+- Implement Device::IO.setup_keyboard to map keys on input functions.
+- On Device::Transaction::Download rescue SocketError returning COMMUNICATION_ERROR.
+
 ### 0.6.4 - 2016-02-16 - Update cloudwalk_handshake
 
 - Update cloudwalk_handshake to version 0.5.3.
