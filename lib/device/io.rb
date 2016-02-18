@@ -1,5 +1,7 @@
 class Device
   class IO < ::IO
+    include Device::Helper
+
     F1               = "\001"
     F2               = "\002"
     F3               = "\003"
@@ -31,17 +33,6 @@ class Device
 
     NUMBERS = %w(1 2 3 4 5 6 7 8 9 0)
 
-    ONE_LETTERS   = "qzQZ _,."
-    TWO_LETTERS   = "abcABC"
-    THREE_LETTERS = "defDEF"
-    FOUR_LETTERS  = "ghiGHI"
-    FIVE_LETTERS  = "jklJKL"
-    SIX_LETTERS   = "mnoMNO"
-    SEVEN_LETTERS = "prsPRS"
-    EIGHT_LETTERS = "tuvTUV"
-    NINE_LETTERS  = "wxyWXY"
-    ZERO_LETTERS  = "spSP"
-
     ONE_NUMBER    = "1"
     TWO_NUMBER    = "2"
     THREE_NUMBER  = "3"
@@ -53,29 +44,55 @@ class Device
     NINE_NUMBER   = "9"
     ZERO_NUMBER   = "0"
 
-    ONE_ALPHA     = ONE_NUMBER   + ONE_LETTERS
-    TWO_ALPHA     = TWO_NUMBER   + TWO_LETTERS
-    THREE_ALPHA   = THREE_NUMBER + THREE_LETTERS
-    FOUR_ALPHA    = FOUR_NUMBER  + FOUR_LETTERS
-    FIVE_ALPHA    = FIVE_NUMBER  + FIVE_LETTERS
-    SIX_ALPHA     = SIX_NUMBER   + SIX_LETTERS
-    SEVEN_ALPHA   = SEVEN_NUMBER + SEVEN_LETTERS
-    EIGHT_ALPHA   = EIGHT_NUMBER + EIGHT_LETTERS
-    NINE_ALPHA    = NINE_NUMBER  + NINE_LETTERS
-    ZERO_ALPHA    = ZERO_NUMBER  + ZERO_LETTERS
-
-    RANGE_ALPHA   = [ONE_ALPHA, TWO_ALPHA, THREE_ALPHA, FOUR_ALPHA, FIVE_ALPHA, SIX_ALPHA, SEVEN_ALPHA, EIGHT_ALPHA, NINE_ALPHA, ZERO_ALPHA]
-    RANGE_NUMBER  = [ONE_NUMBER, TWO_NUMBER, THREE_NUMBER, FOUR_NUMBER, FIVE_NUMBER, SIX_NUMBER, SEVEN_NUMBER, EIGHT_NUMBER, NINE_NUMBER, ZERO_NUMBER]
-    RANGE_LETTERS = [ONE_LETTERS, TWO_LETTERS, THREE_LETTERS, FOUR_LETTERS, FIVE_LETTERS, SIX_LETTERS, SEVEN_LETTERS, EIGHT_LETTERS, NINE_LETTERS, ZERO_LETTERS]
-
-    KEYS_RANGE    = {MASK_ALPHA => RANGE_ALPHA, MASK_LETTERS => RANGE_LETTERS, MASK_NUMBERS => RANGE_NUMBER}
-
-    include Device::Helper
-
     class << self
-      attr_accessor :timeout
+      attr_accessor :timeout, :keys_range
     end
 
+    # Setup Keyboard Map
+    #
+    # @param key_map [Array] contains the key map from 1 to 0 (0..9)
+    # @return [NilClass] nil.
+    #
+    # @example
+    #   one_letters   = "qzQZ _,."
+    #   two_letters   = "abcABC"
+    #   three_letters = "defDEF"
+    #   four_letters  = "ghiGHI"
+    #   five_letters  = "jklJKL"
+    #   six_letters   = "mnoMNO"
+    #   seven_letters = "prsPRS"
+    #   eight_letters = "tuvTUV"
+    #   nine_letters  = "wxyWXY"
+    #   zero_letters  = "spSP"
+    #   map = [one_letters, two_letters, three_letters, four_letters, five_letters,
+    #   six_letters, seven_letters, eight_letters, nine_letters, zero_letters]
+    #   Device::IO.setup_keyboard(map)
+    #
+    def self.setup_keyboard(map)
+      one_letters, two_letters, three_letters, four_letters, five_letters,
+        six_letters, seven_letters, eight_letters, nine_letters, zero_letters =
+        map
+
+      range_number  = [
+        ONE_NUMBER , TWO_NUMBER   , THREE_NUMBER , FOUR_NUMBER , FIVE_NUMBER ,
+        SIX_NUMBER , SEVEN_NUMBER , EIGHT_NUMBER , NINE_NUMBER , ZERO_NUMBER
+      ]
+      range_letters = [
+        one_letters, two_letters, three_letters, four_letters, five_letters,
+        six_letters, seven_letters, eight_letters, nine_letters, zero_letters
+      ]
+      range_alpha = [
+        ONE_NUMBER   + one_letters, TWO_NUMBER     + two_letters,
+        THREE_NUMBER + three_letters, FOUR_NUMBER  + four_letters,
+        FIVE_NUMBER  + five_letters, SIX_NUMBER    + six_letters,
+        SEVEN_NUMBER + seven_letters, EIGHT_NUMBER + eight_letters,
+        NINE_NUMBER  + nine_letters, ZERO_NUMBER   + zero_letters
+      ]
+      @keys_range = {MASK_ALPHA => range_alpha, MASK_LETTERS => range_letters, MASK_NUMBERS => range_number}
+    end
+
+    self.setup_keyboard(["qzQZ _,.", "abcABC", "defDEF", "ghiGHI", "jklJKL",
+                        "mnoMNO", "prsPRS", "tuvTUV", "wxyWXY", "spSP"])
     self.timeout = DEFAULT_TIMEOUT
 
     # Restricted to terminals, get strings and numbers.
@@ -156,7 +173,7 @@ class Device
 
     def self.change_next(text, mask_type = Device::IO::MASK_ALPHA)
       char = text[-1]
-      if char && (range = KEYS_RANGE[mask_type].detect { |range| range.include?(char) })
+      if char && (range = self.keys_range[mask_type].detect { |range| range.include?(char) })
         index = range.index(char)
         new_value = range[index+1]
         if new_value
