@@ -91,8 +91,8 @@ class Device
       @keys_range = {MASK_ALPHA => range_alpha, MASK_LETTERS => range_letters, MASK_NUMBERS => range_number}
     end
 
-    self.setup_keyboard(["qzQZ _,.", "abcABC", "defDEF", "ghiGHI", "jklJKL",
-                        "mnoMNO", "prsPRS", "tuvTUV", "wxyWXY", "spSP"])
+    self.setup_keyboard(["qzQZ.", "abcABC", "defDEF", "ghiGHI", "jklJKL",
+                        "mnoMNO", "prsPRS", "tuvTUV", "wxyWXY", ", *\#_$%-+="])
     self.timeout = DEFAULT_TIMEOUT
 
     # Restricted to terminals, get strings and numbers.
