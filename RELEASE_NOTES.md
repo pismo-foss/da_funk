@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.6.6 - 2016-02-18 - Update map keys adding some special chars
+
+- Update map keys adding some special chars.
+- Finally remove da_funk binary file from git source, the binary will package on release only(rubygem).
+
 ### 0.6.5 - 2016-02-18 - Implement keys map on input functions
 
 - Update cloudwalk_handshake to version 0.5.4.
