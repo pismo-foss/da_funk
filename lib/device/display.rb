@@ -64,16 +64,16 @@ class Device
 
     def self.print_main_image
       bmp = "./shared/#{self.main_image}"
-      if File.exists?(bmp)
-        self.print_bitmap(bmp,0,0)
-      else
-        bmp_main = "./shared/#{MAIN_BMP}"
-        self.print_bitmap(bmp_main,0,0) if File.exists?(bmp_main)
-      end
+      self.print_bitmap(bmp,0,0) if File.exists?(bmp)
     end
 
     def self.main_image
-      adapter.main_image
+      if adapter.respond_to?(:main_image) &&
+        File.exists?("./shared/#{adapter.main_image}")
+        adapter.main_image
+      else
+        MAIN_BMP
+      end
     end
   end
 end
