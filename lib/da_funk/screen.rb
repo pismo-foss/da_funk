@@ -45,7 +45,7 @@ class Screen
     if n_strings?(args)
       args = args.map {|str| "#{str}\n" }
     else
-      args[0] = "#{args[0]}\n"
+      args[0] = "#{args.first}\n"
     end
     print(*args)
   end
@@ -64,9 +64,9 @@ class Screen
         jump_line if string[-1] == "\n"
       else
         space = @max_x - @x
-        Device::Display.print("#{string[0..(space - 1)]}", @y, @x)
+        Device::Display.print("#{string[0..(space - 1)]}", @y.to_i, @x.to_i)
         jump_line
-        loop_split_strings("#{string[(space)..-1]}")
+        loop_split_strings("#{string[space..-1]}")
       end
     end
   end
