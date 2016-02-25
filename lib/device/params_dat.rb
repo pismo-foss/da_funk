@@ -129,6 +129,13 @@ class Device
       File.delete(FILE_NAME) if exists?
       @apps = []
       @files = []
+      Dir.entries("./shared/").each do |f|
+        begin
+          path = "./shared/#{f}"
+          File.delete(path) if File.file?(path) && f != Device::Display::MAIN_BMP
+        rescue
+        end
+      end
     end
 
     def self.update_app(application, index = 1, all = 1, force = false)
