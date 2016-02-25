@@ -70,7 +70,7 @@ class Device
     end
 
     def self.configured?
-      Device::Setting.network_configured == "1"
+      Device::Setting.network_configured == "1" && ! Device::Setting.media.to_s.empty?
     end
 
     def self.ping(host, port)
