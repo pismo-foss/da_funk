@@ -19,11 +19,9 @@ class Device
   end
 
   def self.app_loop(&block)
-    Device::Display.clear
-    puts "SETUP NOTIFICATIONS..."
-    Notification.setup
+    DaFunk::Engine.setup
     loop do
-      Notification.check
+      DaFunk::Engine.check
       block.call(self)
     end
   end

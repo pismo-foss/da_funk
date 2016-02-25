@@ -44,5 +44,35 @@ class Device
         adapter.clear_line line
       end
     end
+
+    # Print image in slot of status bar
+    #
+    # @param slot [Fixnum] Status bar slot.
+    # @param image_path [String] Path to image, or send nil to clear the slot.
+    # @return [NilClass] Failure.
+    # @return [TrueClass] Success.
+    def self.print_status_bar(slot, image_path)
+      slots = self.adapter.status_bar_slots_available - 1
+      if (0..slots).include?(slot)
+        if image_path.nil? || File.exists?(image_path)
+          self.adapter.print_status_bar(slot, image_path)
+        end
+      end
+    end
+
+    def self.print_main_image
+      bmp = "./shared/#{self.main_image}"
+      if File.exists?(bmp)
+        self.print_bitmap(bmp,0,0)
+      else
+        bmp_main = "./shared/main.bmp"
+        self.print_bitmap(bmp_main,0,0) if File.exists?(bmp_main)
+      end
+    end
+
+    def self.main_image
+      adapter.main_image
+    end
   end
 end
+
