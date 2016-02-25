@@ -1,5 +1,7 @@
 class Device
   class Display
+    MAIN_BMP = "main.bmp"
+
     def self.adapter
       Device.adapter::Display
     end
@@ -65,7 +67,7 @@ class Device
       if File.exists?(bmp)
         self.print_bitmap(bmp,0,0)
       else
-        bmp_main = "./shared/main.bmp"
+        bmp_main = "./shared/#{MAIN_BMP}"
         self.print_bitmap(bmp_main,0,0) if File.exists?(bmp_main)
       end
     end
