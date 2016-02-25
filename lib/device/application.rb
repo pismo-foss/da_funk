@@ -32,13 +32,16 @@ class Device
     end
 
     def download(force = false)
-      if force || outdated?
+      if force || self.outdated?
         ret = Device::Transaction::Download.request_file(remote, file, crc_local)
       else
         ret = Device::Transaction::Download::FILE_NOT_CHANGE
       end
       @crc_local = @crc if ret == Device::Transaction::Download::SUCCESS
       ret
+    rescue => e
+      puts "ERROR #{e.message}"
+      Device::Transaction::Download::IO_ERROR
     end
 
     def dir
@@ -63,6 +66,8 @@ class Device
         @crc_local = Device::Crypto.crc16_hex(handle.read)
       end
       @crc_local != @crc
+    rescue
+      true
     ensure
       handle.close if handle
     end
