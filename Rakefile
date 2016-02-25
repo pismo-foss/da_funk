@@ -20,6 +20,8 @@ FILES = FileList[
   "lib/da_funk/i18n_error.rb",
   "lib/da_funk/i18n.rb",
   "lib/da_funk/file_parameter.rb",
+  "lib/da_funk/helper/status_bar.rb",
+  "lib/da_funk/engine.rb",
   "lib/device.rb",
   "lib/device/audio.rb",
   "lib/device/crypto.rb",
