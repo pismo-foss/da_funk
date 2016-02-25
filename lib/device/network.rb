@@ -93,7 +93,9 @@ class Device
     #
     # @return [Fixnum] Signal value between 0 and 5.
     def self.signal
-      adapter.signal
+      if self.connected? == 0
+        adapter.signal
+      end
     end
 
     # Scan for wifi aps available
