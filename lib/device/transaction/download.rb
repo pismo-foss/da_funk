@@ -118,6 +118,8 @@ class Device
         return_code
       rescue SocketError
         return COMMUNICATION_ERROR
+      rescue
+        return IO_ERROR
       end
 
       def generate_crc(local_path)
