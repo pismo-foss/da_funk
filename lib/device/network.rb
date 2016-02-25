@@ -82,10 +82,8 @@ class Device
     end
 
     def self.sim_id
-      if adapter.respond_to? :sim_id
+      if self.adapter.started?
         adapter.sim_id
-      else
-        ""
       end
     end
 
