@@ -1,5 +1,15 @@
 # DaFunk
 
+### 0.6.7 - 2016-02-29 - DaFunk::Engine and DaFunk::StatusBar
+
+- Refactoring screen string manipulation.
+- Only call signal if Network connected.
+- Bug fix, only consider Network configured if Device::Setting.media is defined and Device::Setting.network_configured is 1.
+- Implement DaFunk::Engine and support to display status bar icons(battery, wifi and mobile).
+- Add support to remove all files from ./shared/ on Device::ParamsDat.format!(excluding main.bmp).
+- Device::Display.main_image check if platform respond_to main_image and if the file exists to return the method.
+- Update posxml_parser to version 0.7.3.
+
 ### 0.6.6 - 2016-02-18 - Update map keys adding some special chars
 
 - Update map keys adding some special chars.
