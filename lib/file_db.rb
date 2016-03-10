@@ -25,6 +25,10 @@ class FileDb
     end
   end
 
+  def each(&block)
+    @hash.each(&block)
+  end
+
   def save
     file_new = File.open(@path, "w+")
     @hash.each do |line_key, line_value|
