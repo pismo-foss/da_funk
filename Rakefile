@@ -9,6 +9,8 @@ DA_FUNK_ROOT = File.dirname(File.expand_path(__FILE__))
 FileUtils.cd DA_FUNK_ROOT
 
 FILES = FileList[
+  "lib/ext/kernel.rb",
+  "lib/ext/string.rb",
   "lib/device/version.rb",
   "lib/da_funk/version.rb",
   "lib/da_funk/helper.rb",
@@ -58,9 +60,7 @@ FILES = FileList[
   "lib/device/notification.rb",
   "lib/device/application.rb",
   "lib/zip.rb",
-  "lib/device/magnetic.rb",
-  "lib/ext/kernel.rb",
-  "lib/ext/string.rb"
+  "lib/device/magnetic.rb"
 ]
 
 DaFunk::RakeTask.new do |t|
