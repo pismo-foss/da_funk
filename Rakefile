@@ -11,6 +11,8 @@ FileUtils.cd DA_FUNK_ROOT
 FILES = FileList[
   "lib/ext/kernel.rb",
   "lib/ext/string.rb",
+  "lib/ext/array.rb",
+  "lib/ext/hash.rb",
   "lib/device/version.rb",
   "lib/da_funk/version.rb",
   "lib/da_funk/helper.rb",
