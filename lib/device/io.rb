@@ -50,7 +50,7 @@ class Device
 
     # Setup Keyboard Map
     #
-    # @param key_map [Array] contains the key map from 1 to 0 (0..9)
+    # @param map [Array] contains the key map from 1 to 0 (0..9)
     # @return [NilClass] nil.
     #
     # @example
@@ -138,7 +138,7 @@ class Device
           text = text[0..-2]
         elsif key == ENTER || key == KEY_TIMEOUT
           return text
-        elsif key ==  F1 || key == DOWN || key == UP
+        elsif key == F1 || key == DOWN || key == UP
           change_next(text, check_mask_type(text, options))
           next
         elsif text.size >= max
