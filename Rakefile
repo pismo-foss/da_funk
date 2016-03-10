@@ -25,6 +25,8 @@ FILES = FileList[
   "lib/da_funk/i18n.rb",
   "lib/da_funk/file_parameter.rb",
   "lib/da_funk/helper/status_bar.rb",
+  "lib/da_funk/event_listener.rb",
+  "lib/da_funk/event_handler.rb",
   "lib/da_funk/engine.rb",
   "lib/device.rb",
   "lib/device/audio.rb",
