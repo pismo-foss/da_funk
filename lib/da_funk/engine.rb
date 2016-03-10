@@ -10,6 +10,19 @@ module DaFunk
       Device::Notification.check
       DaFunk::Helper::StatusBar.check
     end
+    def self.app_loop(&block)
+      @stop = false
+      self.setup
+      loop do
+        self.check
+        break if @stop
+        block.call
+      end
+    end
+
+    def self.stop!
+      @stop = true
+    end
   end
 end
 

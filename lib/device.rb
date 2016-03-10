@@ -17,13 +17,5 @@ class Device
 
   def self.call(*args)
   end
-
-  def self.app_loop(&block)
-    DaFunk::Engine.setup
-    loop do
-      DaFunk::Engine.check
-      block.call(self)
-    end
-  end
 end
 
