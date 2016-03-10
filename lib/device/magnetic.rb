@@ -65,6 +65,14 @@ class Device
       @tracks
     end
 
+    def bin?(range)
+      if range.is_a?(Range)
+        range.include?(tracks[:track2].to_s[0..3].to_i)
+      else
+        tracks[:track2].to_s[0..3] == range.to_s
+      end
+    end
+
     private
     def read_tracks
       @tracks = adapter.tracks
