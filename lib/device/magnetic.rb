@@ -52,6 +52,10 @@ class Device
       false
     end
 
+    def read?
+      @status == STATUS_SUCCESSFUL_READ
+    end
+
     def read
       adapter.read
     end
