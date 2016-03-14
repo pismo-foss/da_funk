@@ -1,7 +1,7 @@
 module DaFunk
   module Helper
     class StatusBar
-      STATUS_TIMEOUT  = 10
+      STATUS_TIMEOUT  = 60
       SLOT_CONNECTION = 0
       SLOT_BATTERY    = 7
 
