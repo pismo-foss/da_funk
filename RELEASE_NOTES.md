@@ -1,5 +1,17 @@
 # DaFunk
 
+### 0.7.0 - 2016-03-10 - EventListener and EventHandler
+
+- Implemented method each for FileDb.
+- Implement method to_json to array and hash on an extension.
+- Extract app_loop method from Device to DaFunk::Engine.
+- Implement method Magnetic#bin? to change range read.
+- Implement EventListener and EventHandler to deal with custom events.
+- Remove Notification setup from app_loop and DaFunk responsibility.
+- Change status bar update timeout to 60 seconds.
+- Implemented Magnetic#read? to check if status is STATUS_SUCCESSFUL_READ.
+- Update posxml_parser to version 0.7.6.
+
 ### 0.6.7 - 2016-02-29 - DaFunk::Engine and DaFunk::StatusBar
 
 - Refactoring screen string manipulation.
