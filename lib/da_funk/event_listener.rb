@@ -59,8 +59,6 @@ module DaFunk
       else
         if @block_check && ! self.handlers.empty?
           @block_check.call
-          self.finish
-          self.start
         end
       end
     end
