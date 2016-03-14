@@ -48,23 +48,6 @@ class Device
       end
     end
 
-    def self.setup
-      NotificationCallback.new "APP_UPDATE", :on => Proc.new { Device::ParamsDat.update_apps(true) }
-      NotificationCallback.new "SETUP_DEVICE_CONFIG", :on => Proc.new { Device::ParamsDat.update_apps(true) }
-      NotificationCallback.new "RESET_DEVICE_CONFIG", :on => Proc.new { Device::ParamsDat.format! }
-
-      NotificationCallback.new "SYSTEM_UPDATE", :on => Proc.new { |file| }
-      NotificationCallback.new "CANCEL_SYSTEM_UPDATE", :on => Proc.new { }
-      NotificationCallback.new "TIMEZONE_UPDATE", :on => Proc.new { Device::Setting.cw_pos_timezone = "" }
-      NotificationCallback.new "SHOW_MESSAGE", :on => Proc.new { |message, datetime|
-        Device::Display.clear
-        date = datetime.sub(" ", "-").split("-")
-        Device::Display.print_line("#{date[1]}/#{date[0]}/#{date[2]} #{date[3]}", 0)
-        Device::Display.print_line("#{message}", 2)
-        getc(0)
-      }
-    end
-
     def self.create_fiber?
       (! Device::Setting.company_name.empty?) && (! Device::Setting.logical_number.empty?) && self.valid_creation_interval?
     end
@@ -87,6 +70,7 @@ class Device
 
     # Check if there is any notification
     def check
+      # TODO check if should execute this(because of connection exception)
       if valid_check_interval? && Device::Network.connected? == Device::Network::SUCCESS
         if @fiber.alive?
           if (notification = @fiber.resume)
