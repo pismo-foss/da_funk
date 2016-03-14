@@ -64,8 +64,8 @@ module Serfx
     # @return [Hash]
     def read_data(read_timeout = self.timeout)
       buf = read_buffer(read_timeout)
-      return if buf.nil?
-      return {'Error' => "Socket closed"} if buf.empty?
+      return {'Error' => "Socket closed"} if buf.nil?
+      return if buf.empty?
       parse_package(buf)
     end
 
@@ -85,9 +85,9 @@ module Serfx
         bytes = socket.bytes_available
         return socket.recv_nonblock(bytes) if bytes > 0
         break unless time_timeout > Time.now
-        sleep 1
+        usleep 200_000
       end
-      nil
+      ""
     end
 
     # takes raw RPC command name and an optional request body
