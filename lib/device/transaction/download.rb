@@ -20,7 +20,7 @@ class Device
       MAPREDUCE_RESPONSE_ERROR = -2
       IO_ERROR                 = -3
 
-      def self.request_file(remote_path, local_path, crc = "")
+      def self.request_file(remote_path, local_path, crc = nil)
         download = Device::Transaction::Download.new(Device::System.serial, "", DaFunk::VERSION)
         download.perform(Device::Network.socket,
                          Device::Setting.company_name,
@@ -77,7 +77,7 @@ class Device
         ei_encode_binary(@serial)        # elemento binario serialterminal
         ei_encode_binary(@version)       # elemento binario versao walk
         ei_encode_binary(remote_path)      # elemento binario nomeaplicativo
-        ei_encode_binary(crc)            # elemento binario crc aplicativo
+        ei_encode_binary(@crc)            # elemento binario crc aplicativo
         ei_encode_binary("")             # elemento binario buffer do posxml
         ei_encode_binary(logical_number) # elemento binario numero do terminal
         ei_encode_binary(current_app)    # elemento binario nome do aplicativo que esta sendo executado
