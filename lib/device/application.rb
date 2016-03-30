@@ -37,7 +37,12 @@ class Device
       else
         ret = Device::Transaction::Download::FILE_NOT_CHANGE
       end
-      @crc_local = @crc if ret == Device::Transaction::Download::SUCCESS
+      if ret == Device::Transaction::Download::SUCCESS
+        @crc_local = calculate_crc
+        if @crc_local != @crc
+          return Device::Transaction::Download::COMMUNICATION_ERROR
+        end
+      end
       ret
     rescue => e
       puts "ERROR #{e.message}"
@@ -61,15 +66,10 @@ class Device
 
     def outdated?
       return true unless File.exists?(file)
-      unless @crc_local
-        handle = File.open(file)
-        @crc_local = Device::Crypto.crc16_hex(handle.read)
-      end
+      @crc_local = calculate_crc unless @crc_local
       @crc_local != @crc
     rescue
       true
-    ensure
-      handle.close if handle
     end
 
     def execute(json = "")
@@ -89,6 +89,15 @@ class Device
     end
 
     private
+
+    def calculate_crc
+      if exists?
+        handle = File.open(file)
+        Device::Crypto.crc16_hex(handle.read)
+      end
+    ensure
+      handle.close if handle
+    end
 
     def check_path(path)
       if posxml?
