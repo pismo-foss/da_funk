@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    da_funk (0.7.0)
+    da_funk (0.7.1)
       bundler (~> 1.7)
       cloudwalk_handshake (~> 0.5)
       posxml_parser (~> 0.6)

@@ -1,5 +1,12 @@
 # DaFunk
 
+### 0.7.1 - 2016-03-30 - Small changes
+
+- Refactoring Application to calculate crc on the end of download to check integrity.
+- During attaching process define network_configured = 1 if attached successfully.
+- Fix crc generation on download file if crc didn’t come.
+- Update posxml_parser to version 0.7.10.
+
 ### 0.7.0 - 2016-03-10 - EventListener and EventHandler
 
 - Implemented method each for FileDb.
