@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.7.2 - 2016-03-30 - gemspec problem
+
+- Fix gemspec problem on the list of files.
+
 ### 0.7.1 - 2016-03-30 - Small changes
 
 - Refactoring Application to calculate crc on the end of download to check integrity.
