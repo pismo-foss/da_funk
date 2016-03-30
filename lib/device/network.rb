@@ -144,10 +144,12 @@ class Device
         while(ret == PROCESSING)
           ret = Device::Network.connected?
         end
-        if ret == SUCCESS && (wifi? || ethernet?)
-          Device::Network.dhcp_client(20000)
+        if ret == SUCCESS
+          Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
+          Device::Setting.network_configured = 1
+        else
+          Device::Setting.network_configured = 0
         end
-        Device::Setting.network_configured = 0 if ret != SUCCESS 
       end
       ret
     end
