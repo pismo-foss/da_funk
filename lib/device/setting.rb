@@ -74,7 +74,7 @@ class Device
       self.environment == "staging"
     end
 
-   def self.to_production!
+    def self.to_production!
       if self.environment != "production"
         @file.update_attributes("company_name" => "", "environment" => "production", "host" => HOST_PRODUCTION)
         return true
