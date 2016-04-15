@@ -1,5 +1,9 @@
 class I18n
   include DaFunk::Helper
+
+  DEFAULT_LOCALE      = "en"
+  DEFAULT_APPLICATION = "main"
+
   class << self
     attr_accessor :locale, :hash, :block_parse, :klasses
   end
@@ -17,7 +21,7 @@ class I18n
     "./#{klass}/i18n.json"
   end
 
-  def self.configure(klass, locale)
+  def self.configure(klass = DEFAULT_APPLICATION, locale = DEFAULT_LOCALE)
     raise I18nError.new("File not found") if (! File.exists?(filepath(klass)))
     self.parse(klass)
     @locale = locale
@@ -43,6 +47,7 @@ class I18n
   end
 
   def self.language
+    configure unless @hash
     @hash[@locale]
   end
 
