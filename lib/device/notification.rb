@@ -76,13 +76,13 @@ class Device
           if (notification = @fiber.resume)
             Notification.execute(NotificationEvent.new(notification))
           end
-          @last_check = Time.now
         else
           if Device::Notification.create_fiber?(true)
             self.close
             @fiber = create_fiber
           end
         end
+        @last_check = Time.now
       end
     end
 
