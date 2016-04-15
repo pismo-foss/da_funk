@@ -48,8 +48,8 @@ class Device
       end
     end
 
-    def self.create_fiber?
-      (! Device::Setting.company_name.empty?) && (! Device::Setting.logical_number.empty?) && self.valid_creation_interval?
+    def self.create_fiber?(force = false)
+      (! Device::Setting.company_name.empty?) && (! Device::Setting.logical_number.empty?) && (force || self.valid_creation_interval?)
     end
 
     def self.valid_creation_interval?
@@ -77,7 +77,8 @@ class Device
             Notification.execute(NotificationEvent.new(notification))
           end
           @last_check = Time.now
-          if Device::Notification.create_fiber?
+        else
+          if Device::Notification.create_fiber?(true)
             self.close
             @fiber = create_fiber
           end
