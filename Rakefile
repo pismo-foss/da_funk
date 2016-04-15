@@ -10,6 +10,7 @@ FileUtils.cd DA_FUNK_ROOT
 
 FILES = FileList[
   "lib/ext/kernel.rb",
+  "lib/ext/nil.rb",
   "lib/ext/string.rb",
   "lib/ext/array.rb",
   "lib/ext/hash.rb",
