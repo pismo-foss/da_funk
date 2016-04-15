@@ -1,5 +1,12 @@
 # DaFunk
 
+### 0.7.3 - 2016-04-15 - Small changes
+
+- Implement NilClass#to_big.
+- Load I18n main file if try to use.
+- String#integer? return true if string[0] is “0”.
+- On Notification implement force parameter to create fiber when fiber is dead.
+
 ### 0.7.2 - 2016-03-30 - gemspec problem
 
 - Fix gemspec problem on the list of files.
