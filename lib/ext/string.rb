@@ -11,6 +11,7 @@ class String
   end
 
   def integer?
+    return true if self[0] == "0"
     !!Integer(self)
   rescue ArgumentError
     return false
