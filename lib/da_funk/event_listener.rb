@@ -40,7 +40,7 @@ module DaFunk
     end
 
     def delete
-      self.finish if sel.started?
+      self.finish if self.started?
       EventListener.delete(self)
     end
 
