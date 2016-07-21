@@ -48,8 +48,11 @@ module DaFunk
       if block_given?
         @block_start = block
       else
-        @started = true
-        @block_start.call if @block_start
+        if @block_start
+          @started = @block_start.call
+        else
+          @started = true
+        end
       end
     end
 
@@ -57,7 +60,7 @@ module DaFunk
       if block_given?
         @block_check = block
       else
-        if @block_check && ! self.handlers.empty?
+        if @block_check && ! self.handlers.empty? && self.started?
           @block_check.call
         end
       end
