@@ -1,6 +1,7 @@
 module DaFunk
   class EventHandler
     attr_reader :option, :type
+    attr_accessor :timer
 
     def initialize(type, option, &block)
       @type          = type
