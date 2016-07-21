@@ -19,7 +19,7 @@ class FileDb
 
   def parse(text)
     text.split("\n").compact.each do |line|
-      key_value = line.split("=")
+      key_value = line.split("=", 2)
       key, value = sanitize(key_value[0]), sanitize(key_value[1])
       @hash[key] = value unless value.empty?
     end
