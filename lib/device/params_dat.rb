@@ -101,7 +101,12 @@ class Device
           Device::Display.clear
           I18n.pt(:downloading_content, :args => ["PARAMS", 1, 1])
           ret = Device::Transaction::Download.request_param_file(FILE_NAME)
-          check_download_error(ret)
+          unless check_download_error(ret)
+            sleep(2) 
+            false
+          else
+            true
+          end
         end
         parse if ret
         ret
