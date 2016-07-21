@@ -31,7 +31,7 @@ class Device
 
     def initialize
       @status = STATUS_CLOSE
-      self.start
+      @open = self.start
     end
 
     def start
@@ -67,6 +67,10 @@ class Device
     def tracks
       read_tracks unless @tracks
       @tracks
+    end
+
+    def open?
+      @open
     end
 
     def bin?(value)
