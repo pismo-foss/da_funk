@@ -118,7 +118,8 @@ class Device
         return_code
       rescue SocketError
         return COMMUNICATION_ERROR
-      rescue
+      rescue => e
+        ContextLog.error(e, e.backtrace)
         return IO_ERROR
       end
 
