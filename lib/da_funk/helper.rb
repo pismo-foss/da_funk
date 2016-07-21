@@ -16,19 +16,25 @@ module DaFunk
 
     def attach
       Device::Display.clear
-      I18n.pt(:attach_connecting)
-      if Device::Network.connected? < 0
-        if (ret = Device::Network.attach) == 0
-          I18n.pt(:attach_connected)
+      if Device::Network.configured?
+        I18n.pt(:attach_connecting)
+        if Device::Network.connected? < 0
+          if (ret = Device::Network.attach) == 0
+            I18n.pt(:attach_connected)
+          else
+            I18n.pt(:attach_fail, :args => [ret.to_s])
+            sleep 4
+            return false
+          end
         else
-          I18n.pt(:attach_fail, :args => [ret.to_s])
-          sleep 4
-          return false
+          I18n.pt(:attach_already_connected)
         end
+        true
       else
-        I18n.pt(:attach_already_connected)
+        I18n.pt(:attach_device_not_configured)
+        sleep(2)
+        false
       end
-      true
     end
 
     def check_download_error(ret)
