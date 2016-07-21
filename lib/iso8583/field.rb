@@ -38,8 +38,8 @@ module ISO8583
       rest = raw[len, raw.length]
       begin
         real_value = codec.decode(raw_value)
-      rescue
-        raise ISO8583ParseException.new($!.message+" (#{name})")
+      rescue => e
+        raise ISO8583ParseException.new(e.message+" (#{name})")
       end
 
       [ real_value, rest ]
@@ -54,8 +54,9 @@ module ISO8583
     def encode(value)
       begin
         encoded_value = codec.encode(value) 
-      rescue ISO8583Exception
-        raise ISO8583Exception.new($!.message+" (#{name})")
+      rescue ISO8583Exception => e
+        ContextLog.error(e, e.backtrace, e.message+" (#{name})")
+        raise ISO8583Exception.new(e.message+" (#{name})")
       end
 
       if padding
