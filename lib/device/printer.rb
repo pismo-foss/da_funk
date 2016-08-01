@@ -15,7 +15,7 @@ class Device
 
     DEFAULT_SINGLE_WIDTH  = 12
     DEFAULT_SINGLE_HEIGHT = 24
-    DEFAULT_MULTI_WIDTH   = 24
+    DEFAULT_MULTI_WIDTH   = 12
     DEFAULT_MULTI_HEIGHT  = 24
 
     def self.adapter
