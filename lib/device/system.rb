@@ -69,6 +69,12 @@ class Device
     def self.versions
       adapter.versions
     end
+
+    def self.update(path)
+      if File.exists? path
+        adapter.update(path)
+      end
+    end
   end
 end
 
