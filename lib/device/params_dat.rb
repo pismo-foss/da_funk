@@ -97,7 +97,7 @@ class Device
     def self.download
       if attach
         parse
-        ret = try(3) do |tried|
+        ret = try(3) do |attempt|
           Device::Display.clear
           I18n.pt(:downloading_content, :args => ["PARAMS", 1, 1])
           ret = Device::Transaction::Download.request_param_file(FILE_NAME)
@@ -145,7 +145,7 @@ class Device
 
     def self.update_app(application, index = 1, all = 1, force = false)
       if attach && application
-        try(3) do |tried|
+        try(3) do |attempt|
           Device::Display.clear
           I18n.pt(:downloading_content, :args => [I18n.t(:apps), index, all])
           ret = check_download_error(application.download(force))
@@ -157,7 +157,7 @@ class Device
 
     def self.update_file(file_parameter, index = 1, all = 1, force = false)
       if attach && file_parameter
-        try(3) do |tried|
+        try(3) do |attempt|
           Device::Display.clear
           I18n.pt(:downloading_content, :args => [I18n.t(:files), index, all])
           ret = check_download_error(file_parameter.download(force))
