@@ -48,6 +48,24 @@ class Device
       buf.each_byte{|x| crc = ((crc<<8) ^ CCITT_16[(crc>>8) ^ x])&0xffff}
       crc
     end
+
+    def self.file_crc16_hex(path)
+      if File.exists?(path)
+        crc = 0
+        file = File.open(path)
+
+        loop do
+          break unless buf = file.read(1000)
+          crc = crc16(file.sysread(1000), crc)
+        end
+        rjust(crc.to_s(16).upcase, 4, "0")
+      else
+        "0000"
+      end
+    ensure
+      file.close if file
+      GC.start
+    end
   end
 end
 
