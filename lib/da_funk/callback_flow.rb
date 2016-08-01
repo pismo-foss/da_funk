@@ -12,7 +12,7 @@ module DaFunk
 
     def dispatch(result)
       return if result.nil?
-      Device::Display.clear
+      bind.setup
       route(check(bind.instance_exec(result, &block)))
     end
 

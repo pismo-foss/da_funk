@@ -1,24 +1,32 @@
 module DaFunk
   class ScreenFlow
-    attr_accessor :list
+    class << self
+      attr_accessor :screen_methods, :setup
+    end
+    attr_reader :screens
 
-    def self.add(method, &block)
+    def self.screen(method, &block)
+      self.screen_methods ||= []
+      self.screen_methods << method
       define_method method do
-        @list << CallbackFlow.new(self, @list.last, &block)
-        self
+        @screens << CallbackFlow.new(self, @screens.last, &block)
       end
     end
 
     def initialize
-      self.list = []
-      order
+      @screens = []
+      self.class.screen_methods.each{|method| send(method) }
     end
 
-    def order
+    def self.setup(&block)
+      define_method(:setup, &block)
+    end
+
+    def setup
     end
 
     def start
-      first = self.list.first
+      first = self.screens.first
       first.dispatch(true) if first
     end
 
@@ -28,3 +36,4 @@ module DaFunk
     end
   end
 end
+
