@@ -20,6 +20,21 @@ class Device
       MAPREDUCE_RESPONSE_ERROR = -2
       IO_ERROR                 = -3
 
+      def self.check(ret)
+        case ret
+        when SERIAL_NUMBER_NOT_FOUND
+        when FILE_NOT_FOUND
+        when FILE_NOT_CHANGE
+          return true
+        when SUCCESS
+          return true
+        when COMMUNICATION_ERROR
+        when MAPREDUCE_RESPONSE_ERROR
+        when IO_ERROR
+        end
+        false
+      end
+
       def self.request_file(remote_path, local_path, crc = nil)
         download = Device::Transaction::Download.new(Device::System.serial, "", DaFunk::VERSION)
         download.perform(Device::Network.socket,
