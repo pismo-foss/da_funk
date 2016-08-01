@@ -66,7 +66,7 @@ class I18n
   end
 
   def self.pt(symbol, options = {})
-    puts(t(symbol, options))
+    puts(t(symbol, options), options[:line], options[:column])
   end
 
   def self.parse_time(value, time)
