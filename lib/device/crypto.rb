@@ -2,6 +2,11 @@
 class Device
   class Crypto
     include DaFunk::Helper
+
+    def self.adapter
+      Device.adapter::Crypto
+    end
+
     CCITT_16 = [
       0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50A5, 0x60C6, 0x70E7,
       0x8108, 0x9129, 0xA14A, 0xB16B, 0xC18C, 0xD1AD, 0xE1CE, 0xF1EF,
@@ -45,25 +50,28 @@ class Device
     end
 
     def self.crc16(buf, crc=0)
-      buf.each_byte{|x| crc = ((crc<<8) ^ CCITT_16[(crc>>8) ^ x])&0xffff}
-      crc
+      if self.adapter.respond_to? :crc16
+        self.adapter.crc16(buf, crc)
+      else
+        buf.each_byte{|x| crc = ((crc<<8) ^ CCITT_16[(crc>>8) ^ x])&0xffff}
+        crc
+      end
     end
 
     def self.file_crc16_hex(path)
       if File.exists?(path)
         crc = 0
-        file = File.open(path)
-
-        loop do
-          break unless buf = file.read(1000)
-          crc = crc16(file.sysread(1000), crc)
+        File.open(path) do |file|
+          loop do
+            break unless buf = file.read(1000)
+            crc = self.crc16(buf, crc)
+          end
         end
         rjust(crc.to_s(16).upcase, 4, "0")
       else
         "0000"
       end
     ensure
-      file.close if file
       GC.start
     end
   end
