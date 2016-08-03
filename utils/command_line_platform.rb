@@ -104,6 +104,9 @@ class CommandLinePlatform
     end
   end
 
+  class Crypto
+  end
+
   def self.version
     DaFunk::VERSION
   end
