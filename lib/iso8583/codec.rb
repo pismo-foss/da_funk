@@ -175,8 +175,10 @@ module ISO8583
               begin
                 dt = DateTime.strptime(date, fmt)
                 dt.strftime(fmt)
-              rescue
-                raise ISO8583Exception.new("Invalid format encoding: #{date}, must be #{fmt}.")
+              rescue => e
+                msg = "Invalid format encoding: #{date}, must be #{fmt}."
+                ContextLog.error(e, e.backtrace, msg)
+                raise ISO8583Exception.new(msg)
               end
             else  
               raise ISO8583Exception.new("Don't know how to encode: #{date.class} to a time.")
@@ -186,8 +188,10 @@ module ISO8583
     c.decoder = lambda {|str|
       begin
         DateTime.strptime(str, fmt)
-      rescue
-        raise ISO8583Exception.new("Invalid format decoding: #{str}, must be #{fmt}.")
+      rescue => e
+        msg = "Invalid format decoding: #{str}, must be #{fmt}."
+        ContextLog.error(e, e.backtrace, msg)
+        raise ISO8583Exception.new(msg)
       end
     }
 
