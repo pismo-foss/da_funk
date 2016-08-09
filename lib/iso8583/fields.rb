@@ -5,6 +5,7 @@
 #++
 
 module ISO8583
+  include DaFunk::Helper
 
   # This file contains a number of preinstantiated Field definitions. You
   # will probably need to create own fields in your implementation, please
@@ -120,13 +121,13 @@ module ISO8583
   N = Field.new
   N.codec = ASCII_Number
   N.padding = lambda {|val, len|
-    sprintf("%0#{len}d", val)
+    rjust(val.to_s, len, "0")
   }
 
   XN        = BCDField.new
   XN.codec  = ASCII_Number
   XN.padding = lambda {|val, len|
-    sprintf("%0#{len}d", val)
+    rjust(val.to_s, len, "0")
   }
 
   N_BCD = BCDField.new
