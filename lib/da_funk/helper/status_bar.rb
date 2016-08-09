@@ -6,14 +6,16 @@ module DaFunk
       SLOT_BATTERY    = 7
 
       BATTERY_IMAGES = {
-        0 => "./shared/battery0.png",
-        1 => "./shared/battery25.png",
-        2 => "./shared/battery50.png",
-        3 => "./shared/battery75.png",
-        4 => "./shared/battery100.png",
-        5 => "./shared/battery0c.png",
-        6 => "./shared/battery100c.png",
-        7 => nil
+        0..24    => "./shared/battery0.png",
+        25..49   => "./shared/battery25.png",
+        50..74   => "./shared/battery50.png",
+        75..99   => "./shared/battery75.png",
+        100..100 => "./shared/battery100.png"
+      }
+
+      BATTERY_CHARGE_IMAGES = {
+        50  => "./shared/battery0c.png",
+        100 => "./shared/battery100c.png"
       }
 
       WIFI_IMAGES = {
@@ -33,7 +35,7 @@ module DaFunk
       }
 
       class << self
-        attr_accessor :status_timeout, :signal, :battery
+        attr_accessor :status_timeout, :signal, :battery, :power
       end
 
       def self.check
@@ -58,11 +60,18 @@ module DaFunk
       end
 
       def self.change_battery
-        bat = Device::System.battery
-        if self.battery != bat
+        bat  = Device::System.battery
+        dock = Device::System.power_supply
+        if self.battery != bat || self.power != dock
           self.battery = bat
-          Device::Display.print_status_bar(
-            SLOT_BATTERY, get_image_path(:battery, self.battery))
+          self.power   = dock
+          if self.power
+            Device::Display.print_status_bar(
+              SLOT_BATTERY, get_image_path(:battery_charge, self.battery))
+          else
+            Device::Display.print_status_bar(
+              SLOT_BATTERY, get_image_path(:battery, self.battery))
+          end
         end
       end
 
@@ -74,7 +83,9 @@ module DaFunk
         when :wifi
           WIFI_IMAGES.each {|k,v| return v if k.include? sig }
         when :battery
-          BATTERY_IMAGES[sig]
+          BATTERY_IMAGES.each {|k,v| return v if k.include? sig }
+        when :battery_charge
+          BATTERY_CHARGE_IMAGES[sig]
         else
           nil
         end
