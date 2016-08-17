@@ -13,7 +13,14 @@ class String
   def integer?
     return true if self[0] == "0"
     !!Integer(self)
-  rescue ArgumentError
+  rescue ArgumentError => e
+    if e.message[-19..-1] == "too big for integer"
+      begin
+        return self.to_i.to_s.size == self.size
+      rescue
+        false
+      end
+    end
     return false
   end
 end
