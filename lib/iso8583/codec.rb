@@ -85,9 +85,8 @@ module ISO8583
   # ASCII_Number
   ASCII_Number = Codec.new
   ASCII_Number.encoder= lambda{|num|
-    enc = num.to_s
-    raise ISO8583Exception.new("Invalid value: #{enc} must be numeric!") unless enc =~ /^[0-9]*$/
-    enc
+    raise ISO8583Exception.new("Invalid value: #{num} must be numeric!") unless "#{num}" =~ /^[0-9]*$/
+    "#{num}"
   }
 
   ASCII_Number.decoder = lambda{|raw|
@@ -137,8 +136,9 @@ module ISO8583
 
   ANS_Codec = Codec.new
   ANS_Codec.encoder = lambda{|str|
-    raise ISO8583Exception.new("Invalid value: #{str} must be [\\x20-\\x7E]") unless str =~ /^[\x20-\x7E]*$/
-    str
+    #raise ISO8583Exception.new("Invalid value: #{str} must be [A-Za-y0-9 ]") unless str =~ /^[A-Za-z0-9 ]*$/
+    #raise ISO8583Exception.new("Invalid value: #{str} must be [\\x20-\\x7E]") unless str =~ /^[\x20-\x7E]*$/
+    "#{str}"
   }
   ANS_Codec.decoder = PASS_THROUGH_DECODER
 
