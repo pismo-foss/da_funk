@@ -13,13 +13,23 @@ class Device
     ERR_DEV_BUSY          = -1005 # Device is busy.
     ERR_FONT_NOT_EXIST    = -1008 # Font does not exist.
 
-    DEFAULT_SINGLE_WIDTH  = 12
-    DEFAULT_SINGLE_HEIGHT = 24
-    DEFAULT_MULTI_WIDTH   = 12
-    DEFAULT_MULTI_HEIGHT  = 24
+    DEFAULT_SINGLE_WIDTH  = 10
+    DEFAULT_SINGLE_HEIGHT = 20
+    DEFAULT_MULTI_WIDTH   = 10
+    DEFAULT_MULTI_HEIGHT  = 20
+
+    BMP_SUCCESS        = 0
+    BMP_FILE_ERROR     = -1
+    BMP_NOT_MONOCHROME = -3
+    BMP_INVALID_WIDTH  = -4
+    BMP_LSEEK_FAILED   = -5
 
     def self.adapter
       Device.adapter::Printer
+    end
+
+    class << self
+      attr_accessor :single_width, :single_height, :multi_width, :multi_height
     end
 
     # Initialize Printer device.
@@ -43,6 +53,12 @@ class Device
                    singlecode_height=DEFAULT_SINGLE_HEIGHT,
                    multicode_width=DEFAULT_MULTI_WIDTH,
                    multicode_height=DEFAULT_MULTI_HEIGHT)
+
+      self.single_width  = singlecode_width
+      self.single_height = singlecode_height
+      self.multi_width   = multicode_width
+      self.multi_height  = multicode_height
+
       self.adapter.start(singlecode_width, singlecode_height, multicode_width, multicode_height)
     end
 
@@ -132,6 +148,7 @@ class Device
     #
     # @return [NilClass] Allways returns nil.
     def self.print(string)
+      self.size(self.single_width, self.single_height, self.multi_width, self.multi_height)
       self.adapter.print(string)
     end
 
@@ -151,9 +168,8 @@ class Device
     #
     # @return [NilClass] Allways returns nil.
     def self.print_big(string)
-      size(24, 48, 48, 48)
+      self.size(24, 48, 24, 48)
       self.adapter.print(string)
-      size
     end
 
     # Print bmp file.
