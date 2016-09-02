@@ -1,5 +1,27 @@
 # DaFunk
 
+### 0.7.4 - 2016-04-15 - Small changes
+
+- Add timer type EventListener.
+- Change attach helper to check if Network is configured.
+- Add key ALPHA to change between alpha chars on get_format.
+- Store response from open in Magnetic object.
+- Log error if exception error in file download.
+- Bug fix in key value parse at FileDb supporting more than one “=“.
+- Bugfix ISO8583 exception handler.
+- Refactoring ScreenFlow
+    - Rename add method to screen.
+    - Remove order, now the order is defined by the screen method call order.
+    - Add screen_methods and screen attributes.
+    - Add support for setup method, to be called every time before start a screen.
+- Add support for line and column on I18n.pt method.
+- Add support for crc generation from a file.
+- Refactoring download method from ParamsDat class rename tried variable for attempt.
+- Add Device::System.update.
+- Refactoring Crypto crc’s functions to use internal implementation in C from Device if available.
+- Refactoring StatusBar battery display and add support to power_supply from Device.
+- Fix String#integer? to work mRuby 1.2.
+
 ### 0.7.3 - 2016-04-15 - Small changes
 
 - Implement NilClass#to_big.
