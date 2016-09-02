@@ -16,8 +16,9 @@ module DaFunk
     def initialize(name, crc)
       @crc      = crc
       @original = name
-      @remote   = @original.sub("#{Device::Setting.company_name}_", "")
-      @name     = @original.sub("#{Device::Setting.company_name}_", "").split(".").first
+      company   = check_company(name)
+      @remote   = @original.sub("#{company}_", "")
+      @name     = @original.sub("#{company}_", "").split(".").first
       @file     = "#{FILEPATH}/#{@remote}"
       @crc_local = @crc if File.exists?(@file)
     end
@@ -62,6 +63,10 @@ module DaFunk
     end
 
     private
+    def check_company(name)
+      name.split("_", 2)[0]
+    end
+
     def remove_company(name)
       name.split("_")[1..-1].join("_")
     end

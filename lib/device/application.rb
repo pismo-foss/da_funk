@@ -25,8 +25,9 @@ class Device
       @crc      = crc
       @original = remote
       @order, @label = split_label(label)
-      @remote    = remote.sub("#{Device::Setting.company_name}_", "")
-      @name      = remote.sub("#{Device::Setting.company_name}_", "").split(".")[0]
+      company    = check_company(remote)
+      @remote    = remote.sub("#{company}_", "")
+      @name      = remote.sub("#{company}_", "").split(".")[0]
       @file      = check_path(@remote)
       @crc_local = @crc if File.exists?(@file)
     end
@@ -89,6 +90,10 @@ class Device
     end
 
     private
+
+    def check_company(name)
+      name.split("_", 2)[0]
+    end
 
     def calculate_crc
       if exists?
