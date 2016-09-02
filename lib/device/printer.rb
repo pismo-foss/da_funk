@@ -14,9 +14,9 @@ class Device
     ERR_FONT_NOT_EXIST    = -1008 # Font does not exist.
 
     DEFAULT_SINGLE_WIDTH  = 10
-    DEFAULT_SINGLE_HEIGHT = 20
+    DEFAULT_SINGLE_HEIGHT = 21
     DEFAULT_MULTI_WIDTH   = 10
-    DEFAULT_MULTI_HEIGHT  = 20
+    DEFAULT_MULTI_HEIGHT  = 21
 
     BMP_SUCCESS        = 0
     BMP_FILE_ERROR     = -1
@@ -168,7 +168,7 @@ class Device
     #
     # @return [NilClass] Allways returns nil.
     def self.print_big(string)
-      self.size(24, 48, 24, 48)
+      self.size(18, 36, 18, 36)
       self.adapter.print(string)
     end
 
