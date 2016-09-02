@@ -4,7 +4,9 @@ class Device
     include DaFunk::Helper
 
     def self.adapter
-      Device.adapter::Crypto
+      if Device.const_defined?(:Crypto)
+        Device.adapter::Crypto
+      end
     end
 
     CCITT_16 = [
