@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    da_funk (0.7.4)
+    da_funk (0.7.5)
       bundler (~> 1.7)
       cloudwalk_handshake (~> 0.5)
       posxml_parser (~> 0.6)
@@ -12,7 +12,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     cloudwalk_handshake (0.6.0)
-    funky-simplehttp (0.4.4)
     posxml_parser (0.9.0)
     rake (10.5.0)
     yard (0.8.7.6)
@@ -22,8 +21,5 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  cloudwalk_handshake
   da_funk!
-  funky-simplehttp
-  posxml_parser
   yard

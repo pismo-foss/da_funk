@@ -1,5 +1,11 @@
 # DaFunk
 
+### 0.7.5 - 2016-09-06
+
+- Refactoring Magnetic#bin? adding properly checking if read.
+- Bug fix check if Magnetic adapter opened correctly.
+- Remove rescue exception in CommandLinePlatform to avoid hide any error.
+
 ### 0.7.4 - 2016-04-15 - Small changes
 
 - Add timer type EventListener.
