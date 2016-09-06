@@ -11,13 +11,9 @@ class CommandLinePlatform
     set_system_values
     CommandLinePlatform::Display.standard_output = STDOUT
     Screen.setup(21, 20)
-    begin
-      require 'posxml_parser'
-      require 'cloudwalk_handshake'
-      CloudwalkHandshake.configure!
-    rescue LoadError
-    rescue NameError
-    end
+    require 'posxml_parser'
+    require 'cloudwalk_handshake'
+    CloudwalkHandshake.configure!
   end
 
   def self.set_system_values
