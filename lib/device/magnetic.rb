@@ -19,6 +19,7 @@ class Device
       magnetic.close if magnetic
     end
 
+    HARDWARE_RET_OK          = 0
     HARDWARE_SUCCESSFUL_READ = 1
     HARDWARE_NOT_READ        = 0
     STATUS_SUCCESSFUL_READ = :success
@@ -35,7 +36,7 @@ class Device
     end
 
     def start
-      if self.adapter.open == 1
+      if self.adapter.open == HARDWARE_RET_OK
         @status = STATUS_OPEN
         true
       else
