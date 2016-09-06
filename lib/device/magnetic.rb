@@ -74,7 +74,9 @@ class Device
     end
 
     def bin?(value)
-      tracks if STATUS_SUCCESSFUL_READ
+      return false if value.to_s.empty?
+      tracks if self.read?
+
       digits = track2.to_s[0..3]
       if value.is_a?(Range) && ! digits.empty? && digits.integer?
         value.include? digits.to_f
