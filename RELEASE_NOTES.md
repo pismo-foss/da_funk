@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.7.6 - 2016-09-08
+
+- Bug fix bitmap 128 bits size generation.
+
 ### 0.7.5 - 2016-09-06
 
 - Refactoring Magnetic#bin? adding properly checking if read.
