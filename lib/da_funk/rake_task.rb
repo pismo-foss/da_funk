@@ -45,13 +45,13 @@ module DaFunk
     end
 
     def get_mrbc_bin(from_user)
-      if (! platform_call("type mrbc > /dev/null 2>&1 ")) && from_user
+      if (! system("type mrbc > /dev/null 2>&1 ")) && from_user
         from_user
-      elsif platform_call("type mrbc > /dev/null 2>&1 ")
+      elsif system("type mrbc > /dev/null 2>&1 ")
         "env mrbc"
       elsif ENV["MRBC"]
         ENV["MRBC"]
-      elsif platform_call("type cloudwalk > /dev/null 2>&1 ")
+      elsif system("type cloudwalk > /dev/null 2>&1 ")
         "env cloudwalk compile"
       else
         puts "$MRBC isn't set or mrbc/cloudwalk isn't on $PATH"
@@ -83,7 +83,7 @@ module DaFunk
 
     def platform_call(command)
       if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM)
-        sh("bash -c\"#{command}\"")
+        sh("bash -c \"#{command}\"")
       else
         sh command
       end
