@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.7.8 - 2016-09-20
+
+- Fix windows system call in bin checks.
+
 ### 0.7.7 - 2016-09-20
 
 - Fix system call in cygwin environment.
