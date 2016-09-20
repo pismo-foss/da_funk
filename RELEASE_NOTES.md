@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.7.7 - 2016-09-20
+
+- Fix system call in cygwin environment.
+
 ### 0.7.6 - 2016-09-08
 
 - Bug fix bitmap 128 bits size generation.
