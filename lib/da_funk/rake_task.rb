@@ -45,13 +45,13 @@ module DaFunk
     end
 
     def get_mrbc_bin(from_user)
-      if (! system("type mrbc > /dev/null 2>&1 ")) && from_user
+      if (! platform_call("type mrbc > /dev/null 2>&1 ")) && from_user
         from_user
-      elsif system("type mrbc > /dev/null 2>&1 ")
+      elsif platform_call("type mrbc > /dev/null 2>&1 ")
         "env mrbc"
       elsif ENV["MRBC"]
         ENV["MRBC"]
-      elsif system("type cloudwalk > /dev/null 2>&1 ")
+      elsif platform_call("type cloudwalk > /dev/null 2>&1 ")
         "env cloudwalk compile"
       else
         puts "$MRBC isn't set or mrbc/cloudwalk isn't on $PATH"
@@ -64,10 +64,10 @@ module DaFunk
       command_line     = File.join(File.dirname(__FILE__), "..", "..", "utils", "command_line_platform.rb")
       command_line_obj = File.join(root_path, "out", "main", "command_line_platform.mrb")
       all_files        = FileList["test/test_helper.rb"] + libs + files + [command_line] + [File.join(File.dirname(__FILE__), "..", "..", "utils", "test_run.rb")]
-      if sh("#{mrbc} -g -o #{command_line_obj} #{command_line}") && sh("#{mrbc} -g -o #{test_out} #{all_files.uniq}")
+      if platform_call("#{mrbc} -g -o #{command_line_obj} #{command_line}") && platform_call("#{mrbc} -g -o #{test_out} #{all_files.uniq}")
         puts "cd #{File.dirname(out_path)}"
         FileUtils.cd File.dirname(out_path)
-        sh("#{mruby} #{File.join(name, "test.mrb")}")
+        platform_call("#{mruby} #{File.join(name, "test.mrb")}")
       end
     end
 
@@ -79,6 +79,14 @@ module DaFunk
         return nil
       end
       return path
+    end
+
+    def platform_call(command)
+      if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM)
+        sh("bash -c\"#{command}\"")
+      else
+        sh command
+      end
     end
 
     def define
@@ -100,7 +108,7 @@ module DaFunk
 
       desc "Compile app to mrb and process resources"
       task :build => :resources do
-        sh "#{mrbc} #{debug_flag} -o #{main_out} #{libs} "
+        platform_call "#{mrbc} #{debug_flag} -o #{main_out} #{libs} "
       end
 
       namespace :test do
