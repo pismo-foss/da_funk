@@ -1,6 +1,7 @@
 
 class Device
   class Network
+    include DaFunk::Helper
 
     MEDIA_GPRS     = "gprs"
     MEDIA_WIFI     = "wifi"
@@ -24,10 +25,14 @@ class Device
     MODE_IBSS    = "ibss"
     MODE_STATION = "station"
 
-    TIMEOUT       = -3320
-    NO_CONNECTION = -1012
-    SUCCESS       = 0
-    PROCESSING    = 1
+    ERR_USER_CANCEL = -1010
+    TIMEOUT         = -3320
+    NO_CONNECTION   = -1012
+    SUCCESS         = 0
+    PROCESSING      = 1
+
+    POWER_OFF = 0
+    POWER_ON  = 1
 
     # Not Supported
     #AUTH_WPA_EAP        = "wpa_eap"
@@ -123,13 +128,16 @@ class Device
     end
 
     def self.dhcp_client(timeout)
-      time = Time.now + (timeout.to_f / 1000.0)
       ret = adapter.dhcp_client_start
       if (ret == SUCCESS)
-        ret = PROCESSING
-        while(ret == PROCESSING) # 1 - In process to attach
-          ret = adapter.dhcp_client_check
-          break ret = TIMEOUT unless (time >= Time.now)
+        hash = try_user(timeout) do |processing|
+          processing[:ret] = adapter.dhcp_client_check
+          processing[:ret] == PROCESSING
+        end
+        ret = hash[:ret]
+
+        unless ret == SUCCESS
+          ret = ERR_USER_CANCEL if hash[:key] == Device::IO::CANCEL
         end
       end
       ret
@@ -141,14 +149,20 @@ class Device
         ret = Device::Network.init(*self.config)
         ret = Device::Network.connect
         ret = Device::Network.connected? if ret != SUCCESS
-        while(ret == PROCESSING)
-          ret = Device::Network.connected?
+
+        hash = try_user do |process|
+          process[:ret] = Device::Network.connected?
+          process[:ret] == PROCESSING # if true keep trying
         end
+        ret = hash[:ret]
+
         if ret == SUCCESS
-          Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
+          ret = Device::Network.dhcp_client(20000) if (wifi? || ethernet?)
           Device::Setting.network_configured = 1
         else
+          ret = ERR_USER_CANCEL if hash[:key] == Device::IO::CANCEL
           Device::Setting.network_configured = 0
+          Device::Network.disconnect
         end
       end
       ret
