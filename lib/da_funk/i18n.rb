@@ -62,7 +62,7 @@ class I18n
   end
 
   def self.get(symbol)
-    language[symbol] || "No Translation"
+    (language[symbol] || "No Translation").dup
   end
 
   def self.pt(symbol, options = {})
