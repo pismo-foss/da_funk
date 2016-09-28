@@ -7,7 +7,7 @@ class Device
     DEFAULT_CREATION_INTERVAL = 3600
 
     class << self
-      attr_accessor :callbacks, :current, :last_creation, :creation_interval
+      attr_accessor :callbacks, :current, :last_creation, :creation_interval, :last_event
     end
 
     self.callbacks = Hash.new
@@ -49,7 +49,10 @@ class Device
     end
 
     def self.create_fiber?(force = false)
-      (! Device::Setting.company_name.empty?) && (! Device::Setting.logical_number.empty?) && (force || self.valid_creation_interval?)
+      (! Device::Setting.company_name.empty?) &&
+        (! Device::Setting.logical_number.empty?) &&
+        (force || self.valid_creation_interval?) &&
+        Device::ParamsDat.file["notification_enabled"] == "1"
     end
 
     def self.valid_creation_interval?
@@ -107,13 +110,27 @@ class Device
       end
     end
 
+    def valid_event_interval?
+      if @last_event
+        (@last_event + Notification.creation_interval) < Time.now
+      else
+        true
+      end
+    end
+
     private
     def reply(conn, ev)
       if ev.is_a?(Hash)
         if ev["Event"] == "user" && ev["Payload"] && ev["Payload"].include?("Id")
           index = ev["Payload"].index("\"Id")
           id = ev["Payload"][(index+7)..(index+38)]
+          @last_event = Time.now
           conn.event(event_name, "{\"Id\"=>\"#{id}\"}", false)
+        end
+      elsif ev.nil?
+        if self.valid_event_interval?
+          @last_event = Time.now
+          conn.event(event_name, "", false)
         end
       end
     end
@@ -132,6 +149,7 @@ class Device
       Fiber.new do
         begin
           Serfx.connect(socket_block: Device::Network.socket, timeout: timeout, stream_timeout: stream_timeout) do |conn|
+            @last_event = Time.now
             conn.auth(CloudwalkTOTP.at)
             Device::Notification.last_creation = Time.now
             conn.stream(subscription) { |ev| reply(conn, ev) }
