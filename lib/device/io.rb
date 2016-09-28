@@ -209,6 +209,11 @@ class Device
       end
     end
 
+    # => {"return" => 1, "x" => 10, "y" => 50}
+    def self.getxy
+      super
+    end
+
     def self.insert_key?(key, options)
       if options[:mode] == IO_INPUT_MONEY || options[:mode] == IO_INPUT_DECIMAL || options[:mode] == IO_INPUT_NUMBERS
         NUMBERS.include?(key)
