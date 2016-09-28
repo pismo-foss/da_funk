@@ -177,7 +177,7 @@ module ISO8583
                 dt.strftime(fmt)
               rescue => e
                 msg = "Invalid format encoding: #{date}, must be #{fmt}."
-                ContextLog.error(e, e.backtrace, msg)
+                ContextLog.exception(e, e.backtrace, msg)
                 raise ISO8583Exception.new(msg)
               end
             else  
@@ -190,7 +190,7 @@ module ISO8583
         DateTime.strptime(str, fmt)
       rescue => e
         msg = "Invalid format decoding: #{str}, must be #{fmt}."
-        ContextLog.error(e, e.backtrace, msg)
+        ContextLog.exception(e, e.backtrace, msg)
         raise ISO8583Exception.new(msg)
       end
     }

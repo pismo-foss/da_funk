@@ -39,7 +39,7 @@ module ISO8583
       begin
         real_value = codec.decode(raw_value)
       rescue => e
-        ContextLog.error e, e.backtrace
+        ContextLog.exception e, e.backtrace
         raise ISO8583ParseException.new(e.message+" (#{name})")
       end
 
@@ -56,7 +56,7 @@ module ISO8583
       begin
         encoded_value = codec.encode(value) 
       rescue ISO8583Exception => e
-        ContextLog.error(e, e.backtrace, "#{e.message} (#{name})")
+        ContextLog.exception(e, e.backtrace, "#{e.message} (#{name})")
         raise ISO8583Exception.new(e.message+" (#{name})")
       end
 
