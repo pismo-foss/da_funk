@@ -118,9 +118,11 @@ module Serfx
     # raises [RPCError] exception if error string is not empty
     #
     # @param header [Hash] RPC response header as hash
-    def check_rpc_error!(header)
+    def check_rpc_error!(header, must_return = false)
       if header
         raise RPCError, header['Error'] unless header['Error'].empty?
+      else
+        raise RPCError, "Socket Closed" if must_return
       end
     end
 
@@ -130,7 +132,7 @@ module Serfx
     # @return [Response]
     def read_response(command, read_timeout = self.timeout)
       header, body = read_data(read_timeout)
-      check_rpc_error!(header)
+      check_rpc_error!(header, true)
       if COMMANDS[command].include?(:body)
         Response.new(header, body)
       else
