@@ -29,6 +29,7 @@ FILES = FileList[
   "lib/da_funk/event_listener.rb",
   "lib/da_funk/event_handler.rb",
   "lib/da_funk/engine.rb",
+  "lib/da_funk/struct.rb",
   "lib/device.rb",
   "lib/device/audio.rb",
   "lib/device/crypto.rb",
