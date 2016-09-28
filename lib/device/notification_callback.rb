@@ -3,7 +3,7 @@ class Device
     attr_reader :on, :before, :after, :description
     attr_accessor :results
 
-    CallbackResult = Struct.new(:before_execute, :result, :after_execute)
+    CallbackResult = DaFunk::Struct.klass(:before_execute, :result, :after_execute)
 
     def initialize(description, procs = {})
       @description = description
@@ -20,7 +20,7 @@ class Device
 
     def call(event, moment = :on)
       if support?(moment)
-        results[moment] << CallbackResult.new(
+        results[moment] << CallbackResult.call(
           Time.now,
           perform(event, moment),
           Time.now

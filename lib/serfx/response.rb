@@ -12,7 +12,7 @@ module Serfx
     #
     # `{"Seq": 0, "Error": ""}`
     #
-    Header = Struct.new(:seq, :error)
+    Header = DaFunk::Struct.klass(:seq, :error)
     attr_reader :header, :body
 
     # Constructs a response object from a given header and body.
@@ -20,7 +20,7 @@ module Serfx
     # @param header [Hash] header of the response as hash
     # @param body [Hash] body of the response as hash
     def initialize(header, body = nil)
-      @header = Header.new(header['Seq'], header['Error']) if header
+      @header = Header.call(header['Seq'], header['Error']) if header
       @body = body
     end
   end
