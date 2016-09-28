@@ -23,7 +23,7 @@ module DaFunk
             I18n.pt(:attach_connected)
           else
             I18n.pt(:attach_fail, :args => [ret.to_s])
-            sleep 4
+            getc(4000)
             return false
           end
         else
@@ -32,7 +32,7 @@ module DaFunk
         true
       else
         I18n.pt(:attach_device_not_configured)
-        sleep(2)
+        getc(2000)
         false
       end
     end
