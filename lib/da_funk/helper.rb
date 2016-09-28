@@ -88,6 +88,19 @@ module DaFunk
       key
     end
 
+    # must send nonblock proc
+    def try_user(timeout = Device::IO.timeout, &block)
+      time = timeout != 0 ? Time.now + timeout / 1000 : Time.now
+      processing = Hash.new(keep: true)
+      while(processing[:keep] && processing[:key] != Device::IO::CANCEL) do
+        if processing[:keep] = block.call(processing)
+          processing[:key] = getc(300)
+        end
+        break if time < Time.now
+      end
+      processing
+    end
+
     # Create a form menu.
     #
     # @param title [String] Text to display on line 0. If nil title won't be
