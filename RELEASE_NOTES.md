@@ -1,5 +1,21 @@
 # DaFunk
 
+### 0.7.9 - 2016-10-03
+
+- Implement seconds to Scheduler timer.
+- Implement Device::IO.getxy to support touchscreen.
+- Adopt try_user in Device::Network.
+- Implement Helper#try_user to implement a user interruption.
+- Use getc(milliseconds) instead of sleep to improve UX in Helper.
+- Replace ContextLog.error by ContextLog.exception.
+- Adopt DaFunk::Struct instead of Struct in Notifications.
+- Send a Serf#event if creation interval exceed.
+- Fix leak I18n copying translation in every call.
+- Close serf socket if command has no reply.
+- Implement DaFunk::Struct to avoid memory leaks from mruby.
+- Check key cancel and return it at get_format.
+- Update README.
+
 ### 0.7.8 - 2016-09-20
 
 - Fix windows system call in bin checks.
