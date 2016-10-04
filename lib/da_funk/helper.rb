@@ -150,21 +150,14 @@ module DaFunk
 
     # TODO Scalone: Refactor.
     def pagination(title, options, collection, &block)
-      if title.nil?
-        start_line = 0
-        options[:limit] ||= STDOUT.max_y
-      else
-        start_line = 1
-        options[:limit] ||= STDOUT.max_y - 1
-      end
-      if collection.size > options[:limit] # minus header
-        key   = Device::IO::F1
-        pages = pagination_page(collection, options[:limit] - 1)
+      start_line, options[:limit] = pagination_limit(title, options[:limit])
+      if collection.size > (options[:limit] - 1) # minus pagination header
+        key   = Device::IO.back_key
+        pages = pagination_page(collection, options[:limit] - 1) # minus pagination header
         page  = 1
-        while(key == Device::IO::F1 || key == Device::IO::F2)
+        while(key == Device::IO.back_key || key == Device::IO.forward_key)
           Device::Display.clear
-          print_title(title, options[:default]) if title
-          Device::Display.print("< F1 ____ #{page}/#{pages.size} ____ F2 >", start_line, 0)
+          pagination_header(title, page, pages.size, start_line, options[:default])
           values = pages[page].to_a
           block.call(values, start_line+1)
           key  = try_key(pagination_keys(values.size))
@@ -185,10 +178,17 @@ module DaFunk
       end
     end
 
+    def pagination_header(title, page, pages, line, default)
+      print_title(title, default) if title
+      back    = Device::IO.back_key_label
+      forward = Device::IO.forward_key_label
+      Device::Display.print("< #{back} __ #{page}/#{pages} __ #{forward} >", line, 0)
+    end
+
     def pagination_key_page(page, key, size)
-      if key == Device::IO::F1
+      if key == Device::IO.back_key
         page == 1 ? page : page -= 1
-      elsif key == Device::IO::F2
+      elsif key == Device::IO.forward_key
         page >= size ? size : page += 1
       end
     end
@@ -197,8 +197,10 @@ module DaFunk
       page = 1
       i = 0
       values.group_by do |value|
-        if size < (i+=1)
-          page+=1; i=0
+        if size <= i
+          page+=1; i=1
+        else
+          i += 1
         end
         page
       end
@@ -206,7 +208,25 @@ module DaFunk
 
     def pagination_keys(size)
       (1..size.to_i).to_a.map(&:to_s) + [Device::IO::ENTER, Device::IO::CLEAR,
-        Device::IO::CANCEL, Device::IO::F1, Device::IO::F2]
+        Device::IO::CANCEL, Device::IO.back_key, Device::IO.forward_key]
+    end
+
+    def pagination_limit(title, number = nil)
+      start = title.nil? ? 0 : 1 # start in next line if title
+      if number
+        limit = number
+      else
+        if STDOUT.max_y > 9
+          limit = 9
+        else
+          if title.nil?
+            limit = STDOUT.max_y
+          else
+            limit = STDOUT.max_y - 1 # minus title
+          end
+        end
+      end
+      [start, limit]
     end
 
     def number_to_currency(value, options = {})
@@ -273,6 +293,5 @@ module DaFunk
       end
     end
   end
-
 end
 
