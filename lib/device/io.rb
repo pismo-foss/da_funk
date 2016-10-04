@@ -44,8 +44,12 @@ class Device
     NINE_NUMBER   = "9"
     ZERO_NUMBER   = "0"
 
+    KEYBOARD_DEFAULT = ["qzQZ.", "abcABC", "defDEF", "ghiGHI", "jklJKL",
+      "mnoMNO", "prsPRS", "tuvTUV", "wxyWXY", ", *\#_$%-+="]
+
     class << self
-      attr_accessor :timeout, :keys_range
+      attr_accessor :timeout, :keys_range, :forward_key, :back_key, :back_key_label,
+        :forward_key_label
     end
 
     # Setup Keyboard Map
@@ -67,8 +71,7 @@ class Device
     #   map = [one_letters, two_letters, three_letters, four_letters, five_letters,
     #   six_letters, seven_letters, eight_letters, nine_letters, zero_letters]
     #   Device::IO.setup_keyboard(map)
-    #
-    def self.setup_keyboard(map)
+    def self.setup_keyboard(map, options = {})
       one_letters, two_letters, three_letters, four_letters, five_letters,
         six_letters, seven_letters, eight_letters, nine_letters, zero_letters =
         map
@@ -89,10 +92,14 @@ class Device
         NINE_NUMBER  + nine_letters, ZERO_NUMBER   + zero_letters
       ]
       @keys_range = {MASK_ALPHA => range_alpha, MASK_LETTERS => range_letters, MASK_NUMBERS => range_number}
+
+      self.back_key          = options[:back_key]          || Device::IO::F1
+      self.back_key_label    = options[:back_key_label]    || " F1 "
+      self.forward_key       = options[:forward_key]       || Device::IO::F2
+      self.forward_key_label = options[:forward_key_label] || " F2 "
     end
 
-    self.setup_keyboard(["qzQZ.", "abcABC", "defDEF", "ghiGHI", "jklJKL",
-                        "mnoMNO", "prsPRS", "tuvTUV", "wxyWXY", ", *\#_$%-+="])
+    self.setup_keyboard(KEYBOARD_DEFAULT)
     self.timeout = DEFAULT_TIMEOUT
 
     # Restricted to terminals, get strings and numbers.
