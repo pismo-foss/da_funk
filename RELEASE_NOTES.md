@@ -1,5 +1,10 @@
 # DaFunk
 
+### 0.7.10 - 2016-10-06
+
+- Refactoring Helper.menu supporting custom forward and back key, and bug fix pagination.
+- Support custom forward and back keys.
+
 ### 0.7.9 - 2016-10-03
 
 - Implement seconds to Scheduler timer.
