@@ -75,7 +75,7 @@ class Device
 
     def execute(json = "")
       if posxml?
-        Device::Runtime.execute(remote, json)
+        PosxmlInterpreter.new(remote, nil, false).start
       else
         Device::Runtime.execute(name, json)
       end
