@@ -1,5 +1,9 @@
 # DaFunk
 
+### 0.7.11 - 2016-10-07
+
+- Do not start a new runtime for POSXML.
+
 ### 0.7.10 - 2016-10-06
 
 - Refactoring Helper.menu supporting custom forward and back key, and bug fix pagination.
