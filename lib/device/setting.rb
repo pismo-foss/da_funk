@@ -14,7 +14,7 @@ class Device
       "user"                        => "",
       "password"                    => "", #WIFI
       "apn"                         => "",
-      "sim_pim"                     => "",
+      "sim_pin"                     => "",
       "sim_slot"                    => "0",
       "sim_dual"                    => "0",
       "authentication"              => "", #WIFI
