@@ -27,8 +27,6 @@ module DaFunk
 
     def method_missing(method, *args, &block)
       param = method.to_s
-      p self.members
-      p param[0..-2]
       if self.include? method
         self[method]
       elsif (param[-1..-1] == "=" && self.include?(key = param[0..-2]))
@@ -41,20 +39,6 @@ module DaFunk
     def include?(key)
       self.members.include?(key.to_sym)
     end
-
-    #def self.new(*variables)
-    #Class.new do
-    #define_method :initialize do |*args| 
-    #members.each_with_index do |member, index|
-    #send("#{member}=", args[index])
-    #end
-    #end
-    #attr_accessor *variables
-    #define_method(:members) do
-    #variables
-    #end
-    #end
-    #end
   end
 end
 
