@@ -4,7 +4,7 @@ class Device
     include DaFunk::Helper
 
     def self.adapter
-      if Device.const_defined?(:Crypto)
+      if Device.adapter.const_defined?(:Crypto)
         Device.adapter::Crypto
       end
     end
