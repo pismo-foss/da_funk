@@ -1,5 +1,11 @@
 # DaFunk
 
+### 0.7.12 - 2016-10-14
+
+- Bug fix Crypto class check.
+- Remove commented code at struct.rb.
+- Bug fix replace Device::Setting.sim_pim by sim_pin.
+
 ### 0.7.11 - 2016-10-07
 
 - Do not start a new runtime for POSXML.
